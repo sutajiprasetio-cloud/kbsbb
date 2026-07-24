@@ -59,11 +59,16 @@ function HeroSlider() {
   return (
     <section className="relative h-[86vh] min-h-[560px] max-h-[820px] w-full overflow-hidden">
       {SLIDES.map((s, idx) => (
-        <div key={idx} className={`absolute inset-0 transition-opacity duration-1000 ${i === idx ? "opacity-100" : "opacity-0"}`}>
+        <div key={idx} className={`absolute inset-0 transition-opacity duration-[1400ms] ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
           <img src={s.img} alt={s.title} className="h-full w-full object-cover" width={1920} height={1080} />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
         </div>
       ))}
+      {/* Animated color blobs */}
+      <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/30 blur-3xl animate-blob" />
+      <div className="pointer-events-none absolute bottom-0 right-10 h-[26rem] w-[26rem] rounded-full bg-ocean/30 blur-3xl animate-blob" style={{ animationDelay: "4s" }} />
+      <div className="pointer-events-none absolute top-1/3 right-1/4 h-64 w-64 rounded-full bg-white/10 blur-3xl animate-blob" style={{ animationDelay: "8s" }} />
       <div className="relative z-10 container-x h-full flex items-center">
         <div className="max-w-2xl text-white">
           <div key={i} className="animate-fade-up">
