@@ -1,0 +1,42 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { SiteLayout, PageHero } from "@/components/site-layout";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+export const Route = createFileRoute("/partners")({
+  head: () => ({
+    meta: [
+      { title: "Partners — KBSBB Corporate & Institutional Allies" },
+      { name: "description", content: "KBSBB partners with leading Indonesian and global institutions to deliver humanitarian impact at scale." },
+      { property: "og:title", content: "KBSBB Partners" },
+      { property: "og:description", content: "Trusted by leaders across sectors." },
+    ],
+  }),
+  component: Partners,
+});
+
+const LOGOS = ["UNICEF", "WHO", "PMI", "BAZNAS", "Gojek", "Tokopedia", "Telkomsel", "BCA", "Mandiri", "Astra", "Danone", "Unilever", "BNI", "Pertamina", "Shopee", "Grab"];
+
+function Partners() {
+  return (
+    <SiteLayout>
+      <PageHero eyebrow="Our Partners" title="Together we go further" description="From global institutions to local businesses — thank you for standing with the mission." />
+      <section className="container-x py-20">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {LOGOS.map((p) => (
+            <div key={p} className="grid h-28 place-items-center rounded-3xl border border-border bg-card text-2xl font-black tracking-tight text-muted-foreground hover:text-primary hover:shadow-soft transition-all">
+              {p}
+            </div>
+          ))}
+        </div>
+        <Card className="mt-16 rounded-3xl border-border/70 gradient-brand text-white">
+          <CardContent className="p-10 md:p-14 text-center">
+            <h2 className="text-3xl md:text-4xl font-extrabold">Become a partner</h2>
+            <p className="mt-3 max-w-xl mx-auto opacity-90">CSR alignment, employee volunteering, program sponsorship — let's design impact together.</p>
+            <Button size="lg" className="mt-6 rounded-full bg-white text-primary hover:bg-white/90">Contact partnerships</Button>
+          </CardContent>
+        </Card>
+      </section>
+    </SiteLayout>
+  );
+}
