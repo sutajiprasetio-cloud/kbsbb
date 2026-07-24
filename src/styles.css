@@ -36,8 +36,8 @@
   --color-ocean: var(--ocean);
   --color-ocean-foreground: var(--ocean-foreground);
   --color-ocean-soft: var(--ocean-soft);
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
