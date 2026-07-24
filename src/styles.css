@@ -155,3 +155,37 @@
 @utility animate-fade-up { animation: fade-up 0.7s ease-out both; }
 @utility animate-fade-in { animation: fade-in 0.8s ease-out both; }
 @utility animate-marquee { animation: marquee 30s linear infinite; }
+
+@keyframes blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.1); }
+  66% { transform: translate(-30px, 30px) scale(0.95); }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--brand) 55%, transparent); }
+  70% { box-shadow: 0 0 0 18px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@utility animate-blob { animation: blob 18s ease-in-out infinite; }
+@utility animate-float { animation: float-y 3.5s ease-in-out infinite; }
+@utility animate-spin-slow { animation: spin-slow 12s linear infinite; }
+@utility animate-pulse-ring { animation: pulse-ring 2.2s ease-out infinite; }
+
+@utility glass {
+  background-color: color-mix(in oklab, var(--background) 65%, transparent);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
+.reveal { opacity: 0; }
+.reveal.in-view { animation: reveal-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
