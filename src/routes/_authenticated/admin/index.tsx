@@ -23,15 +23,22 @@ function Dashboard() {
 
   useEffect(() => {
     (async () => {
-      // These tables don't exist yet in Phase 1 — they'll be added in later phases.
-      // For now, safe zero-fallbacks so the dashboard renders end-to-end.
-      const activityRes = await supabase
-        .from("activity_log")
-        .select("id, action, entity, created_at, user_id")
-        .order("created_at", { ascending: false })
-        .limit(8);
+      const [donations, volunteers, programs, activityRes] = await Promise.all([
+        (supabase as any).from("donations").select("amount, donor_email", { count: "exact" }).eq("status", "confirmed"),
+        (supabase as any).from("volunteers").select("id", { count: "exact", head: true }),
+        (supabase as any).from("programs").select("id", { count: "exact", head: true }).eq("is_active", true),
+        supabase.from("activity_log").select("id, action, entity, created_at, user_id").order("created_at", { ascending: false }).limit(8),
+      ]);
+      const total = (donations.data ?? []).reduce((s: number, d: any) => s + Number(d.amount || 0), 0);
+      const donors = new Set((donations.data ?? []).map((d: any) => d.donor_email).filter(Boolean)).size;
       setActivity(activityRes.data ?? []);
-      setStats({ donationsTotal: 0, donationsCount: 0, donors: 0, volunteers: 0, programs: 0 });
+      setStats({
+        donationsTotal: total,
+        donationsCount: donations.count ?? 0,
+        donors,
+        volunteers: volunteers.count ?? 0,
+        programs: programs.count ?? 0,
+      });
     })();
   }, []);
 
