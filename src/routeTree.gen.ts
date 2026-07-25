@@ -26,6 +26,23 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminVolunteersRouteImport } from './routes/_authenticated/admin/volunteers'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
+import { Route as AuthenticatedAdminTeamRouteImport } from './routes/_authenticated/admin/team'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
+import { Route as AuthenticatedAdminProgramsRouteImport } from './routes/_authenticated/admin/programs'
+import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authenticated/admin/partners'
+import { Route as AuthenticatedAdminNewsRouteImport } from './routes/_authenticated/admin/news'
+import { Route as AuthenticatedAdminHeroRouteImport } from './routes/_authenticated/admin/hero'
+import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authenticated/admin/gallery'
+import { Route as AuthenticatedAdminFaqRouteImport } from './routes/_authenticated/admin/faq'
+import { Route as AuthenticatedAdminEventsRouteImport } from './routes/_authenticated/admin/events'
+import { Route as AuthenticatedAdminDonationsRouteImport } from './routes/_authenticated/admin/donations'
+import { Route as AuthenticatedAdminDonationCategoriesRouteImport } from './routes/_authenticated/admin/donation-categories'
+import { Route as AuthenticatedAdminContactRouteImport } from './routes/_authenticated/admin/contact'
+import { Route as AuthenticatedAdminCampaignsRouteImport } from './routes/_authenticated/admin/campaigns'
+import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin/about'
 
 const VolunteerRoute = VolunteerRouteImport.update({
   id: '/volunteer',
@@ -111,6 +128,102 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
+const AuthenticatedAdminVolunteersRoute =
+  AuthenticatedAdminVolunteersRouteImport.update({
+    id: '/volunteers',
+    path: '/volunteers',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminTestimonialsRoute =
+  AuthenticatedAdminTestimonialsRouteImport.update({
+    id: '/testimonials',
+    path: '/testimonials',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminTeamRoute = AuthenticatedAdminTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminProgramsRoute =
+  AuthenticatedAdminProgramsRouteImport.update({
+    id: '/programs',
+    path: '/programs',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminPartnersRoute =
+  AuthenticatedAdminPartnersRouteImport.update({
+    id: '/partners',
+    path: '/partners',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminNewsRoute = AuthenticatedAdminNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminHeroRoute = AuthenticatedAdminHeroRouteImport.update({
+  id: '/hero',
+  path: '/hero',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminGalleryRoute =
+  AuthenticatedAdminGalleryRouteImport.update({
+    id: '/gallery',
+    path: '/gallery',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminFaqRoute = AuthenticatedAdminFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminEventsRoute =
+  AuthenticatedAdminEventsRouteImport.update({
+    id: '/events',
+    path: '/events',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminDonationsRoute =
+  AuthenticatedAdminDonationsRouteImport.update({
+    id: '/donations',
+    path: '/donations',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminDonationCategoriesRoute =
+  AuthenticatedAdminDonationCategoriesRouteImport.update({
+    id: '/donation-categories',
+    path: '/donation-categories',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminContactRoute =
+  AuthenticatedAdminContactRouteImport.update({
+    id: '/contact',
+    path: '/contact',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminCampaignsRoute =
+  AuthenticatedAdminCampaignsRouteImport.update({
+    id: '/campaigns',
+    path: '/campaigns',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminAboutRoute = AuthenticatedAdminAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -128,6 +241,23 @@ export interface FileRoutesByFullPath {
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
+  '/admin/contact': typeof AuthenticatedAdminContactRoute
+  '/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
+  '/admin/donations': typeof AuthenticatedAdminDonationsRoute
+  '/admin/events': typeof AuthenticatedAdminEventsRoute
+  '/admin/faq': typeof AuthenticatedAdminFaqRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
+  '/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/admin/news': typeof AuthenticatedAdminNewsRoute
+  '/admin/partners': typeof AuthenticatedAdminPartnersRoute
+  '/admin/programs': typeof AuthenticatedAdminProgramsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/volunteers': typeof AuthenticatedAdminVolunteersRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -145,6 +275,23 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
+  '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
+  '/admin/contact': typeof AuthenticatedAdminContactRoute
+  '/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
+  '/admin/donations': typeof AuthenticatedAdminDonationsRoute
+  '/admin/events': typeof AuthenticatedAdminEventsRoute
+  '/admin/faq': typeof AuthenticatedAdminFaqRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
+  '/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/admin/news': typeof AuthenticatedAdminNewsRoute
+  '/admin/partners': typeof AuthenticatedAdminPartnersRoute
+  '/admin/programs': typeof AuthenticatedAdminProgramsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/volunteers': typeof AuthenticatedAdminVolunteersRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -165,6 +312,23 @@ export interface FileRoutesById {
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
+  '/_authenticated/admin/contact': typeof AuthenticatedAdminContactRoute
+  '/_authenticated/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
+  '/_authenticated/admin/donations': typeof AuthenticatedAdminDonationsRoute
+  '/_authenticated/admin/events': typeof AuthenticatedAdminEventsRoute
+  '/_authenticated/admin/faq': typeof AuthenticatedAdminFaqRoute
+  '/_authenticated/admin/gallery': typeof AuthenticatedAdminGalleryRoute
+  '/_authenticated/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
+  '/_authenticated/admin/partners': typeof AuthenticatedAdminPartnersRoute
+  '/_authenticated/admin/programs': typeof AuthenticatedAdminProgramsRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/admin/volunteers': typeof AuthenticatedAdminVolunteersRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -185,6 +349,23 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/volunteer'
     | '/admin'
+    | '/admin/about'
+    | '/admin/campaigns'
+    | '/admin/contact'
+    | '/admin/donation-categories'
+    | '/admin/donations'
+    | '/admin/events'
+    | '/admin/faq'
+    | '/admin/gallery'
+    | '/admin/hero'
+    | '/admin/news'
+    | '/admin/partners'
+    | '/admin/programs'
+    | '/admin/settings'
+    | '/admin/team'
+    | '/admin/testimonials'
+    | '/admin/users'
+    | '/admin/volunteers'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -202,6 +383,23 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/testimonials'
     | '/volunteer'
+    | '/admin/about'
+    | '/admin/campaigns'
+    | '/admin/contact'
+    | '/admin/donation-categories'
+    | '/admin/donations'
+    | '/admin/events'
+    | '/admin/faq'
+    | '/admin/gallery'
+    | '/admin/hero'
+    | '/admin/news'
+    | '/admin/partners'
+    | '/admin/programs'
+    | '/admin/settings'
+    | '/admin/team'
+    | '/admin/testimonials'
+    | '/admin/users'
+    | '/admin/volunteers'
     | '/admin'
   id:
     | '__root__'
@@ -221,6 +419,23 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/volunteer'
     | '/_authenticated/admin'
+    | '/_authenticated/admin/about'
+    | '/_authenticated/admin/campaigns'
+    | '/_authenticated/admin/contact'
+    | '/_authenticated/admin/donation-categories'
+    | '/_authenticated/admin/donations'
+    | '/_authenticated/admin/events'
+    | '/_authenticated/admin/faq'
+    | '/_authenticated/admin/gallery'
+    | '/_authenticated/admin/hero'
+    | '/_authenticated/admin/news'
+    | '/_authenticated/admin/partners'
+    | '/_authenticated/admin/programs'
+    | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/team'
+    | '/_authenticated/admin/testimonials'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/admin/volunteers'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -363,15 +578,169 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/volunteers': {
+      id: '/_authenticated/admin/volunteers'
+      path: '/volunteers'
+      fullPath: '/admin/volunteers'
+      preLoaderRoute: typeof AuthenticatedAdminVolunteersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/testimonials': {
+      id: '/_authenticated/admin/testimonials'
+      path: '/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AuthenticatedAdminTestimonialsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/team': {
+      id: '/_authenticated/admin/team'
+      path: '/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AuthenticatedAdminTeamRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/programs': {
+      id: '/_authenticated/admin/programs'
+      path: '/programs'
+      fullPath: '/admin/programs'
+      preLoaderRoute: typeof AuthenticatedAdminProgramsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/partners': {
+      id: '/_authenticated/admin/partners'
+      path: '/partners'
+      fullPath: '/admin/partners'
+      preLoaderRoute: typeof AuthenticatedAdminPartnersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/news': {
+      id: '/_authenticated/admin/news'
+      path: '/news'
+      fullPath: '/admin/news'
+      preLoaderRoute: typeof AuthenticatedAdminNewsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/hero': {
+      id: '/_authenticated/admin/hero'
+      path: '/hero'
+      fullPath: '/admin/hero'
+      preLoaderRoute: typeof AuthenticatedAdminHeroRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/gallery': {
+      id: '/_authenticated/admin/gallery'
+      path: '/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AuthenticatedAdminGalleryRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/faq': {
+      id: '/_authenticated/admin/faq'
+      path: '/faq'
+      fullPath: '/admin/faq'
+      preLoaderRoute: typeof AuthenticatedAdminFaqRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/events': {
+      id: '/_authenticated/admin/events'
+      path: '/events'
+      fullPath: '/admin/events'
+      preLoaderRoute: typeof AuthenticatedAdminEventsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/donations': {
+      id: '/_authenticated/admin/donations'
+      path: '/donations'
+      fullPath: '/admin/donations'
+      preLoaderRoute: typeof AuthenticatedAdminDonationsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/donation-categories': {
+      id: '/_authenticated/admin/donation-categories'
+      path: '/donation-categories'
+      fullPath: '/admin/donation-categories'
+      preLoaderRoute: typeof AuthenticatedAdminDonationCategoriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/contact': {
+      id: '/_authenticated/admin/contact'
+      path: '/contact'
+      fullPath: '/admin/contact'
+      preLoaderRoute: typeof AuthenticatedAdminContactRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/campaigns': {
+      id: '/_authenticated/admin/campaigns'
+      path: '/campaigns'
+      fullPath: '/admin/campaigns'
+      preLoaderRoute: typeof AuthenticatedAdminCampaignsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/about': {
+      id: '/_authenticated/admin/about'
+      path: '/about'
+      fullPath: '/admin/about'
+      preLoaderRoute: typeof AuthenticatedAdminAboutRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
   }
 }
 
 interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
+  AuthenticatedAdminCampaignsRoute: typeof AuthenticatedAdminCampaignsRoute
+  AuthenticatedAdminContactRoute: typeof AuthenticatedAdminContactRoute
+  AuthenticatedAdminDonationCategoriesRoute: typeof AuthenticatedAdminDonationCategoriesRoute
+  AuthenticatedAdminDonationsRoute: typeof AuthenticatedAdminDonationsRoute
+  AuthenticatedAdminEventsRoute: typeof AuthenticatedAdminEventsRoute
+  AuthenticatedAdminFaqRoute: typeof AuthenticatedAdminFaqRoute
+  AuthenticatedAdminGalleryRoute: typeof AuthenticatedAdminGalleryRoute
+  AuthenticatedAdminHeroRoute: typeof AuthenticatedAdminHeroRoute
+  AuthenticatedAdminNewsRoute: typeof AuthenticatedAdminNewsRoute
+  AuthenticatedAdminPartnersRoute: typeof AuthenticatedAdminPartnersRoute
+  AuthenticatedAdminProgramsRoute: typeof AuthenticatedAdminProgramsRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminTeamRoute: typeof AuthenticatedAdminTeamRoute
+  AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminVolunteersRoute: typeof AuthenticatedAdminVolunteersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
+    AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
+    AuthenticatedAdminCampaignsRoute: AuthenticatedAdminCampaignsRoute,
+    AuthenticatedAdminContactRoute: AuthenticatedAdminContactRoute,
+    AuthenticatedAdminDonationCategoriesRoute:
+      AuthenticatedAdminDonationCategoriesRoute,
+    AuthenticatedAdminDonationsRoute: AuthenticatedAdminDonationsRoute,
+    AuthenticatedAdminEventsRoute: AuthenticatedAdminEventsRoute,
+    AuthenticatedAdminFaqRoute: AuthenticatedAdminFaqRoute,
+    AuthenticatedAdminGalleryRoute: AuthenticatedAdminGalleryRoute,
+    AuthenticatedAdminHeroRoute: AuthenticatedAdminHeroRoute,
+    AuthenticatedAdminNewsRoute: AuthenticatedAdminNewsRoute,
+    AuthenticatedAdminPartnersRoute: AuthenticatedAdminPartnersRoute,
+    AuthenticatedAdminProgramsRoute: AuthenticatedAdminProgramsRoute,
+    AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+    AuthenticatedAdminTeamRoute: AuthenticatedAdminTeamRoute,
+    AuthenticatedAdminTestimonialsRoute: AuthenticatedAdminTestimonialsRoute,
+    AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+    AuthenticatedAdminVolunteersRoute: AuthenticatedAdminVolunteersRoute,
     AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   }
 

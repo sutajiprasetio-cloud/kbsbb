@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout, PageHero } from "@/components/site-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useTable } from "@/lib/public-data";
 
 export const Route = createFileRoute("/partners")({
   head: () => ({
@@ -15,25 +16,27 @@ export const Route = createFileRoute("/partners")({
   component: Partners,
 });
 
-const LOGOS = ["UNICEF", "WHO", "PMI", "BAZNAS", "Gojek", "Tokopedia", "Telkomsel", "BCA", "Mandiri", "Astra", "Danone", "Unilever", "BNI", "Pertamina", "Shopee", "Grab"];
+const FALLBACK = ["UNICEF", "WHO", "PMI", "BAZNAS", "Gojek", "Tokopedia", "Telkomsel", "BCA", "Mandiri", "Astra", "Danone", "Unilever", "BNI", "Pertamina", "Shopee", "Grab"].map((name, i) => ({ id: i, name, logo_url: null, website: null }));
 
 function Partners() {
+  const data = useTable<any>("partners", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
+  const items = data && data.length > 0 ? data : FALLBACK;
   return (
     <SiteLayout>
       <PageHero eyebrow="Our Partners" title="Together we go further" description="From global institutions to local businesses — thank you for standing with the mission." />
       <section className="container-x py-20">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {LOGOS.map((p) => (
-            <div key={p} className="grid h-28 place-items-center rounded-3xl border border-border bg-card text-2xl font-black tracking-tight text-muted-foreground hover:text-primary hover:shadow-soft transition-all">
-              {p}
-            </div>
+          {items.map((p: any) => (
+            <a key={p.id ?? p.name} href={p.website ?? "#"} target={p.website ? "_blank" : undefined} rel="noreferrer" className="grid h-28 place-items-center rounded-3xl border border-border bg-card p-4 text-2xl font-black tracking-tight text-muted-foreground hover:text-primary hover:shadow-soft transition-all">
+              {p.logo_url ? <img src={p.logo_url} alt={p.name} className="max-h-16 max-w-full object-contain" /> : p.name}
+            </a>
           ))}
         </div>
         <Card className="mt-16 rounded-3xl border-border/70 gradient-brand text-white">
           <CardContent className="p-10 md:p-14 text-center">
             <h2 className="text-3xl md:text-4xl font-extrabold">Become a partner</h2>
             <p className="mt-3 max-w-xl mx-auto opacity-90">CSR alignment, employee volunteering, program sponsorship — let's design impact together.</p>
-            <Button size="lg" className="mt-6 rounded-full bg-white text-primary hover:bg-white/90">Contact partnerships</Button>
+            <Link to="/contact"><Button size="lg" className="mt-6 rounded-full bg-white text-primary hover:bg-white/90">Contact partnerships</Button></Link>
           </CardContent>
         </Card>
       </section>
