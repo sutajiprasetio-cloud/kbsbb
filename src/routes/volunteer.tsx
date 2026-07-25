@@ -1,11 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteLayout, PageHero } from "@/components/site-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Users, Heart, Sparkles, Handshake } from "lucide-react";
+import { Users, Heart, Sparkles, Handshake, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/volunteer")({
   head: () => ({
@@ -27,6 +30,19 @@ const PERKS = [
 ];
 
 function Volunteer() {
+  const [busy, setBusy] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", phone: "", city: "", skills: "", message: "" });
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setBusy(true);
+    const { error } = await supabase.from("volunteers").insert(form);
+    setBusy(false);
+    if (error) return toast.error(error.message);
+    toast.success("Application received — we'll be in touch within 3–5 days.");
+    setForm({ name: "", email: "", phone: "", city: "", skills: "", message: "" });
+  }
+
   return (
     <SiteLayout>
       <PageHero eyebrow="Volunteer" title="Give your time. Change a life." description="Whether you have an hour a week or a whole weekend, there's a place for you." />
@@ -49,16 +65,18 @@ function Volunteer() {
           <CardContent className="p-6 md:p-8">
             <h3 className="text-2xl font-extrabold">Apply now</h3>
             <p className="mt-2 text-sm text-muted-foreground">We'll get back within 3–5 days.</p>
-            <form className="mt-6 grid gap-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="mt-6 grid gap-4" onSubmit={submit}>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="grid gap-1.5"><Label>Full name</Label><Input required /></div>
-                <div className="grid gap-1.5"><Label>Age</Label><Input type="number" min={17} required /></div>
+                <div className="grid gap-1.5"><Label>Full name</Label><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
+                <div className="grid gap-1.5"><Label>Email</Label><Input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
               </div>
-              <div className="grid gap-1.5"><Label>Email</Label><Input type="email" required /></div>
-              <div className="grid gap-1.5"><Label>Phone (WhatsApp)</Label><Input required /></div>
-              <div className="grid gap-1.5"><Label>City</Label><Input required /></div>
-              <div className="grid gap-1.5"><Label>Why do you want to volunteer?</Label><Textarea rows={4} /></div>
-              <Button type="submit" size="lg" className="rounded-full">Submit application</Button>
+              <div className="grid gap-1.5"><Label>Phone (WhatsApp)</Label><Input required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>City</Label><Input required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Skills / experience</Label><Input value={form.skills} onChange={(e) => setForm({ ...form, skills: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Why do you want to volunteer?</Label><Textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} /></div>
+              <Button type="submit" size="lg" className="rounded-full" disabled={busy}>
+                {busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Submit application
+              </Button>
             </form>
           </CardContent>
         </Card>
