@@ -1,19 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Calendar, MapPin, Heart, Users, HandCoins, Sprout, Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Quote, Mail, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Heart, Users, HandCoins, Sprout, Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home as HomeIcon, HandHeart, Quote, Mail, ChevronLeft, ChevronRight } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
 import { CountUp } from "@/components/count-up";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
-import edu from "@/assets/program-education.jpg";
-import health from "@/assets/program-health.jpg";
-import food from "@/assets/program-food.jpg";
-import disaster from "@/assets/program-disaster.jpg";
+import { useTable } from "@/lib/public-data";
+import { EmptyState } from "@/components/empty-state";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,11 +22,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const SLIDES = [
-  { img: hero1, eyebrow: "Berbagi Berkah", title: "Every gift becomes a blessing for a family in need", sub: "Together we have delivered 1.2M meals, medical care to 340 villages, and hope to countless communities across Indonesia." },
-  { img: hero2, eyebrow: "Berbagi Sehat", title: "Free health clinics for every remote village", sub: "Our mobile medical teams reach where hospitals cannot — from Nias to Papua." },
-  { img: hero3, eyebrow: "Bersama Kita Bisa", title: "Become a volunteer and change a life today", sub: "Join 3,400+ volunteers across 34 provinces making Indonesia stronger, healthier and kinder." },
-];
+const ICONS: Record<string, any> = { Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home: HomeIcon, HandHeart };
 
 function HomePage() {
   return (
@@ -51,21 +42,45 @@ function HomePage() {
 }
 
 function HeroSlider() {
+  const slides = useTable<any>("hero_slides", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
   const [i, setI] = useState(0);
+  const count = slides?.length ?? 0;
   useEffect(() => {
-    const t = setInterval(() => setI((v) => (v + 1) % SLIDES.length), 6500);
+    if (count < 2) return;
+    const t = setInterval(() => setI((v) => (v + 1) % count), 6500);
     return () => clearInterval(t);
-  }, []);
+  }, [count]);
+
+  if (!slides || count === 0) {
+    return (
+      <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden gradient-brand">
+        <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white/10 blur-3xl animate-blob" />
+        <div className="relative z-10 container-x h-full flex items-center">
+          <div className="max-w-2xl text-white">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">KBSBB</h1>
+            <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">
+              {slides ? "No hero slides published yet — they will appear here once added." : ""}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/donate"><Button size="lg" className="rounded-full gap-2 px-7 bg-white text-primary hover:bg-white/90"><Heart className="h-4 w-4 fill-current" /> Donate now</Button></Link>
+              <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Our programs <ArrowRight className="h-4 w-4" /></Button></Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const cur = slides[Math.min(i, count - 1)];
   return (
     <section className="relative h-[86vh] min-h-[560px] max-h-[820px] w-full overflow-hidden">
-      {SLIDES.map((s, idx) => (
-        <div key={idx} className={`absolute inset-0 transition-opacity duration-[1400ms] ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
-          <img src={s.img} alt={s.title} className="h-full w-full object-cover" width={1920} height={1080} />
+      {slides.map((s: any, idx: number) => (
+        <div key={s.id} className={`absolute inset-0 transition-opacity duration-[1400ms] ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
+          {s.image_url && <img src={s.image_url} alt={s.title} className="h-full w-full object-cover" width={1920} height={1080} />}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
         </div>
       ))}
-      {/* Animated color blobs */}
       <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/30 blur-3xl animate-blob" />
       <div className="pointer-events-none absolute bottom-0 right-10 h-[26rem] w-[26rem] rounded-full bg-ocean/30 blur-3xl animate-blob" style={{ animationDelay: "4s" }} />
       <div className="pointer-events-none absolute top-1/3 right-1/4 h-64 w-64 rounded-full bg-white/10 blur-3xl animate-blob" style={{ animationDelay: "8s" }} />
@@ -73,29 +88,37 @@ function HeroSlider() {
         <div className="max-w-2xl text-white">
           <div key={i} className="animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full bg-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
-              <Sprout className="h-3.5 w-3.5" /> {SLIDES[i].eyebrow}
+              <Sprout className="h-3.5 w-3.5" /> KBSBB
             </span>
             <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight">
-              {SLIDES[i].title}
+              {cur.title}
             </h1>
-            <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">{SLIDES[i].sub}</p>
+            {cur.subtitle && <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">{cur.subtitle}</p>}
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/donate"><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> Donate now</Button></Link>
+              {cur.cta_href ? (
+                <a href={cur.cta_href}><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> {cur.cta_label ?? "Donate now"}</Button></a>
+              ) : (
+                <Link to="/donate"><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> {cur.cta_label ?? "Donate now"}</Button></Link>
+              )}
               <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Our programs <ArrowRight className="h-4 w-4" /></Button></Link>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-6 right-6 z-10 flex items-center gap-2">
-        <button onClick={() => setI((v) => (v - 1 + SLIDES.length) % SLIDES.length)} className="grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white backdrop-blur hover:bg-white hover:text-foreground" aria-label="Previous"><ChevronLeft className="h-5 w-5" /></button>
-        <button onClick={() => setI((v) => (v + 1) % SLIDES.length)} className="grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white backdrop-blur hover:bg-white hover:text-foreground" aria-label="Next"><ChevronRight className="h-5 w-5" /></button>
-      </div>
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        {SLIDES.map((_, idx) => (
-          <button key={idx} onClick={() => setI(idx)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-10 bg-primary" : "w-4 bg-white/50"}`} aria-label={`Slide ${idx + 1}`} />
-        ))}
-      </div>
+      {count > 1 && (
+        <>
+          <div className="absolute bottom-6 right-6 z-10 flex items-center gap-2">
+            <button onClick={() => setI((v) => (v - 1 + count) % count)} className="grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white backdrop-blur hover:bg-white hover:text-foreground" aria-label="Previous"><ChevronLeft className="h-5 w-5" /></button>
+            <button onClick={() => setI((v) => (v + 1) % count)} className="grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white backdrop-blur hover:bg-white hover:text-foreground" aria-label="Next"><ChevronRight className="h-5 w-5" /></button>
+          </div>
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+            {slides.map((s: any, idx: number) => (
+              <button key={s.id} onClick={() => setI(idx)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-10 bg-primary" : "w-4 bg-white/50"}`} aria-label={`Slide ${idx + 1}`} />
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 }
@@ -131,13 +154,6 @@ function StatsSection() {
   );
 }
 
-const PROGRAMS = [
-  { icon: Stethoscope, img: health, tag: "Health", title: "Mobile Health Clinics", desc: "Free checkups, medicines, and maternal care for remote villages." },
-  { icon: GraduationCap, img: edu, tag: "Education", title: "Beasiswa Anak Bangsa", desc: "Scholarships and learning kits for underprivileged children." },
-  { icon: UtensilsCrossed, img: food, tag: "Food Security", title: "Berbagi Nasi Berkah", desc: "Weekly meal distribution and staple food packages for families." },
-  { icon: LifeBuoy, img: disaster, tag: "Disaster Relief", title: "Tanggap Bencana", desc: "Rapid response teams for floods, earthquakes and evacuation aid." },
-];
-
 export function SectionHeading({ eyebrow, title, description, align = "center" }: { eyebrow: string; title: string; description?: string; align?: "left" | "center" }) {
   return (
     <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
@@ -149,81 +165,85 @@ export function SectionHeading({ eyebrow, title, description, align = "center" }
 }
 
 function FeaturedPrograms() {
+  const items = useTable<any>("programs", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true }, limit: 4 });
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
-        <SectionHeading eyebrow="Our Programs" title="Real work. Real change." description="Four pillars of humanitarian action, delivered directly by our volunteers to the communities that need it most." />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {PROGRAMS.map((p) => (
-            <Card key={p.title} className="group overflow-hidden rounded-3xl border-border/70 pt-0 transition-all hover:-translate-y-1 hover:shadow-soft">
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img src={p.img} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-primary">
-                  <p.icon className="h-3.5 w-3.5" /> {p.tag}
-                </div>
-              </div>
-              <CardContent className="px-5 pb-5">
-                <h3 className="text-lg font-bold">{p.title}</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground">{p.desc}</p>
-                <Link to="/programs" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">Learn more <ArrowRight className="h-4 w-4" /></Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <SectionHeading eyebrow="Our Programs" title="Real work. Real change." description="Humanitarian action delivered directly by our volunteers to the communities that need it most." />
+        {items && items.length === 0 ? (
+          <EmptyState className="mt-12" title="No programs yet" description="Our programs will be listed here once published." />
+        ) : (
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {(items ?? []).map((p: any) => {
+              const Icon = ICONS[p.icon] ?? HandHeart;
+              return (
+                <Card key={p.id} className="group overflow-hidden rounded-3xl border-border/70 pt-0 transition-all hover:-translate-y-1 hover:shadow-soft">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                    {p.image_url && <img src={p.image_url} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />}
+                    <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-primary">
+                      <Icon className="h-3.5 w-3.5" /> {p.tag ?? p.slug ?? "Program"}
+                    </div>
+                  </div>
+                  <CardContent className="px-5 pb-5">
+                    <h3 className="text-lg font-bold">{p.title}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground">{p.summary ?? p.description}</p>
+                    <Link to="/programs" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">Learn more <ArrowRight className="h-4 w-4" /></Link>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
 }
-
-const CAMPAIGNS = [
-  { title: "Clean Water for Sumba", goal: 250_000_000, raised: 187_400_000, img: disaster },
-  { title: "School Kits for 1,000 Children", goal: 150_000_000, raised: 92_300_000, img: edu },
-  { title: "Free Health Camp — East Java", goal: 120_000_000, raised: 108_600_000, img: health },
-];
 
 const rupiah = (n: number) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 
 function DonationProgress() {
+  const items = useTable<any>("donation_campaigns", { filter: (q) => q.eq("is_active", true), order: { column: "created_at", ascending: false }, limit: 3 });
   return (
     <section className="py-20 md:py-28 bg-brand-soft/40 border-y border-border/60">
       <div className="container-x">
         <SectionHeading eyebrow="Active Campaigns" title="Turn your gift into someone's tomorrow" description="Track every campaign in real time. 100% of your donation reaches the field." />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {CAMPAIGNS.map((c) => {
-            const pct = Math.round((c.raised / c.goal) * 100);
-            return (
-              <Card key={c.title} className="overflow-hidden rounded-3xl border-border/70 pt-0">
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img src={c.img} alt={c.title} loading="lazy" className="h-full w-full object-cover" />
-                </div>
-                <CardContent className="px-5 pb-5">
-                  <h3 className="text-lg font-bold">{c.title}</h3>
-                  <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Raised <b className="text-foreground">{rupiah(c.raised)}</b></span>
-                    <span className="font-semibold text-primary">{pct}%</span>
+        {items && items.length === 0 ? (
+          <EmptyState className="mt-12" title="No active campaigns" description="There are no running campaigns right now — you can still give a general donation." />
+        ) : (
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {(items ?? []).map((c: any) => {
+              const goal = Number(c.goal_amount) || 0;
+              const raised = Number(c.raised_amount) || 0;
+              const pct = goal > 0 ? Math.min(100, Math.round((raised / goal) * 100)) : 0;
+              return (
+                <Card key={c.id} className="overflow-hidden rounded-3xl border-border/70 pt-0">
+                  <div className="aspect-[16/10] overflow-hidden bg-muted">
+                    {c.cover_url && <img src={c.cover_url} alt={c.title} loading="lazy" className="h-full w-full object-cover" />}
                   </div>
-                  <Progress value={pct} className="mt-2 h-2" />
-                  <div className="mt-1 text-xs text-muted-foreground">Goal {rupiah(c.goal)}</div>
-                  <Link to="/donate" className="mt-5 block">
-                    <Button className="w-full rounded-full gap-2"><Heart className="h-4 w-4 fill-current" /> Donate</Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                  <CardContent className="px-5 pb-5">
+                    <h3 className="text-lg font-bold">{c.title}</h3>
+                    <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+                      <span>Raised <b className="text-foreground">{rupiah(raised)}</b></span>
+                      <span className="font-semibold text-primary">{pct}%</span>
+                    </div>
+                    <Progress value={pct} className="mt-2 h-2" />
+                    <div className="mt-1 text-xs text-muted-foreground">Goal {rupiah(goal)}</div>
+                    <Link to="/donate" className="mt-5 block">
+                      <Button className="w-full rounded-full gap-2"><Heart className="h-4 w-4 fill-current" /> Donate</Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-const NEWS = [
-  { date: "12 Mar 2026", cat: "Health", title: "300 families receive free vision screening in Bandung", img: health },
-  { date: "04 Mar 2026", cat: "Education", title: "New scholarship batch opens for 150 students in NTT", img: edu },
-  { date: "22 Feb 2026", cat: "Food", title: "Ramadan meal drive delivers 40,000 iftar packages", img: food },
-];
-
 function LatestNews() {
+  const items = useTable<any>("news_posts", { filter: (q) => q.eq("is_published", true), order: { column: "published_at", ascending: false }, limit: 3 });
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
@@ -231,69 +251,73 @@ function LatestNews() {
           <SectionHeading eyebrow="Latest News" title="Stories from the field" align="left" />
           <Link to="/news" className="text-sm font-semibold text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">All news <ArrowRight className="h-4 w-4" /></Link>
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {NEWS.map((n) => (
-            <Card key={n.title} className="group overflow-hidden rounded-3xl border-border/70 pt-0 hover:shadow-soft transition-all">
-              <div className="aspect-[16/10] overflow-hidden">
-                <img src={n.img} alt={n.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-              <CardContent className="px-5 pb-5">
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span className="rounded-full bg-ocean-soft px-2.5 py-0.5 font-semibold text-[oklch(0.4_0.15_240)]">{n.cat}</span>
-                  <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {n.date}</span>
+        {items && items.length === 0 ? (
+          <EmptyState className="mt-10" title="No news yet" description="Published stories will appear here." />
+        ) : (
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {(items ?? []).map((n: any) => (
+              <Card key={n.id} className="group overflow-hidden rounded-3xl border-border/70 pt-0 hover:shadow-soft transition-all">
+                <div className="aspect-[16/10] overflow-hidden bg-muted">
+                  {n.cover_url && <img src={n.cover_url} alt={n.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />}
                 </div>
-                <h3 className="mt-3 text-lg font-bold leading-snug">{n.title}</h3>
-                <Link to="/news" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">Read article <ArrowRight className="h-4 w-4" /></Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                <CardContent className="px-5 pb-5">
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <span className="rounded-full bg-ocean-soft px-2.5 py-0.5 font-semibold text-[oklch(0.4_0.15_240)]">{n.tags?.[0] ?? "News"}</span>
+                    {n.published_at && <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(n.published_at).toLocaleDateString()}</span>}
+                  </div>
+                  <h3 className="mt-3 text-lg font-bold leading-snug">{n.title}</h3>
+                  <Link to="/news" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">Read article <ArrowRight className="h-4 w-4" /></Link>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-const EVENTS = [
-  { day: "18", mon: "Apr", title: "Charity Run for Clean Water", loc: "GBK Senayan, Jakarta", time: "06:00 WIB" },
-  { day: "27", mon: "Apr", title: "Free Health Camp — Bogor", loc: "Alun-alun Bogor", time: "08:00 WIB" },
-  { day: "10", mon: "May", title: "Volunteer Onboarding Batch 12", loc: "KBSBB HQ, Jakarta", time: "10:00 WIB" },
-  { day: "22", mon: "May", title: "Beasiswa Award Ceremony", loc: "Balai Kartini, Jakarta", time: "18:30 WIB" },
-];
-
 function UpcomingEvents() {
+  const items = useTable<any>("events", { filter: (q) => q.eq("is_published", true), order: { column: "starts_at", ascending: false }, limit: 4 });
   return (
     <section className="py-20 md:py-28 bg-brand-soft/40 border-y border-border/60">
       <div className="container-x">
         <SectionHeading eyebrow="Upcoming Events" title="Come, join us in person" />
-        <div className="mt-12 grid gap-4 md:grid-cols-2">
-          {EVENTS.map((e) => (
-            <Card key={e.title} className="rounded-3xl border-border/70 hover:shadow-soft transition-all">
-              <CardContent className="p-5 flex items-center gap-5">
-                <div className="grid h-20 w-20 shrink-0 place-items-center rounded-2xl gradient-brand text-white">
-                  <div className="text-center leading-tight">
-                    <div className="text-2xl font-extrabold">{e.day}</div>
-                    <div className="text-[11px] uppercase tracking-widest opacity-90">{e.mon}</div>
-                  </div>
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-base md:text-lg font-bold leading-snug">{e.title}</h3>
-                  <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                    <span className="inline-flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {e.loc}</span>
-                    <span className="inline-flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> {e.time}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {items && items.length === 0 ? (
+          <EmptyState className="mt-12" title="No events scheduled" description="Published events will show up here." />
+        ) : (
+          <div className="mt-12 grid gap-4 md:grid-cols-2">
+            {(items ?? []).map((e: any) => {
+              const d = new Date(e.starts_at);
+              return (
+                <Card key={e.id} className="rounded-3xl border-border/70 hover:shadow-soft transition-all">
+                  <CardContent className="p-5 flex items-center gap-5">
+                    <div className="grid h-20 w-20 shrink-0 place-items-center rounded-2xl gradient-brand text-white">
+                      <div className="text-center leading-tight">
+                        <div className="text-2xl font-extrabold">{d.getDate().toString().padStart(2, "0")}</div>
+                        <div className="text-[11px] uppercase tracking-widest opacity-90">{d.toLocaleString("en", { month: "short" })}</div>
+                      </div>
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-base md:text-lg font-bold leading-snug">{e.title}</h3>
+                      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                        {e.location && <span className="inline-flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {e.location}</span>}
+                        <span className="inline-flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> {d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} WIB</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-const GALLERY = [hero1, edu, food, health, hero3, disaster, hero2, edu];
-
 function GalleryPreview() {
+  const items = useTable<any>("gallery_items", { order: { column: "sort_order", ascending: true }, limit: 8 });
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
@@ -301,29 +325,44 @@ function GalleryPreview() {
           <SectionHeading eyebrow="Gallery" title="Moments of impact" align="left" />
           <Link to="/gallery" className="text-sm font-semibold text-primary inline-flex items-center gap-1">View all <ArrowRight className="h-4 w-4" /></Link>
         </div>
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {GALLERY.map((src, i) => (
-            <div key={i} className={`relative overflow-hidden rounded-2xl group ${i % 5 === 0 ? "md:row-span-2 md:col-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
-              <img src={src} alt="Gallery" loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-          ))}
-        </div>
+        {items && items.length === 0 ? (
+          <EmptyState className="mt-10" title="No photos yet" description="Gallery photos will appear here once uploaded." />
+        ) : (
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            {(items ?? []).map((g: any, i: number) => (
+              <div key={g.id} className={`relative overflow-hidden rounded-2xl group ${i % 5 === 0 ? "md:row-span-2 md:col-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
+                <img src={g.image_url} alt={g.title ?? "Gallery"} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-const QUOTES = [
-  { name: "Siti Rahmawati", role: "Volunteer, Batch 09", quote: "KBSBB gave me a family and a purpose. Every field visit reminds me why compassion matters.", img: hero3 },
-  { name: "Dr. Andi Pratama", role: "Medical Partner", quote: "The mobile clinics reach patients I couldn't otherwise. This is real, deeply organized humanitarian work.", img: health },
-  { name: "Ibu Marlina", role: "Beneficiary, Sumba", quote: "Our village now has clean water. My children can go to school without walking three kilometers.", img: disaster },
-];
-
 function Testimonials() {
+  const items = useTable<any>("testimonials", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
   const [i, setI] = useState(0);
-  useEffect(() => { const t = setInterval(() => setI((v) => (v + 1) % QUOTES.length), 6000); return () => clearInterval(t); }, []);
-  const q = QUOTES[i];
+  const count = items?.length ?? 0;
+  useEffect(() => {
+    if (count < 2) return;
+    const t = setInterval(() => setI((v) => (v + 1) % count), 6000);
+    return () => clearInterval(t);
+  }, [count]);
+
+  if (!items) return null;
+  if (count === 0) {
+    return (
+      <section className="py-20 md:py-28">
+        <div className="container-x">
+          <EmptyState title="No stories yet" description="Testimonials from our community will appear here." />
+        </div>
+      </section>
+    );
+  }
+  const q = items[Math.min(i, count - 1)];
   return (
     <section className="py-20 md:py-28 gradient-brand text-white">
       <div className="container-x">
@@ -333,41 +372,47 @@ function Testimonials() {
             "{q.quote}"
           </p>
           <div className="mt-8 flex items-center justify-center gap-3">
-            <img src={q.img} alt={q.name} className="h-12 w-12 rounded-full object-cover border-2 border-white/60" loading="lazy" />
+            {q.avatar_url && <img src={q.avatar_url} alt={q.name} className="h-12 w-12 rounded-full object-cover border-2 border-white/60" loading="lazy" />}
             <div className="text-left">
               <div className="font-bold">{q.name}</div>
               <div className="text-xs opacity-80">{q.role}</div>
             </div>
           </div>
-          <div className="mt-6 flex justify-center gap-2">
-            {QUOTES.map((_, idx) => (
-              <button key={idx} onClick={() => setI(idx)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-white" : "w-3 bg-white/40"}`} aria-label={`Quote ${idx + 1}`} />
-            ))}
-          </div>
+          {count > 1 && (
+            <div className="mt-6 flex justify-center gap-2">
+              {items.map((t: any, idx: number) => (
+                <button key={t.id} onClick={() => setI(idx)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-white" : "w-3 bg-white/40"}`} aria-label={`Quote ${idx + 1}`} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
   );
 }
 
-const PARTNERS = ["UNICEF", "WHO", "PMI", "BAZNAS", "Gojek", "Tokopedia", "Telkomsel", "BCA", "Mandiri", "Astra", "Danone", "Unilever"];
-
 function PartnersMarquee() {
-  const list = [...PARTNERS, ...PARTNERS];
+  const items = useTable<any>("partners", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
+  const list = items && items.length > 0 ? [...items, ...items] : [];
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
         <SectionHeading eyebrow="Our Partners" title="Trusted by leaders across sectors" />
+        {items && items.length === 0 && (
+          <EmptyState className="mt-12" title="No partners listed yet" description="Partner organisations will be shown here." />
+        )}
       </div>
-      <div className="mt-12 overflow-hidden relative [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
-        <div className="flex gap-12 animate-marquee w-max">
-          {list.map((p, i) => (
-            <div key={i} className="grid h-20 min-w-[180px] place-items-center rounded-2xl border border-border bg-card px-8 text-xl font-black tracking-tight text-muted-foreground/70 hover:text-primary transition-colors">
-              {p}
-            </div>
-          ))}
+      {list.length > 0 && (
+        <div className="mt-12 overflow-hidden relative [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
+          <div className="flex gap-12 animate-marquee w-max">
+            {list.map((p: any, i: number) => (
+              <div key={`${p.id}-${i}`} className="grid h-20 min-w-[180px] place-items-center rounded-2xl border border-border bg-card px-8 text-xl font-black tracking-tight text-muted-foreground/70 hover:text-primary transition-colors">
+                {p.logo_url ? <img src={p.logo_url} alt={p.name} className="max-h-12 max-w-full object-contain" /> : p.name}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
