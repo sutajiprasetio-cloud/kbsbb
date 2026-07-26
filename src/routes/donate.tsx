@@ -66,6 +66,12 @@ function Donate() {
               ))}
             </div>
 
+            {campaigns && campaigns.length === 0 && (
+              <div className="mt-6 rounded-2xl border border-dashed border-border bg-muted/40 p-5 text-sm text-muted-foreground">
+                No active campaigns right now — your donation will support our general fund.
+              </div>
+            )}
+
             {campaigns && campaigns.length > 0 && (
               <div className="mt-6">
                 <h3 className="text-lg font-bold">Choose a campaign (optional)</h3>
