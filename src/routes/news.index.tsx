@@ -6,7 +6,7 @@ import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
 import { SafeImage } from "@/components/safe-image";
 
-export const Route = createFileRoute("/news")({
+export const Route = createFileRoute("/news/")({
   head: () => ({
     meta: [
       { title: "News — KBSBB Updates from the Field" },

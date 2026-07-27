@@ -24,6 +24,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as AuthenticatedAdminVolunteersRouteImport } from './routes/_authenticated/admin/volunteers'
@@ -117,6 +118,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const NewsSlugRoute = NewsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => NewsRoute,
 } as any)
 const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
   id: '/admin',
@@ -234,13 +240,14 @@ export interface FileRoutesByFullPath {
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/news': typeof NewsRoute
+  '/news': typeof NewsRouteWithChildren
   '/partners': typeof PartnersRoute
   '/programs': typeof ProgramsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/news/$slug': typeof NewsSlugRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
@@ -269,12 +276,13 @@ export interface FileRoutesByTo {
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/news': typeof NewsRoute
+  '/news': typeof NewsRouteWithChildren
   '/partners': typeof PartnersRoute
   '/programs': typeof ProgramsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
+  '/news/$slug': typeof NewsSlugRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
@@ -305,13 +313,14 @@ export interface FileRoutesById {
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/news': typeof NewsRoute
+  '/news': typeof NewsRouteWithChildren
   '/partners': typeof PartnersRoute
   '/programs': typeof ProgramsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/news/$slug': typeof NewsSlugRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
   '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/_authenticated/admin/contact': typeof AuthenticatedAdminContactRoute
@@ -349,6 +358,7 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/volunteer'
     | '/admin'
+    | '/news/$slug'
     | '/admin/about'
     | '/admin/campaigns'
     | '/admin/contact'
@@ -383,6 +393,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/testimonials'
     | '/volunteer'
+    | '/news/$slug'
     | '/admin/about'
     | '/admin/campaigns'
     | '/admin/contact'
@@ -419,6 +430,7 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/volunteer'
     | '/_authenticated/admin'
+    | '/news/$slug'
     | '/_authenticated/admin/about'
     | '/_authenticated/admin/campaigns'
     | '/_authenticated/admin/contact'
@@ -449,7 +461,7 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
-  NewsRoute: typeof NewsRoute
+  NewsRoute: typeof NewsRouteWithChildren
   PartnersRoute: typeof PartnersRoute
   ProgramsRoute: typeof ProgramsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -563,6 +575,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/news/$slug': {
+      id: '/news/$slug'
+      path: '/$slug'
+      fullPath: '/news/$slug'
+      preLoaderRoute: typeof NewsSlugRouteImport
+      parentRoute: typeof NewsRoute
     }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
@@ -760,6 +779,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface NewsRouteChildren {
+  NewsSlugRoute: typeof NewsSlugRoute
+}
+
+const NewsRouteChildren: NewsRouteChildren = {
+  NewsSlugRoute: NewsSlugRoute,
+}
+
+const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -770,7 +799,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventsRoute: EventsRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
-  NewsRoute: NewsRoute,
+  NewsRoute: NewsRouteWithChildren,
   PartnersRoute: PartnersRoute,
   ProgramsRoute: ProgramsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
