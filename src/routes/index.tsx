@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
+import { SafeImage } from "@/components/safe-image";
 
 export const Route = createFileRoute("/")({
   head: () => ({
