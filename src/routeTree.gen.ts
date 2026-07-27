@@ -17,14 +17,15 @@ import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EventsRouteImport } from './routes/events'
-import { Route as DonateRouteImport } from './routes/donate'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
+import { Route as DonateIndexRouteImport } from './routes/donate.index'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as DonateSlugRouteImport } from './routes/donate.$slug'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as AuthenticatedAdminVolunteersRouteImport } from './routes/_authenticated/admin/volunteers'
@@ -85,11 +86,6 @@ const EventsRoute = EventsRouteImport.update({
   path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DonateRoute = DonateRouteImport.update({
-  id: '/donate',
-  path: '/donate',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -119,9 +115,19 @@ const NewsIndexRoute = NewsIndexRouteImport.update({
   path: '/news/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DonateIndexRoute = DonateIndexRouteImport.update({
+  id: '/donate/',
+  path: '/donate/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/news/$slug',
   path: '/news/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateSlugRoute = DonateSlugRouteImport.update({
+  id: '/donate/$slug',
+  path: '/donate/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
@@ -236,7 +242,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -246,7 +251,9 @@ export interface FileRoutesByFullPath {
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/donate/$slug': typeof DonateSlugRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/donate/': typeof DonateIndexRoute
   '/news/': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
@@ -272,7 +279,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -281,7 +287,9 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
+  '/donate/$slug': typeof DonateSlugRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/donate': typeof DonateIndexRoute
   '/news': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
@@ -309,7 +317,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -319,7 +326,9 @@ export interface FileRoutesById {
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/donate/$slug': typeof DonateSlugRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/donate/': typeof DonateIndexRoute
   '/news/': typeof NewsIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
   '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
@@ -347,7 +356,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
-    | '/donate'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -357,7 +365,9 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/volunteer'
     | '/admin'
+    | '/donate/$slug'
     | '/news/$slug'
+    | '/donate/'
     | '/news/'
     | '/admin/about'
     | '/admin/campaigns'
@@ -383,7 +393,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
-    | '/donate'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -392,7 +401,9 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/testimonials'
     | '/volunteer'
+    | '/donate/$slug'
     | '/news/$slug'
+    | '/donate'
     | '/news'
     | '/admin/about'
     | '/admin/campaigns'
@@ -419,7 +430,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
-    | '/donate'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -429,7 +439,9 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/volunteer'
     | '/_authenticated/admin'
+    | '/donate/$slug'
     | '/news/$slug'
+    | '/donate/'
     | '/news/'
     | '/_authenticated/admin/about'
     | '/_authenticated/admin/campaigns'
@@ -457,7 +469,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
-  DonateRoute: typeof DonateRoute
   EventsRoute: typeof EventsRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
@@ -466,7 +477,9 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   TestimonialsRoute: typeof TestimonialsRoute
   VolunteerRoute: typeof VolunteerRoute
+  DonateSlugRoute: typeof DonateSlugRoute
   NewsSlugRoute: typeof NewsSlugRoute
+  DonateIndexRoute: typeof DonateIndexRoute
   NewsIndexRoute: typeof NewsIndexRoute
 }
 
@@ -528,13 +541,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/donate': {
-      id: '/donate'
-      path: '/donate'
-      fullPath: '/donate'
-      preLoaderRoute: typeof DonateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -577,11 +583,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/donate/': {
+      id: '/donate/'
+      path: '/donate'
+      fullPath: '/donate/'
+      preLoaderRoute: typeof DonateIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/news/$slug': {
       id: '/news/$slug'
       path: '/news/$slug'
       fullPath: '/news/$slug'
       preLoaderRoute: typeof NewsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donate/$slug': {
+      id: '/donate/$slug'
+      path: '/donate/$slug'
+      fullPath: '/donate/$slug'
+      preLoaderRoute: typeof DonateSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -786,7 +806,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
-  DonateRoute: DonateRoute,
   EventsRoute: EventsRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
@@ -795,7 +814,9 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   TestimonialsRoute: TestimonialsRoute,
   VolunteerRoute: VolunteerRoute,
+  DonateSlugRoute: DonateSlugRoute,
   NewsSlugRoute: NewsSlugRoute,
+  DonateIndexRoute: DonateIndexRoute,
   NewsIndexRoute: NewsIndexRoute,
 }
 export const routeTree = rootRouteImport

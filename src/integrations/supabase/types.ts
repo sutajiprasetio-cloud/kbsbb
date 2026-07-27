@@ -201,7 +201,10 @@ export type Database = {
           created_at: string
           donor_email: string | null
           donor_name: string
+          donor_phone: string | null
           id: string
+          is_anonymous: boolean
+          message: string | null
           method: string | null
           note: string | null
           status: string
@@ -214,7 +217,10 @@ export type Database = {
           created_at?: string
           donor_email?: string | null
           donor_name: string
+          donor_phone?: string | null
           id?: string
+          is_anonymous?: boolean
+          message?: string | null
           method?: string | null
           note?: string | null
           status?: string
@@ -227,7 +233,10 @@ export type Database = {
           created_at?: string
           donor_email?: string | null
           donor_name?: string
+          donor_phone?: string | null
           id?: string
+          is_anonymous?: boolean
+          message?: string | null
           method?: string | null
           note?: string | null
           status?: string
@@ -695,6 +704,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      campaign_stats: {
+        Args: never
+        Returns: {
+          campaign_id: string
+          confirmed_total: number
+          donor_count: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -703,6 +720,16 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      public_donations: {
+        Args: { _campaign_id?: string; _limit?: number }
+        Returns: {
+          amount: number
+          created_at: string
+          donor_name: string
+          id: string
+          message: string
+        }[]
+      }
     }
     Enums: {
       app_role: "super_admin" | "admin" | "editor"
