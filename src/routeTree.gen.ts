@@ -24,6 +24,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
+import { Route as DonateIndexRouteImport } from './routes/donate.index'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
@@ -118,6 +119,11 @@ const NewsIndexRoute = NewsIndexRouteImport.update({
   id: '/news/',
   path: '/news/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DonateIndexRoute = DonateIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DonateRoute,
 } as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/news/$slug',
@@ -236,7 +242,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/donate': typeof DonateRoute
+  '/donate': typeof DonateRouteWithChildren
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -247,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/volunteer': typeof VolunteerRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
+  '/donate/': typeof DonateIndexRoute
   '/news/': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
@@ -272,7 +279,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/donate': typeof DonateRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -282,6 +288,7 @@ export interface FileRoutesByTo {
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/donate': typeof DonateIndexRoute
   '/news': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
@@ -309,7 +316,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/donate': typeof DonateRoute
+  '/donate': typeof DonateRouteWithChildren
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -320,6 +327,7 @@ export interface FileRoutesById {
   '/volunteer': typeof VolunteerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
+  '/donate/': typeof DonateIndexRoute
   '/news/': typeof NewsIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
   '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
@@ -358,6 +366,7 @@ export interface FileRouteTypes {
     | '/volunteer'
     | '/admin'
     | '/news/$slug'
+    | '/donate/'
     | '/news/'
     | '/admin/about'
     | '/admin/campaigns'
@@ -383,7 +392,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
-    | '/donate'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -393,6 +401,7 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/volunteer'
     | '/news/$slug'
+    | '/donate'
     | '/news'
     | '/admin/about'
     | '/admin/campaigns'
@@ -430,6 +439,7 @@ export interface FileRouteTypes {
     | '/volunteer'
     | '/_authenticated/admin'
     | '/news/$slug'
+    | '/donate/'
     | '/news/'
     | '/_authenticated/admin/about'
     | '/_authenticated/admin/campaigns'
@@ -457,7 +467,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
-  DonateRoute: typeof DonateRoute
+  DonateRoute: typeof DonateRouteWithChildren
   EventsRoute: typeof EventsRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
@@ -576,6 +586,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/news/'
       preLoaderRoute: typeof NewsIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/donate/': {
+      id: '/donate/'
+      path: '/'
+      fullPath: '/donate/'
+      preLoaderRoute: typeof DonateIndexRouteImport
+      parentRoute: typeof DonateRoute
     }
     '/news/$slug': {
       id: '/news/$slug'
@@ -780,13 +797,24 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface DonateRouteChildren {
+  DonateIndexRoute: typeof DonateIndexRoute
+}
+
+const DonateRouteChildren: DonateRouteChildren = {
+  DonateIndexRoute: DonateIndexRoute,
+}
+
+const DonateRouteWithChildren =
+  DonateRoute._addFileChildren(DonateRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
-  DonateRoute: DonateRoute,
+  DonateRoute: DonateRouteWithChildren,
   EventsRoute: EventsRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
