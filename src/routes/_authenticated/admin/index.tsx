@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
-import { Heart, Users, HandHeart, FileText, Activity, Calendar } from "lucide-react";
+import { Heart, Users, HandHeart, FileText, Activity, Calendar, Megaphone } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
@@ -15,6 +15,7 @@ type Stats = {
   donors: number;
   volunteers: number;
   programs: number;
+  campaigns: number;
 };
 
 function Dashboard() {
@@ -23,10 +24,11 @@ function Dashboard() {
 
   useEffect(() => {
     (async () => {
-      const [donations, volunteers, programs, activityRes] = await Promise.all([
+      const [donations, volunteers, programs, campaigns, activityRes] = await Promise.all([
         (supabase as any).from("donations").select("amount, donor_email", { count: "exact" }).eq("status", "confirmed"),
         (supabase as any).from("volunteers").select("id", { count: "exact", head: true }),
         (supabase as any).from("programs").select("id", { count: "exact", head: true }).eq("is_active", true),
+        (supabase as any).from("donation_campaigns").select("id", { count: "exact", head: true }).eq("is_active", true),
         supabase.from("activity_log").select("id, action, entity, created_at, user_id").order("created_at", { ascending: false }).limit(8),
       ]);
       const total = (donations.data ?? []).reduce((s: number, d: any) => s + Number(d.amount || 0), 0);
@@ -38,6 +40,7 @@ function Dashboard() {
         donors,
         volunteers: volunteers.count ?? 0,
         programs: programs.count ?? 0,
+        campaigns: campaigns.count ?? 0,
       });
     })();
   }, []);
@@ -49,11 +52,12 @@ function Dashboard() {
         <p className="mt-1 text-sm text-muted-foreground">Welcome back. Here's what's happening at KBSBB.</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard icon={Heart} label="Total donations" value={stats ? `Rp ${stats.donationsTotal.toLocaleString()}` : null} sub={stats ? `${stats.donationsCount} transactions` : null} tone="brand" />
         <StatCard icon={Users} label="Donors" value={stats?.donors ?? null} tone="ocean" />
         <StatCard icon={HandHeart} label="Volunteers" value={stats?.volunteers ?? null} tone="brand" />
         <StatCard icon={FileText} label="Programs" value={stats?.programs ?? null} tone="ocean" />
+        <StatCard icon={Megaphone} label="Active campaigns" value={stats?.campaigns ?? null} tone="brand" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
