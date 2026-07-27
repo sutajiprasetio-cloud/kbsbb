@@ -14,7 +14,6 @@ import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as PartnersRouteImport } from './routes/partners'
-import { Route as NewsRouteImport } from './routes/news'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EventsRouteImport } from './routes/events'
@@ -24,6 +23,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
@@ -70,11 +70,6 @@ const PartnersRoute = PartnersRouteImport.update({
   path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NewsRoute = NewsRouteImport.update({
-  id: '/news',
-  path: '/news',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
@@ -119,10 +114,15 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsIndexRoute = NewsIndexRouteImport.update({
+  id: '/news/',
+  path: '/news/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => NewsRoute,
+  id: '/news/$slug',
+  path: '/news/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
   id: '/admin',
@@ -240,7 +240,6 @@ export interface FileRoutesByFullPath {
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/news': typeof NewsRouteWithChildren
   '/partners': typeof PartnersRoute
   '/programs': typeof ProgramsRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -248,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/volunteer': typeof VolunteerRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
+  '/news/': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
@@ -276,13 +276,13 @@ export interface FileRoutesByTo {
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/news': typeof NewsRouteWithChildren
   '/partners': typeof PartnersRoute
   '/programs': typeof ProgramsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/news': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
@@ -313,7 +313,6 @@ export interface FileRoutesById {
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/news': typeof NewsRouteWithChildren
   '/partners': typeof PartnersRoute
   '/programs': typeof ProgramsRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -321,6 +320,7 @@ export interface FileRoutesById {
   '/volunteer': typeof VolunteerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
+  '/news/': typeof NewsIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
   '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/_authenticated/admin/contact': typeof AuthenticatedAdminContactRoute
@@ -351,7 +351,6 @@ export interface FileRouteTypes {
     | '/events'
     | '/faq'
     | '/gallery'
-    | '/news'
     | '/partners'
     | '/programs'
     | '/reset-password'
@@ -359,6 +358,7 @@ export interface FileRouteTypes {
     | '/volunteer'
     | '/admin'
     | '/news/$slug'
+    | '/news/'
     | '/admin/about'
     | '/admin/campaigns'
     | '/admin/contact'
@@ -387,13 +387,13 @@ export interface FileRouteTypes {
     | '/events'
     | '/faq'
     | '/gallery'
-    | '/news'
     | '/partners'
     | '/programs'
     | '/reset-password'
     | '/testimonials'
     | '/volunteer'
     | '/news/$slug'
+    | '/news'
     | '/admin/about'
     | '/admin/campaigns'
     | '/admin/contact'
@@ -423,7 +423,6 @@ export interface FileRouteTypes {
     | '/events'
     | '/faq'
     | '/gallery'
-    | '/news'
     | '/partners'
     | '/programs'
     | '/reset-password'
@@ -431,6 +430,7 @@ export interface FileRouteTypes {
     | '/volunteer'
     | '/_authenticated/admin'
     | '/news/$slug'
+    | '/news/'
     | '/_authenticated/admin/about'
     | '/_authenticated/admin/campaigns'
     | '/_authenticated/admin/contact'
@@ -461,12 +461,13 @@ export interface RootRouteChildren {
   EventsRoute: typeof EventsRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
-  NewsRoute: typeof NewsRouteWithChildren
   PartnersRoute: typeof PartnersRoute
   ProgramsRoute: typeof ProgramsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   TestimonialsRoute: typeof TestimonialsRoute
   VolunteerRoute: typeof VolunteerRoute
+  NewsSlugRoute: typeof NewsSlugRoute
+  NewsIndexRoute: typeof NewsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -504,13 +505,6 @@ declare module '@tanstack/react-router' {
       path: '/partners'
       fullPath: '/partners'
       preLoaderRoute: typeof PartnersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/news': {
-      id: '/news'
-      path: '/news'
-      fullPath: '/news'
-      preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -576,12 +570,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/news/': {
+      id: '/news/'
+      path: '/news'
+      fullPath: '/news/'
+      preLoaderRoute: typeof NewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/news/$slug': {
       id: '/news/$slug'
-      path: '/$slug'
+      path: '/news/$slug'
       fullPath: '/news/$slug'
       preLoaderRoute: typeof NewsSlugRouteImport
-      parentRoute: typeof NewsRoute
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
@@ -779,16 +780,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface NewsRouteChildren {
-  NewsSlugRoute: typeof NewsSlugRoute
-}
-
-const NewsRouteChildren: NewsRouteChildren = {
-  NewsSlugRoute: NewsSlugRoute,
-}
-
-const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -799,12 +790,13 @@ const rootRouteChildren: RootRouteChildren = {
   EventsRoute: EventsRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
-  NewsRoute: NewsRouteWithChildren,
   PartnersRoute: PartnersRoute,
   ProgramsRoute: ProgramsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   TestimonialsRoute: TestimonialsRoute,
   VolunteerRoute: VolunteerRoute,
+  NewsSlugRoute: NewsSlugRoute,
+  NewsIndexRoute: NewsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
