@@ -1,0 +1,95 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { SiteLayout } from "@/components/site-layout";
+import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/empty-state";
+import { SafeImage } from "@/components/safe-image";
+import { ArrowLeft, Calendar, User } from "lucide-react";
+
+export const Route = createFileRoute("/news/$slug")({
+  head: () => ({
+    meta: [
+      { title: "Article — KBSBB News" },
+      { name: "description", content: "Read the full story from KBSBB's humanitarian work across Indonesia." },
+      { property: "og:title", content: "KBSBB News Article" },
+      { property: "og:description", content: "Read the full story from KBSBB's humanitarian work across Indonesia." },
+      { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: NewsDetail,
+});
+
+function NewsDetail() {
+  const { slug } = Route.useParams();
+  const [post, setPost] = useState<any | null | undefined>(undefined);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const client = supabase as any;
+      let { data } = await client.from("news_posts").select("*").eq("is_published", true).eq("slug", slug).maybeSingle();
+      if (!data && /^[0-9a-f-]{36}$/i.test(slug)) {
+        const res = await client.from("news_posts").select("*").eq("is_published", true).eq("id", slug).maybeSingle();
+        data = res.data;
+      }
+      if (!cancelled) setPost(data ?? null);
+    })();
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  return (
+    <SiteLayout>
+      <article className="container-x max-w-3xl py-28">
+        <Button asChild variant="ghost" className="mb-6 -ml-3">
+          <Link to="/news"><ArrowLeft className="h-4 w-4 mr-2" /> Back to News</Link>
+        </Button>
+
+        {post === undefined ? (
+          <div className="space-y-4">
+            <Skeleton className="aspect-[16/9] w-full rounded-3xl" />
+            <Skeleton className="h-8 w-2/3" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-5/6" />
+          </div>
+        ) : post === null ? (
+          <EmptyState title="Article not found" description="This story may have been unpublished or the link is incorrect." />
+        ) : (
+          <>
+            <div className="aspect-[16/9] overflow-hidden rounded-3xl bg-muted">
+              <SafeImage src={post.cover_url} alt={post.title} loading="eager" className="h-full w-full object-cover" />
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+              <span className="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-primary">{post.tags?.[0] ?? "News"}</span>
+              {post.author && <span className="inline-flex items-center gap-1"><User className="h-3 w-3" /> {post.author}</span>}
+              {post.published_at && <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(post.published_at).toLocaleDateString()}</span>}
+            </div>
+            <h1 className="mt-4 text-3xl md:text-4xl font-bold leading-tight tracking-tight">{post.title}</h1>
+            {post.excerpt && <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>}
+            {post.content && (
+              <div className="mt-8 space-y-4 text-base leading-relaxed text-foreground/90">
+                {String(post.content).split(/\n{2,}/).map((p: string, i: number) => (
+                  <p key={i} className="whitespace-pre-line">{p}</p>
+                ))}
+              </div>
+            )}
+            {post.tags?.length > 1 && (
+              <div className="mt-10 flex flex-wrap gap-2">
+                {post.tags.slice(1).map((t: string) => (
+                  <span key={t} className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">{t}</span>
+                ))}
+              </div>
+            )}
+            <div className="mt-12">
+              <Button asChild variant="outline" className="rounded-full">
+                <Link to="/news"><ArrowLeft className="h-4 w-4 mr-2" /> Back to News</Link>
+              </Button>
+            </div>
+          </>
+        )}
+      </article>
+    </SiteLayout>
+  );
+}
