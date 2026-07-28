@@ -180,21 +180,22 @@ function StatsSection() {
   return (
     <section className="relative -mt-16 z-20">
       <div className="container-x">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 rounded-3xl bg-card shadow-soft border border-border p-4 md:p-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 rounded-3xl bg-card shadow-soft border border-border p-3 sm:p-4 md:p-6">
           {STATS.map((s, i) => (
-            <div key={i} className="flex items-center gap-4 rounded-2xl p-4 hover:bg-brand-soft/50 transition-colors">
-              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl gradient-brand text-white">
-                <s.icon className="h-5 w-5" />
+            <div key={i} className="flex min-w-0 flex-col items-start gap-2 rounded-2xl p-3 sm:flex-row sm:items-center sm:gap-4 sm:p-4 hover:bg-brand-soft/50 transition-colors">
+              <div className="grid h-10 w-10 sm:h-12 sm:w-12 shrink-0 place-items-center rounded-2xl gradient-brand text-white">
+                <s.icon className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
-              <div className="min-w-0">
-                <div className="text-2xl md:text-3xl font-extrabold tracking-tight text-foreground">
+              <div className="min-w-0 w-full">
+                <div className="truncate text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight text-foreground">
                   <CountUp end={s.end} suffix={s.suffix} />
                 </div>
-                <div className="text-xs md:text-sm text-muted-foreground">{s.label}</div>
+                <div className="text-[11px] sm:text-xs md:text-sm text-muted-foreground">{s.label}</div>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
