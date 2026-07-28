@@ -206,10 +206,11 @@ function FloatingActions() {
       <Link
         to="/donate"
         aria-label="Donate now"
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex origin-right rotate-[-90deg] translate-x-[calc(50%-1.75rem)] items-center gap-2 gradient-brand text-white px-6 py-3 rounded-t-2xl shadow-glow font-semibold text-sm hover:px-8 transition-all"
+        className="fixed right-0 top-[55%] z-40 hidden md:flex origin-bottom-right rotate-[-90deg] items-center gap-2 gradient-brand text-white px-6 py-3 rounded-t-2xl shadow-glow font-semibold text-sm transition-all"
       >
         <Heart className="h-4 w-4 fill-current" /> Donate Now
       </Link>
+
 
       {/* Mobile fixed donate */}
       <Link
