@@ -39,7 +39,7 @@ export function MediaPicker({ value, onChange }: { value: string; onChange: (v: 
         <input ref={ref} type="file" accept="image/*,video/*" className="hidden" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
       </div>
       {value && /^https?:\/\//.test(value) && (
-        <img src={value} alt="preview" className="h-24 rounded border object-cover" />
+        <SafeImage src={value} alt="preview" className="h-24 rounded border object-cover" />
       )}
     </div>
   );
