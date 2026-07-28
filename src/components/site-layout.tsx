@@ -106,29 +106,30 @@ function Header() {
 
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 glass ${scrolled ? "shadow-soft border-b border-border/60" : "border-b border-transparent"}`}>
-      <div className="container-x flex h-16 items-center justify-between gap-4 lg:h-20">
+      <div className="container-x flex h-16 items-center justify-between gap-3 lg:h-20">
         <Link to="/" className="flex items-center gap-2 shrink-0 group" onClick={() => setOpen(false)}>
           <img src={logo} alt="KBSBB" className="h-9 w-9 lg:h-11 lg:w-11 transition-transform group-hover:scale-110" width={44} height={44} />
-          <div className="leading-tight">
+          <div className="leading-tight min-w-0">
             <div className="text-base font-extrabold tracking-tight text-gradient-brand">KBSBB</div>
-            <div className="hidden sm:block text-[10px] uppercase tracking-widest text-muted-foreground">Berbagi Sehat · Berbagi Berkah</div>
+            <div className="hidden sm:block truncate text-[10px] uppercase tracking-widest text-muted-foreground">Berbagi Sehat · Berbagi Berkah</div>
           </div>
         </Link>
 
-        <nav className="hidden xl:flex items-center gap-1">
+        <nav className="hidden xl:flex min-w-0 flex-1 items-center justify-center gap-0.5">
           {NAV.map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="relative rounded-full px-3.5 py-2 text-sm font-medium text-foreground/80 transition-all hover:text-primary hover:-translate-y-0.5"
-              activeProps={{ className: "relative rounded-full px-3.5 py-2 text-sm font-semibold text-primary bg-brand-soft" }}
+              className="relative rounded-full px-2.5 py-2 text-[13px] font-medium text-foreground/80 transition-all hover:text-primary hover:-translate-y-0.5"
+              activeProps={{ className: "relative rounded-full px-2.5 py-2 text-[13px] font-semibold text-primary bg-brand-soft" }}
             >
               {n.label}
             </Link>
           ))}
         </nav>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex shrink-0 items-center gap-1.5">
+
           <button
             onClick={toggle}
             aria-label="Toggle dark mode"
@@ -206,10 +207,11 @@ function FloatingActions() {
       <Link
         to="/donate"
         aria-label="Donate now"
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex origin-right rotate-[-90deg] translate-x-[calc(50%-1.75rem)] items-center gap-2 gradient-brand text-white px-6 py-3 rounded-t-2xl shadow-glow font-semibold text-sm hover:px-8 transition-all"
+        className="fixed right-0 top-[55%] z-40 hidden md:flex origin-bottom-right rotate-[-90deg] items-center gap-2 gradient-brand text-white px-6 py-3 rounded-t-2xl shadow-glow font-semibold text-sm transition-all"
       >
         <Heart className="h-4 w-4 fill-current" /> Donate Now
       </Link>
+
 
       {/* Mobile fixed donate */}
       <Link
