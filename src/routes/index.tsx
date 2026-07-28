@@ -180,7 +180,7 @@ function FeaturedPrograms() {
               return (
                 <Card key={p.id} className="group overflow-hidden rounded-3xl border-border/70 pt-0 transition-all hover:-translate-y-1 hover:shadow-soft">
                   <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                    {p.image_url && <img src={p.image_url} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />}
+                    <SafeImage src={p.image_url} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-primary">
                       <Icon className="h-3.5 w-3.5" /> {p.tag ?? p.slug ?? "Program"}
                     </div>
@@ -219,7 +219,7 @@ function DonationProgress() {
               return (
                 <Card key={c.id} className="overflow-hidden rounded-3xl border-border/70 pt-0">
                   <div className="aspect-[16/10] overflow-hidden bg-muted">
-                    {c.cover_url && <img src={c.cover_url} alt={c.title} loading="lazy" className="h-full w-full object-cover" />}
+                    <SafeImage src={c.cover_url} alt={c.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
                   <CardContent className="px-5 pb-5">
                     <h3 className="text-lg font-bold">{c.title}</h3>
@@ -334,7 +334,7 @@ function GalleryPreview() {
           <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {(items ?? []).map((g: any, i: number) => (
               <div key={g.id} className={`relative overflow-hidden rounded-2xl group ${i % 5 === 0 ? "md:row-span-2 md:col-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
-                <img src={g.image_url} alt={g.title ?? "Gallery"} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <SafeImage src={g.image_url} alt={g.title ?? "Gallery"} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ))}
@@ -375,7 +375,7 @@ function Testimonials() {
             "{q.quote}"
           </p>
           <div className="mt-8 flex items-center justify-center gap-3">
-            {q.avatar_url && <img src={q.avatar_url} alt={q.name} className="h-12 w-12 rounded-full object-cover border-2 border-white/60" loading="lazy" />}
+            {q.avatar_url && <SafeImage src={q.avatar_url} alt={q.name} className="h-12 w-12 shrink-0 rounded-full object-cover border-2 border-white/60" />}
             <div className="text-left">
               <div className="font-bold">{q.name}</div>
               <div className="text-xs opacity-80">{q.role}</div>
@@ -410,7 +410,7 @@ function PartnersMarquee() {
           <div className="flex gap-12 animate-marquee w-max">
             {list.map((p: any, i: number) => (
               <div key={`${p.id}-${i}`} className="grid h-20 min-w-[180px] place-items-center rounded-2xl border border-border bg-card px-8 text-xl font-black tracking-tight text-muted-foreground/70 hover:text-primary transition-colors">
-                {p.logo_url ? <img src={p.logo_url} alt={p.name} className="max-h-12 max-w-full object-contain" /> : p.name}
+                {p.logo_url ? <SafeImage src={p.logo_url} alt={p.name} className="max-h-12 max-w-full object-contain" /> : p.name}
               </div>
             ))}
           </div>
