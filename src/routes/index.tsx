@@ -45,18 +45,23 @@ function HomePage() {
 function HeroSlider() {
   const slides = useTable<any>("hero_slides", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
   const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const touch = useRef<{ x: number; y: number } | null>(null);
   const count = slides?.length ?? 0;
+
+  const go = (n: number) => setI((v) => (count ? (v + n + count) % count : 0));
+
   useEffect(() => {
-    if (count < 2) return;
+    if (count < 2 || paused) return;
     const t = setInterval(() => setI((v) => (v + 1) % count), 6500);
     return () => clearInterval(t);
-  }, [count]);
+  }, [count, paused]);
 
   if (!slides || count === 0) {
     return (
-      <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden gradient-brand">
+      <section className="relative min-h-[70svh] w-full overflow-hidden gradient-brand">
         <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white/10 blur-3xl animate-blob" />
-        <div className="relative z-10 container-x h-full flex items-center">
+        <div className="relative z-10 container-x flex min-h-[70svh] items-center py-20">
           <div className="max-w-2xl text-white">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">KBSBB</h1>
             <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">
@@ -74,27 +79,44 @@ function HeroSlider() {
 
   const cur = slides[Math.min(i, count - 1)];
   return (
-    <section className="relative h-[86vh] min-h-[560px] max-h-[820px] w-full overflow-hidden">
+    <section
+      className="relative w-full max-w-full overflow-hidden min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] lg:max-h-[860px] touch-pan-y select-none"
+      aria-roledescription="carousel"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={(e) => {
+        touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        setPaused(true);
+      }}
+      onTouchEnd={(e) => {
+        const start = touch.current;
+        touch.current = null;
+        setPaused(false);
+        if (!start) return;
+        const dx = e.changedTouches[0].clientX - start.x;
+        const dy = e.changedTouches[0].clientY - start.y;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1);
+      }}
+    >
       {slides.map((s: any, idx: number) => (
-        <div key={s.id} className={`absolute inset-0 transition-opacity duration-[1400ms] ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
-          {s.image_url && <SafeImage src={s.image_url} alt={s.title} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover" />}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent" />
+        <div key={s.id} aria-hidden={i !== idx} className={`absolute inset-0 transition-opacity duration-[1400ms] ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
+          <SafeImage src={s.image_url} alt={s.title} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
         </div>
       ))}
       <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/30 blur-3xl animate-blob" />
-      <div className="pointer-events-none absolute bottom-0 right-10 h-[26rem] w-[26rem] rounded-full bg-ocean/30 blur-3xl animate-blob" style={{ animationDelay: "4s" }} />
-      <div className="pointer-events-none absolute top-1/3 right-1/4 h-64 w-64 rounded-full bg-white/10 blur-3xl animate-blob" style={{ animationDelay: "8s" }} />
-      <div className="relative z-10 container-x h-full flex items-center">
+      <div className="pointer-events-none absolute bottom-0 right-0 h-[22rem] w-[22rem] rounded-full bg-ocean/30 blur-3xl animate-blob" style={{ animationDelay: "4s" }} />
+      <div className="relative z-10 container-x flex min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] items-center py-24">
         <div className="max-w-2xl text-white">
           <div key={i} className="animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full bg-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
               <Sprout className="h-3.5 w-3.5" /> KBSBB
             </span>
-            <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight">
+            <h1 className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.08] tracking-tight break-words">
               {cur.title}
             </h1>
-            {cur.subtitle && <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">{cur.subtitle}</p>}
+            {cur.subtitle && <p className="mt-5 text-sm sm:text-base md:text-lg text-white/85 max-w-xl">{cur.subtitle}</p>}
             <div className="mt-8 flex flex-wrap gap-3">
               {cur.cta_href ? (
                 <a href={cur.cta_href}><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> {cur.cta_label ?? "Donate now"}</Button></a>
@@ -109,13 +131,35 @@ function HeroSlider() {
 
       {count > 1 && (
         <>
-          <div className="absolute bottom-6 right-6 z-10 flex items-center gap-2">
-            <button onClick={() => setI((v) => (v - 1 + count) % count)} className="grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white backdrop-blur hover:bg-white hover:text-foreground" aria-label="Previous"><ChevronLeft className="h-5 w-5" /></button>
-            <button onClick={() => setI((v) => (v + 1) % count)} className="grid h-11 w-11 place-items-center rounded-full bg-white/15 text-white backdrop-blur hover:bg-white hover:text-foreground" aria-label="Next"><ChevronRight className="h-5 w-5" /></button>
-          </div>
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+          {/* Arrows — desktop & tablet only */}
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            className="hidden sm:grid absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full bg-white/20 text-white backdrop-blur hover:bg-white hover:text-foreground transition-colors"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => go(1)}
+            className="hidden sm:grid absolute right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full bg-white/20 text-white backdrop-blur hover:bg-white hover:text-foreground transition-colors"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+
+          {/* Pagination dots */}
+          <div className="absolute bottom-24 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 flex max-w-[80vw] flex-wrap justify-center gap-2">
             {slides.map((s: any, idx: number) => (
-              <button key={s.id} onClick={() => setI(idx)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-10 bg-primary" : "w-4 bg-white/50"}`} aria-label={`Slide ${idx + 1}`} />
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => setI(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+                aria-current={i === idx}
+                className={`h-1.5 rounded-full transition-all ${i === idx ? "w-10 bg-primary" : "w-4 bg-white/50 hover:bg-white/80"}`}
+              />
             ))}
           </div>
         </>
@@ -123,6 +167,7 @@ function HeroSlider() {
     </section>
   );
 }
+
 
 const STATS = [
   { icon: Users, end: 3400, suffix: "+", label: "Active volunteers" },
