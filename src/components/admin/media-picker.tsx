@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Upload, X, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { SafeImage } from "@/components/safe-image";
 
 export function MediaPicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const [busy, setBusy] = useState(false);
@@ -39,7 +40,7 @@ export function MediaPicker({ value, onChange }: { value: string; onChange: (v: 
         <input ref={ref} type="file" accept="image/*,video/*" className="hidden" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
       </div>
       {value && /^https?:\/\//.test(value) && (
-        <img src={value} alt="preview" className="h-24 rounded border object-cover" />
+        <SafeImage src={value} alt="preview" className="h-24 rounded border object-cover" />
       )}
     </div>
   );
