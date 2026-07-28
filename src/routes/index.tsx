@@ -77,7 +77,7 @@ function HeroSlider() {
     <section className="relative h-[86vh] min-h-[560px] max-h-[820px] w-full overflow-hidden">
       {slides.map((s: any, idx: number) => (
         <div key={s.id} className={`absolute inset-0 transition-opacity duration-[1400ms] ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
-          {s.image_url && <SafeImage src={s.image_url} alt={s.title} loading={i === 0 ? "eager" : "lazy"} className="h-full w-full object-cover" />}
+          {s.image_url && <SafeImage src={s.image_url} alt={s.title} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover" />}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
         </div>
