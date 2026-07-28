@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Upload, X, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { SafeImage } from "@/components/safe-image";
 
 export function MediaPicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const [busy, setBusy] = useState(false);
