@@ -38,9 +38,9 @@ function Contact() {
     setForm({ name: "", email: "", subject: "", message: "" });
   }
 
-  const address = settings.maps?.address ?? "Jl. Merdeka No. 88, Jakarta Pusat 10110";
+  const address = settings.maps?.address ?? "Pekanbaru";
   const email = settings.email?.contact_email ?? "hello@kbsbb.org";
-  const phone = settings.social?.whatsapp ? `+${settings.social.whatsapp}` : "+62 812 3456 7890";
+  const phone = settings.social?.whatsapp ? `+${settings.social.whatsapp}` : "+62 853 6508 9475";
   const embed = settings.maps?.map_embed_url ?? "https://www.google.com/maps?q=Monas+Jakarta&output=embed";
 
   return (
