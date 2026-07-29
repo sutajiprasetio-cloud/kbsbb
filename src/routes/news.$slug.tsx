@@ -11,10 +11,10 @@ import { ArrowLeft, Calendar, User } from "lucide-react";
 export const Route = createFileRoute("/news/$slug")({
   head: () => ({
     meta: [
-      { title: "Article — KBSBB News" },
-      { name: "description", content: "Read the full story from KBSBB's humanitarian work across Indonesia." },
-      { property: "og:title", content: "KBSBB News Article" },
-      { property: "og:description", content: "Read the full story from KBSBB's humanitarian work across Indonesia." },
+      { title: "Artikel — Berita KBSBB" },
+      { name: "description", content: "Baca kisah lengkap dari kegiatan kemanusiaan KBSBB di seluruh Indonesia." },
+      { property: "og:title", content: "Artikel Berita KBSBB" },
+      { property: "og:description", content: "Baca kisah lengkap dari kegiatan kemanusiaan KBSBB di seluruh Indonesia." },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -44,7 +44,7 @@ function NewsDetail() {
     <SiteLayout>
       <article className="container-x max-w-3xl py-28">
         <Button asChild variant="ghost" className="mb-6 -ml-3">
-          <Link to="/news"><ArrowLeft className="h-4 w-4 mr-2" /> Back to News</Link>
+          <Link to="/news"><ArrowLeft className="h-4 w-4 mr-2" /> Kembali ke Berita</Link>
         </Button>
 
         {post === undefined ? (
@@ -55,16 +55,16 @@ function NewsDetail() {
             <Skeleton className="h-4 w-5/6" />
           </div>
         ) : post === null ? (
-          <EmptyState title="Article not found" description="This story may have been unpublished or the link is incorrect." />
+          <EmptyState title="Artikel tidak ditemukan" description="Berita ini mungkin telah dihapus atau tautannya tidak sesuai." />
         ) : (
           <>
             <div className="aspect-[16/9] overflow-hidden rounded-3xl bg-muted">
               <SafeImage src={post.cover_url} alt={post.title} loading="eager" className="h-full w-full object-cover" />
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-              <span className="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-primary">{post.tags?.[0] ?? "News"}</span>
+              <span className="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-primary">{post.tags?.[0] ?? "Berita"}</span>
               {post.author && <span className="inline-flex items-center gap-1"><User className="h-3 w-3" /> {post.author}</span>}
-              {post.published_at && <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(post.published_at).toLocaleDateString()}</span>}
+              {post.published_at && <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(post.published_at).toLocaleDateString("id-ID")}</span>}
             </div>
             <h1 className="mt-4 text-3xl md:text-4xl font-bold leading-tight tracking-tight">{post.title}</h1>
             {post.excerpt && <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>}
@@ -84,7 +84,7 @@ function NewsDetail() {
             )}
             <div className="mt-12">
               <Button asChild variant="outline" className="rounded-full">
-                <Link to="/news"><ArrowLeft className="h-4 w-4 mr-2" /> Back to News</Link>
+                <Link to="/news"><ArrowLeft className="h-4 w-4 mr-2" /> Kembali ke Berita</Link>
               </Button>
             </div>
           </>

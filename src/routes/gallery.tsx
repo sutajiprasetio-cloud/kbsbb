@@ -7,10 +7,10 @@ import { EmptyState } from "@/components/empty-state";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — KBSBB Moments of Impact" },
-      { name: "description", content: "Photos from KBSBB volunteers, programs and community events across Indonesia." },
-      { property: "og:title", content: "KBSBB Gallery" },
-      { property: "og:description", content: "Moments of impact captured in the field." },
+      { title: "Galeri — Momen Kebaikan KBSBB" },
+      { name: "description", content: "Foto-foto relawan, program, dan kegiatan komunitas KBSBB di seluruh Indonesia." },
+      { property: "og:title", content: "Galeri KBSBB" },
+      { property: "og:description", content: "Momen kebaikan yang terekam dari lapangan." },
     ],
   }),
   component: Gallery,
@@ -20,15 +20,15 @@ function Gallery() {
   const items = useTable<any>("gallery_items", { order: { column: "sort_order", ascending: true } });
   return (
     <SiteLayout>
-      <PageHero eyebrow="Gallery" title="Moments of impact" description="A window into the field — the smiles, the tears, the hope." />
+      <PageHero eyebrow="Galeri" title="Momen kebaikan" description="Jendela menuju lapangan — senyum, haru, dan harapan." />
       <section className="container-x py-20">
         {items && items.length === 0 ? (
-          <EmptyState title="No photos yet" description="Our gallery is being prepared. Come back soon to see moments from the field." />
+          <EmptyState title="Belum ada foto" description="Galeri kami sedang disiapkan. Silakan kembali lagi nanti." />
         ) : (
           <div className="columns-2 md:columns-3 lg:columns-4 gap-4 [column-fill:_balance]">
             {(items ?? []).map((it: any) => (
               <div key={it.id} className="mb-4 break-inside-avoid overflow-hidden rounded-2xl group">
-                <SafeImage src={it.image_url} alt={it.title ?? "Gallery"} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
+                <SafeImage src={it.image_url} alt={it.title ?? "Galeri"} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
             ))}
           </div>

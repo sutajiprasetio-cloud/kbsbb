@@ -1,6 +1,6 @@
 import { Inbox } from "lucide-react";
 
-export function EmptyState({ title = "Nothing here yet", description = "Content will appear here as soon as it is published.", className = "" }: { title?: string; description?: string; className?: string }) {
+export function EmptyState({ title = "Belum ada konten", description = "Konten akan tampil di sini segera setelah dipublikasikan.", className = "" }: { title?: string; description?: string; className?: string }) {
   return (
     <div className={`rounded-3xl border border-dashed border-border bg-card/50 px-6 py-16 text-center ${className}`}>
       <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-soft text-primary">

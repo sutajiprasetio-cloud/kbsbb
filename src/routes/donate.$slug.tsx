@@ -12,10 +12,10 @@ import { useCampaign, rp, pct } from "@/lib/donations";
 export const Route = createFileRoute("/donate/$slug")({
   head: () => ({
     meta: [
-      { title: "Donation Campaign — KBSBB" },
-      { name: "description", content: "Support this KBSBB campaign. Track live progress, donor count, and give securely in a few seconds." },
-      { property: "og:title", content: "Donation Campaign — KBSBB" },
-      { property: "og:description", content: "Support this KBSBB campaign and follow its live progress." },
+      { title: "Program Donasi — KBSBB" },
+      { name: "description", content: "Dukung program donasi KBSBB ini. Pantau progres dan jumlah donatur secara langsung, dan berdonasi dengan aman dalam hitungan detik." },
+      { property: "og:title", content: "Program Donasi — KBSBB" },
+      { property: "og:description", content: "Dukung program donasi KBSBB dan pantau progresnya secara langsung." },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -39,9 +39,9 @@ function CampaignDetail() {
     return (
       <SiteLayout>
         <div className="container-x py-24">
-          <EmptyState title="Campaign not found" description="This campaign may have ended or been removed." />
+          <EmptyState title="Program donasi tidak ditemukan" description="Program ini mungkin telah berakhir atau dihapus." />
           <div className="mt-6 text-center">
-            <Button asChild variant="outline" className="rounded-full gap-2"><Link to="/donate"><ArrowLeft className="h-4 w-4" /> Back to campaigns</Link></Button>
+            <Button asChild variant="outline" className="rounded-full gap-2"><Link to="/donate"><ArrowLeft className="h-4 w-4" /> Kembali ke daftar donasi</Link></Button>
           </div>
         </div>
       </SiteLayout>
@@ -53,7 +53,7 @@ function CampaignDetail() {
   return (
     <SiteLayout>
       <article className="container-x py-10 md:py-16">
-        <Button asChild variant="ghost" className="rounded-full gap-2 -ml-2 mb-6"><Link to="/donate"><ArrowLeft className="h-4 w-4" /> Back to campaigns</Link></Button>
+        <Button asChild variant="ghost" className="rounded-full gap-2 -ml-2 mb-6"><Link to="/donate"><ArrowLeft className="h-4 w-4" /> Kembali ke daftar donasi</Link></Button>
 
         <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] items-start">
           <div>
@@ -66,9 +66,9 @@ function CampaignDetail() {
             )}
 
             <div className="mt-8">
-              <h2 className="text-lg font-bold">Recent supporters</h2>
+              <h2 className="text-lg font-bold">Donatur terbaru</h2>
               {donors.length === 0 ? (
-                <p className="mt-2 text-sm text-muted-foreground">Be the first to support this campaign.</p>
+                <p className="mt-2 text-sm text-muted-foreground">Jadilah orang pertama yang mendukung program ini.</p>
               ) : (
                 <ul className="mt-4 space-y-3">
                   {donors.map((d: any) => (
@@ -80,7 +80,7 @@ function CampaignDetail() {
                       {d.message && (
                         <p className="mt-2 flex gap-2 text-sm text-muted-foreground"><Quote className="h-4 w-4 shrink-0 mt-0.5" />{d.message}</p>
                       )}
-                      <div className="mt-1 text-xs text-muted-foreground">{new Date(d.created_at).toLocaleDateString()}</div>
+                      <div className="mt-1 text-xs text-muted-foreground">{new Date(d.created_at).toLocaleDateString("id-ID")}</div>
                     </li>
                   ))}
                 </ul>
@@ -92,19 +92,19 @@ function CampaignDetail() {
             <Card className="rounded-3xl border-border/70 shadow-soft">
               <CardContent className="p-6">
                 <div className="text-2xl font-bold text-primary">Rp {rp(Number(campaign.raised_amount))}</div>
-                <div className="text-sm text-muted-foreground">raised of Rp {rp(Number(campaign.goal_amount))} target</div>
+                <div className="text-sm text-muted-foreground">dana terkumpul dari target Rp {rp(Number(campaign.goal_amount))}</div>
                 <div className="mt-4"><Progress value={p} /></div>
                 <div className="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
-                  <Stat icon={Target} label="Progress" value={`${p}%`} />
-                  <Stat icon={Users} label="Donors" value={String(stat?.donor_count ?? 0)} />
-                  <Stat icon={CalendarClock} label="Ends" value={campaign.ends_at ? new Date(campaign.ends_at).toLocaleDateString() : "Open"} />
+                  <Stat icon={Target} label="Progres" value={`${p}%`} />
+                  <Stat icon={Users} label="Donatur" value={String(stat?.donor_count ?? 0)} />
+                  <Stat icon={CalendarClock} label="Berakhir" value={campaign.ends_at ? new Date(campaign.ends_at).toLocaleDateString("id-ID") : "Terbuka"} />
                 </div>
               </CardContent>
             </Card>
 
             <Card className="rounded-3xl border-border/70 shadow-soft">
               <CardContent className="p-6">
-                <h2 className="text-lg font-bold">Make a donation</h2>
+                <h2 className="text-lg font-bold">Berdonasi</h2>
                 <div className="mt-4">
                   <DonationForm campaignId={campaign.id} campaignTitle={campaign.title} onDone={refresh} />
                 </div>

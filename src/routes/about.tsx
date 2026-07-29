@@ -9,20 +9,20 @@ import { EmptyState } from "@/components/empty-state";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About KBSBB — Our Mission & Story" },
-      { name: "description", content: "Meet the people behind KBSBB — an Indonesian humanitarian foundation dedicated to sharing health and blessings across 34 provinces." },
-      { property: "og:title", content: "About KBSBB" },
-      { property: "og:description", content: "Our mission, values, and story." },
+      { title: "Tentang KBSBB — Visi, Misi & Kisah Kami" },
+      { name: "description", content: "Kenali orang-orang di balik KBSBB — yayasan kemanusiaan Indonesia yang berbagi sehat dan berkah di 34 provinsi." },
+      { property: "og:title", content: "Tentang KBSBB" },
+      { property: "og:description", content: "Misi, nilai, dan kisah perjalanan kami." },
     ],
   }),
   component: About,
 });
 
 const VALUES = [
-  { icon: Heart, title: "Compassion", text: "We serve with empathy — every beneficiary is family." },
-  { icon: Award, title: "Integrity", text: "100% transparent, audited annually, every rupiah accounted for." },
-  { icon: Users, title: "Community", text: "Local leaders, local solutions, sustainable impact." },
-  { icon: Sprout, title: "Sustainability", text: "Long-term programs that outlast the aid cycle." },
+  { icon: Heart, title: "Empati", text: "Kami melayani dengan hati — setiap penerima manfaat adalah keluarga." },
+  { icon: Award, title: "Integritas", text: "100% transparan, diaudit setiap tahun, setiap rupiah dipertanggungjawabkan." },
+  { icon: Users, title: "Kebersamaan", text: "Tokoh lokal, solusi lokal, dampak berkelanjutan." },
+  { icon: Sprout, title: "Keberlanjutan", text: "Program jangka panjang yang bertahan melampaui masa bantuan." },
 ];
 
 function About() {
@@ -31,14 +31,14 @@ function About() {
 
   return (
     <SiteLayout>
-      <PageHero eyebrow="About Us" title={about?.headline ?? "About KBSBB"} description={about?.intro ?? undefined} />
+      <PageHero eyebrow="Tentang Kami" title={about?.headline ?? "Tentang KBSBB"} description={about?.intro ?? undefined} />
 
       {(about?.story || about?.image_url) && (
         <section className="container-x py-20 grid lg:grid-cols-2 gap-12 items-center">
-          <SafeImage src={about?.image_url} alt="Community" className="rounded-3xl object-cover w-full aspect-[4/3] shadow-soft" />
+          <SafeImage src={about?.image_url} alt="Komunitas" className="rounded-3xl object-cover w-full aspect-[4/3] shadow-soft" />
           {about?.story && (
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Our story</h2>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Kisah kami</h2>
               <p className="mt-4 text-muted-foreground leading-relaxed whitespace-pre-line">{about.story}</p>
             </div>
           )}
@@ -51,7 +51,7 @@ function About() {
             <Card className="rounded-3xl border-border/70">
               <CardContent className="p-8">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-brand text-white"><Target className="h-5 w-5" /></div>
-                <h3 className="mt-4 text-2xl font-extrabold">Mission</h3>
+                <h3 className="mt-4 text-2xl font-extrabold">Misi</h3>
                 <p className="mt-2 text-muted-foreground whitespace-pre-line">{about.mission}</p>
               </CardContent>
             </Card>
@@ -60,7 +60,7 @@ function About() {
             <Card className="rounded-3xl border-border/70">
               <CardContent className="p-8">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-brand text-white"><Eye className="h-5 w-5" /></div>
-                <h3 className="mt-4 text-2xl font-extrabold">Vision</h3>
+                <h3 className="mt-4 text-2xl font-extrabold">Visi</h3>
                 <p className="mt-2 text-muted-foreground whitespace-pre-line">{about.vision}</p>
               </CardContent>
             </Card>
@@ -70,7 +70,7 @@ function About() {
 
       {about === null && (
         <section className="container-x py-20">
-          <EmptyState title="About content coming soon" description="Our story, vision and mission will be published here shortly." />
+          <EmptyState title="Konten tentang kami segera hadir" description="Kisah, visi, dan misi kami akan segera dipublikasikan di halaman ini." />
         </section>
       )}
 
@@ -89,9 +89,9 @@ function About() {
       </section>
 
       <section className="container-x py-16">
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-center">Leadership</h2>
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-center">Pengurus</h2>
         {team && team.length === 0 ? (
-          <EmptyState className="mt-10" title="Team coming soon" description="Our leadership profiles will be published here shortly." />
+          <EmptyState className="mt-10" title="Data pengurus segera hadir" description="Profil pengurus kami akan segera dipublikasikan di sini." />
         ) : (
           <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-5">
             {(team ?? []).map((t: any) => (

@@ -9,10 +9,10 @@ import { EmptyState } from "@/components/empty-state";
 export const Route = createFileRoute("/partners")({
   head: () => ({
     meta: [
-      { title: "Partners — KBSBB Corporate & Institutional Allies" },
-      { name: "description", content: "KBSBB partners with leading Indonesian and global institutions to deliver humanitarian impact at scale." },
-      { property: "og:title", content: "KBSBB Partners" },
-      { property: "og:description", content: "Trusted by leaders across sectors." },
+      { title: "Mitra — Kolaborasi Korporasi & Institusi KBSBB" },
+      { name: "description", content: "KBSBB bermitra dengan berbagai institusi Indonesia dan global untuk menghadirkan dampak kemanusiaan yang lebih luas." },
+      { property: "og:title", content: "Mitra KBSBB" },
+      { property: "og:description", content: "Dipercaya oleh berbagai institusi." },
     ],
   }),
   component: Partners,
@@ -22,10 +22,10 @@ function Partners() {
   const items = useTable<any>("partners", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
   return (
     <SiteLayout>
-      <PageHero eyebrow="Our Partners" title="Together we go further" description="From global institutions to local businesses — thank you for standing with the mission." />
+      <PageHero eyebrow="Mitra Kami" title="Bersama kita melangkah lebih jauh" description="Dari institusi global hingga usaha lokal — terima kasih telah mendukung misi kami." />
       <section className="container-x py-20">
         {items && items.length === 0 ? (
-          <EmptyState title="No partners listed yet" description="Our partner directory is being updated. Reach out if you'd like to collaborate." />
+          <EmptyState title="Belum ada mitra terdaftar" description="Direktori mitra kami sedang diperbarui. Hubungi kami jika Anda ingin berkolaborasi." />
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {(items ?? []).map((p: any) => (
@@ -37,9 +37,9 @@ function Partners() {
         )}
         <Card className="mt-16 rounded-3xl border-border/70 gradient-brand text-white">
           <CardContent className="p-10 md:p-14 text-center">
-            <h2 className="text-3xl md:text-4xl font-extrabold">Become a partner</h2>
-            <p className="mt-3 max-w-xl mx-auto opacity-90">CSR alignment, employee volunteering, program sponsorship — let's design impact together.</p>
-            <Link to="/contact"><Button size="lg" className="mt-6 rounded-full bg-white text-primary hover:bg-white/90">Contact partnerships</Button></Link>
+            <h2 className="text-3xl md:text-4xl font-extrabold">Jadi mitra kami</h2>
+            <p className="mt-3 max-w-xl mx-auto opacity-90">Penyelarasan CSR, relawan karyawan, sponsor program — mari rancang dampak bersama.</p>
+            <Link to="/contact"><Button size="lg" className="mt-6 rounded-full bg-white text-primary hover:bg-white/90">Hubungi tim kemitraan</Button></Link>
           </CardContent>
         </Card>
       </section>

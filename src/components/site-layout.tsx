@@ -5,17 +5,17 @@ import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 
 const NAV = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/programs", label: "Programs" },
-  { to: "/news", label: "News" },
-  { to: "/gallery", label: "Gallery" },
-  { to: "/events", label: "Events" },
-  { to: "/volunteer", label: "Volunteer" },
-  { to: "/partners", label: "Partners" },
-  { to: "/testimonials", label: "Stories" },
-  { to: "/faq", label: "FAQ" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "Beranda" },
+  { to: "/about", label: "Tentang Kami" },
+  { to: "/programs", label: "Program" },
+  { to: "/news", label: "Berita" },
+  { to: "/gallery", label: "Galeri" },
+  { to: "/events", label: "Kegiatan" },
+  { to: "/volunteer", label: "Relawan" },
+  { to: "/partners", label: "Mitra" },
+  { to: "/testimonials", label: "Kisah Inspiratif" },
+  { to: "/faq", label: "Tanya Jawab" },
+  { to: "/contact", label: "Kontak" },
 ] as const;
 
 export function SiteLayout({ children }: { children: ReactNode }) {
@@ -47,7 +47,7 @@ function PageLoader() {
           <div className="h-16 w-16 rounded-full gradient-brand animate-pulse-ring" />
           <img src={logo} alt="KBSBB" className="absolute inset-0 m-auto h-10 w-10 animate-float" />
         </div>
-        <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Loading…</div>
+        <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Memuat…</div>
       </div>
     </div>
   );
@@ -132,20 +132,20 @@ function Header() {
 
           <button
             onClick={toggle}
-            aria-label="Toggle dark mode"
+            aria-label="Ubah mode gelap"
             className="hidden sm:inline-grid h-10 w-10 place-items-center rounded-full border border-border bg-background/50 hover:bg-brand-soft transition-all hover:-translate-y-0.5"
           >
             {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
           <Link to="/donate" className="hidden sm:inline-flex">
             <Button className="gap-2 rounded-full px-5 shadow-glow transition-transform hover:-translate-y-0.5">
-              <Heart className="h-4 w-4 fill-current" /> Donate
+              <Heart className="h-4 w-4 fill-current" /> Donasi
             </Button>
           </Link>
           <button
             className="xl:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-border"
             onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label="Buka menu"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -170,12 +170,12 @@ function Header() {
               <button
                 onClick={toggle}
                 className="inline-grid h-11 w-11 place-items-center rounded-full border border-border bg-background/60"
-                aria-label="Toggle dark mode"
+                aria-label="Ubah mode gelap"
               >
                 {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </button>
               <Link to="/donate" onClick={() => setOpen(false)} className="flex-1">
-                <Button className="w-full gap-2 rounded-full"><Heart className="h-4 w-4 fill-current" /> Donate now</Button>
+                <Button className="w-full gap-2 rounded-full"><Heart className="h-4 w-4 fill-current" /> Donasi Sekarang</Button>
               </Link>
             </div>
           </div>
@@ -188,38 +188,38 @@ function Header() {
 function FloatingActions() {
   return (
     <>
-      {/* WhatsApp — bottom left */}
+      {/* WhatsApp — kiri bawah */}
       <a
         href="https://wa.me/6281234567890"
         target="_blank"
         rel="noreferrer"
-        aria-label="Chat on WhatsApp"
+        aria-label="Chat via WhatsApp"
         className="group fixed bottom-5 left-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-glow animate-float hover:scale-110 transition-transform"
       >
         <span className="absolute inset-0 rounded-full animate-pulse-ring" />
         <MessageCircle className="h-6 w-6 fill-white" />
         <span className="absolute right-full mr-3 whitespace-nowrap rounded-full bg-foreground text-background px-3 py-1.5 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
-          Chat with us
+          Hubungi kami
         </span>
       </a>
 
-      {/* Fixed Donate — right side */}
+      {/* Tombol donasi tetap — sisi kanan */}
       <Link
         to="/donate"
-        aria-label="Donate now"
+        aria-label="Donasi sekarang"
         className="fixed right-0 top-[55%] z-40 hidden md:flex origin-bottom-right rotate-[-90deg] items-center gap-2 gradient-brand text-white px-6 py-3 rounded-t-2xl shadow-glow font-semibold text-sm transition-all"
       >
-        <Heart className="h-4 w-4 fill-current" /> Donate Now
+        <Heart className="h-4 w-4 fill-current" /> Donasi Sekarang
       </Link>
 
 
-      {/* Mobile fixed donate */}
+      {/* Tombol donasi mobile */}
       <Link
         to="/donate"
-        aria-label="Donate now"
+        aria-label="Donasi sekarang"
         className="md:hidden fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 gradient-brand text-white px-5 h-14 rounded-full shadow-glow font-semibold text-sm hover:scale-105 transition-transform"
       >
-        <Heart className="h-4 w-4 fill-current" /> Donate
+        <Heart className="h-4 w-4 fill-current" /> Donasi
       </Link>
     </>
   );
@@ -238,11 +238,11 @@ function Footer() {
             </div>
           </div>
           <p className="mt-4 text-sm text-white/70 leading-relaxed">
-            Komunitas Berbagi Sehat Berbagi Berkah — an Indonesian humanitarian foundation working across health, education, food security and disaster relief.
+            Komunitas Berbagi Sehat Berbagi Berkah — yayasan kemanusiaan Indonesia yang bergerak di bidang kesehatan, pendidikan, ketahanan pangan, dan tanggap bencana.
           </p>
           <div className="mt-5 flex items-center gap-3">
             {[Facebook, Instagram, Twitter, Youtube].map((I, i) => (
-              <a key={i} href="#" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 transition-all" aria-label="social">
+              <a key={i} href="#" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 transition-all" aria-label="media sosial">
                 <I className="h-4 w-4" />
               </a>
             ))}
@@ -250,7 +250,7 @@ function Footer() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-white">Explore</h4>
+          <h4 className="text-sm font-semibold text-white">Jelajahi</h4>
           <ul className="mt-4 space-y-2.5 text-sm">
             {NAV.slice(0, 6).map((n) => (
               <li key={n.to}><Link to={n.to} className="text-white/70 hover:text-primary transition-colors">{n.label}</Link></li>
@@ -259,18 +259,18 @@ function Footer() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-white">Get Involved</h4>
+          <h4 className="text-sm font-semibold text-white">Ikut Berperan</h4>
           <ul className="mt-4 space-y-2.5 text-sm">
-            <li><Link to="/volunteer" className="text-white/70 hover:text-primary transition-colors">Volunteer</Link></li>
-            <li><Link to="/donate" className="text-white/70 hover:text-primary transition-colors">Donate</Link></li>
-            <li><Link to="/partners" className="text-white/70 hover:text-primary transition-colors">Partnerships</Link></li>
-            <li><Link to="/events" className="text-white/70 hover:text-primary transition-colors">Upcoming Events</Link></li>
-            <li><Link to="/contact" className="text-white/70 hover:text-primary transition-colors">Contact us</Link></li>
+            <li><Link to="/volunteer" className="text-white/70 hover:text-primary transition-colors">Jadi Relawan</Link></li>
+            <li><Link to="/donate" className="text-white/70 hover:text-primary transition-colors">Donasi</Link></li>
+            <li><Link to="/partners" className="text-white/70 hover:text-primary transition-colors">Kemitraan</Link></li>
+            <li><Link to="/events" className="text-white/70 hover:text-primary transition-colors">Kegiatan Mendatang</Link></li>
+            <li><Link to="/contact" className="text-white/70 hover:text-primary transition-colors">Hubungi Kami</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-white">Contact</h4>
+          <h4 className="text-sm font-semibold text-white">Kontak</h4>
           <ul className="mt-4 space-y-3 text-sm text-white/70">
             <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" /> Jl. Merdeka No. 88, Jakarta Pusat 10110, Indonesia</li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" /> +62 812 3456 7890</li>
@@ -280,8 +280,8 @@ function Footer() {
       </div>
       <div className="border-t border-white/10">
         <div className="container-x py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/60">
-          <p>© {new Date().getFullYear()} Yayasan KBSBB. All rights reserved.</p>
-          <p>Made with <Heart className="inline h-3 w-3 text-primary fill-current" /> in Indonesia</p>
+          <p>© {new Date().getFullYear()} Yayasan KBSBB. Seluruh hak cipta dilindungi.</p>
+          <p>Dibuat dengan <Heart className="inline h-3 w-3 text-primary fill-current" /> di Indonesia</p>
         </div>
       </div>
     </footer>

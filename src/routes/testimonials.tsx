@@ -9,10 +9,10 @@ import { EmptyState } from "@/components/empty-state";
 export const Route = createFileRoute("/testimonials")({
   head: () => ({
     meta: [
-      { title: "Stories — Voices from the KBSBB Community" },
-      { name: "description", content: "Read testimonials from KBSBB volunteers, medical partners and beneficiaries across Indonesia." },
-      { property: "og:title", content: "KBSBB Stories" },
-      { property: "og:description", content: "Real voices from the field." },
+      { title: "Kisah Inspiratif — Suara Komunitas KBSBB" },
+      { name: "description", content: "Baca testimoni relawan, mitra kesehatan, dan penerima manfaat KBSBB dari seluruh Indonesia." },
+      { property: "og:title", content: "Kisah Inspiratif KBSBB" },
+      { property: "og:description", content: "Suara nyata dari lapangan." },
     ],
   }),
   component: Testimonials,
@@ -22,10 +22,10 @@ function Testimonials() {
   const items = useTable<any>("testimonials", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
   return (
     <SiteLayout>
-      <PageHero eyebrow="Stories" title="Voices from the community" description="Volunteers, partners and beneficiaries — in their own words." />
+      <PageHero eyebrow="Kisah Inspiratif" title="Suara dari komunitas" description="Relawan, mitra, dan penerima manfaat — dalam kata-kata mereka sendiri." />
       <section className="container-x py-20">
         {items && items.length === 0 ? (
-          <EmptyState title="No stories yet" description="Testimonials from our community will appear here soon." />
+          <EmptyState title="Belum ada kisah" description="Testimoni dari komunitas kami akan segera tampil di sini." />
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {(items ?? []).map((q: any) => (

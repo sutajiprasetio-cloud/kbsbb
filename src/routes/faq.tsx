@@ -7,10 +7,10 @@ import { EmptyState } from "@/components/empty-state";
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ — KBSBB Frequently Asked Questions" },
-      { name: "description", content: "Answers to common questions about donating, volunteering, and partnering with KBSBB." },
-      { property: "og:title", content: "KBSBB FAQ" },
-      { property: "og:description", content: "Everything you need to know." },
+      { title: "Tanya Jawab — Pertanyaan Umum KBSBB" },
+      { name: "description", content: "Jawaban atas pertanyaan umum seputar donasi, menjadi relawan, dan kemitraan bersama KBSBB." },
+      { property: "og:title", content: "Tanya Jawab KBSBB" },
+      { property: "og:description", content: "Semua yang perlu Anda ketahui." },
     ],
   }),
   component: FAQ,
@@ -20,10 +20,10 @@ function FAQ() {
   const items = useTable<any>("faqs", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
   return (
     <SiteLayout>
-      <PageHero eyebrow="FAQ" title="Answers to your questions" />
+      <PageHero eyebrow="Tanya Jawab" title="Jawaban atas pertanyaan Anda" />
       <section className="container-x py-20 max-w-3xl">
         {items && items.length === 0 ? (
-          <EmptyState title="No questions yet" description="We're putting our FAQ together. In the meantime, reach out through the contact page." />
+          <EmptyState title="Belum ada pertanyaan" description="Daftar tanya jawab sedang kami susun. Sementara itu, silakan hubungi kami melalui halaman kontak." />
         ) : (
           <Accordion type="single" collapsible className="w-full">
             {(items ?? []).map((it: any, i: number) => (

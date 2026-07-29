@@ -14,10 +14,10 @@ import { SafeImage } from "@/components/safe-image";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KBSBB — Sharing Health, Sharing Blessings" },
-      { name: "description", content: "Join KBSBB, an Indonesian humanitarian foundation delivering health, education, food and disaster relief programs. Donate, volunteer, or partner with us." },
-      { property: "og:title", content: "KBSBB — Sharing Health, Sharing Blessings" },
-      { property: "og:description", content: "Empowering Indonesian communities through health, education, food and disaster relief." },
+      { title: "KBSBB — Berbagi Sehat, Berbagi Berkah" },
+      { name: "description", content: "KBSBB adalah yayasan kemanusiaan Indonesia yang menjalankan program kesehatan, pendidikan, pangan, dan tanggap bencana. Donasi, jadi relawan, atau bermitra bersama kami." },
+      { property: "og:title", content: "KBSBB — Berbagi Sehat, Berbagi Berkah" },
+      { property: "og:description", content: "Memberdayakan masyarakat Indonesia melalui program kesehatan, pendidikan, pangan, dan tanggap bencana." },
     ],
   }),
   component: HomePage,
@@ -65,11 +65,11 @@ function HeroSlider() {
           <div className="max-w-2xl text-white">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">KBSBB</h1>
             <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">
-              {slides ? "No hero slides published yet — they will appear here once added." : ""}
+              {slides ? "Belum ada slide yang dipublikasikan — slide akan tampil di sini setelah ditambahkan." : ""}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/donate"><Button size="lg" className="rounded-full gap-2 px-7 bg-white text-primary hover:bg-white/90"><Heart className="h-4 w-4 fill-current" /> Donate now</Button></Link>
-              <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Our programs <ArrowRight className="h-4 w-4" /></Button></Link>
+              <Link to="/donate"><Button size="lg" className="rounded-full gap-2 px-7 bg-white text-primary hover:bg-white/90"><Heart className="h-4 w-4 fill-current" /> Donasi Sekarang</Button></Link>
+              <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Program Kami <ArrowRight className="h-4 w-4" /></Button></Link>
             </div>
           </div>
         </div>
@@ -78,6 +78,11 @@ function HeroSlider() {
   }
 
   const cur = slides[Math.min(i, count - 1)];
+  const title = (cur.title ?? "").trim();
+  const subtitle = (cur.subtitle ?? "").trim();
+  const ctaLabel = (cur.cta_label ?? "").trim();
+  const ctaHref = (cur.cta_href ?? "").trim();
+  const hasText = Boolean(title || subtitle || (ctaLabel && ctaHref));
   return (
     <section
       className="relative w-full max-w-full overflow-hidden min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] lg:max-h-[860px] touch-pan-y select-none"
@@ -100,43 +105,46 @@ function HeroSlider() {
     >
       {slides.map((s: any, idx: number) => (
         <div key={s.id} aria-hidden={i !== idx} className={`absolute inset-0 transition-opacity duration-[1400ms] ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
-          <SafeImage src={s.image_url} alt={s.title} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover object-center" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
+          <SafeImage src={s.image_url} alt={s.title || "KBSBB"} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover object-center" />
+          <div className={`absolute inset-0 ${hasText ? "bg-gradient-to-r from-black/80 via-black/50 to-black/20" : "bg-black/20"}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
         </div>
       ))}
       <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/30 blur-3xl animate-blob" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-[22rem] w-[22rem] rounded-full bg-ocean/30 blur-3xl animate-blob" style={{ animationDelay: "4s" }} />
-      <div className="relative z-10 container-x flex min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] items-center py-24">
-        <div className="max-w-2xl text-white">
-          <div key={i} className="animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full bg-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
-              <Sprout className="h-3.5 w-3.5" /> KBSBB
-            </span>
-            <h1 className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.08] tracking-tight break-words">
-              {cur.title}
-            </h1>
-            {cur.subtitle && <p className="mt-5 text-sm sm:text-base md:text-lg text-white/85 max-w-xl">{cur.subtitle}</p>}
-            <div className="mt-8 flex flex-wrap gap-3">
-              {cur.cta_href ? (
-                <a href={cur.cta_href}><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> {cur.cta_label ?? "Donate now"}</Button></a>
-              ) : (
-                <Link to="/donate"><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> {cur.cta_label ?? "Donate now"}</Button></Link>
+      {hasText && (
+        <div className="relative z-10 container-x flex min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] items-center py-24">
+          <div className="max-w-2xl text-white">
+            <div key={i} className="animate-fade-up">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
+                <Sprout className="h-3.5 w-3.5" /> KBSBB
+              </span>
+              {title && (
+                <h1 className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.08] tracking-tight break-words">
+                  {title}
+                </h1>
               )}
-              <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Our programs <ArrowRight className="h-4 w-4" /></Button></Link>
+              {subtitle && <p className="mt-5 text-sm sm:text-base md:text-lg text-white/85 max-w-xl">{subtitle}</p>}
+              <div className="mt-8 flex flex-wrap gap-3">
+                {ctaLabel && ctaHref && (
+                  <a href={ctaHref}><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> {ctaLabel}</Button></a>
+                )}
+                <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Program Kami <ArrowRight className="h-4 w-4" /></Button></Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+      {!hasText && <div className="min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh]" aria-hidden />}
 
       {count > 1 && (
         <>
-          {/* Arrows — desktop & tablet only */}
+          {/* Panah navigasi — hanya desktop & tablet */}
           <button
             type="button"
             onClick={() => go(-1)}
             className="hidden sm:grid absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full bg-white/20 text-white backdrop-blur hover:bg-white hover:text-foreground transition-colors"
-            aria-label="Previous slide"
+            aria-label="Slide sebelumnya"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -144,19 +152,19 @@ function HeroSlider() {
             type="button"
             onClick={() => go(1)}
             className="hidden sm:grid absolute right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full bg-white/20 text-white backdrop-blur hover:bg-white hover:text-foreground transition-colors"
-            aria-label="Next slide"
+            aria-label="Slide berikutnya"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
 
-          {/* Pagination dots */}
+          {/* Titik navigasi */}
           <div className="absolute bottom-24 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 flex max-w-[80vw] flex-wrap justify-center gap-2">
             {slides.map((s: any, idx: number) => (
               <button
                 key={s.id}
                 type="button"
                 onClick={() => setI(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
+                aria-label={`Ke slide ${idx + 1}`}
                 aria-current={i === idx}
                 className={`h-1.5 rounded-full transition-all ${i === idx ? "w-10 bg-primary" : "w-4 bg-white/50 hover:bg-white/80"}`}
               />
@@ -170,10 +178,10 @@ function HeroSlider() {
 
 
 const STATS = [
-  { icon: Users, end: 3400, suffix: "+", label: "Active volunteers" },
-  { icon: HandCoins, end: 1200000, suffix: "+", label: "Meals delivered" },
-  { icon: Sprout, end: 340, suffix: "", label: "Villages served" },
-  { icon: Heart, end: 128, suffix: "K", label: "Lives touched" },
+  { icon: Users, end: 3400, suffix: "+", label: "Relawan aktif" },
+  { icon: HandCoins, end: 1200000, suffix: "+", label: "Paket makanan tersalurkan" },
+  { icon: Sprout, end: 340, suffix: "", label: "Desa terlayani" },
+  { icon: Heart, end: 128, suffix: "K", label: "Jiwa terbantu" },
 ];
 
 function StatsSection() {
@@ -216,9 +224,9 @@ function FeaturedPrograms() {
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
-        <SectionHeading eyebrow="Our Programs" title="Real work. Real change." description="Humanitarian action delivered directly by our volunteers to the communities that need it most." />
+        <SectionHeading eyebrow="Program Kami" title="Kerja nyata. Perubahan nyata." description="Aksi kemanusiaan yang disalurkan langsung oleh relawan kami kepada masyarakat yang paling membutuhkan." />
         {items && items.length === 0 ? (
-          <EmptyState className="mt-12" title="No programs yet" description="Our programs will be listed here once published." />
+          <EmptyState className="mt-12" title="Belum ada program" description="Program kami akan ditampilkan di sini setelah dipublikasikan." />
         ) : (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {(items ?? []).map((p: any) => {
@@ -234,7 +242,7 @@ function FeaturedPrograms() {
                   <CardContent className="px-5 pb-5">
                     <h3 className="text-lg font-bold">{p.title}</h3>
                     <p className="mt-1.5 text-sm text-muted-foreground">{p.summary ?? p.description}</p>
-                    <Link to="/programs" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">Learn more <ArrowRight className="h-4 w-4" /></Link>
+                    <Link to="/programs" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">Selengkapnya <ArrowRight className="h-4 w-4" /></Link>
                   </CardContent>
                 </Card>
               );
@@ -253,9 +261,9 @@ function DonationProgress() {
   return (
     <section className="py-20 md:py-28 bg-brand-soft/40 border-y border-border/60">
       <div className="container-x">
-        <SectionHeading eyebrow="Active Campaigns" title="Turn your gift into someone's tomorrow" description="Track every campaign in real time. 100% of your donation reaches the field." />
+        <SectionHeading eyebrow="Program Donasi Aktif" title="Ubah kebaikan Anda menjadi harapan mereka" description="Pantau setiap program donasi secara real time. 100% donasi Anda tersalurkan ke lapangan." />
         {items && items.length === 0 ? (
-          <EmptyState className="mt-12" title="No active campaigns" description="There are no running campaigns right now — you can still give a general donation." />
+          <EmptyState className="mt-12" title="Belum ada program donasi aktif" description="Saat ini belum ada program donasi berjalan — Anda tetap dapat berdonasi umum." />
         ) : (
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {(items ?? []).map((c: any) => {
@@ -270,13 +278,13 @@ function DonationProgress() {
                   <CardContent className="px-5 pb-5">
                     <h3 className="text-lg font-bold">{c.title}</h3>
                     <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                      <span>Raised <b className="text-foreground">{rupiah(raised)}</b></span>
+                      <span>Dana Terkumpul <b className="text-foreground">{rupiah(raised)}</b></span>
                       <span className="font-semibold text-primary">{pct}%</span>
                     </div>
                     <Progress value={pct} className="mt-2 h-2" />
-                    <div className="mt-1 text-xs text-muted-foreground">Goal {rupiah(goal)}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">Target Dana {rupiah(goal)}</div>
                     <Link to="/donate" className="mt-5 block">
-                      <Button className="w-full rounded-full gap-2"><Heart className="h-4 w-4 fill-current" /> Donate</Button>
+                      <Button className="w-full rounded-full gap-2"><Heart className="h-4 w-4 fill-current" /> Donasi Sekarang</Button>
                     </Link>
                   </CardContent>
                 </Card>
@@ -295,11 +303,11 @@ function LatestNews() {
     <section className="py-20 md:py-28">
       <div className="container-x">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <SectionHeading eyebrow="Latest News" title="Stories from the field" align="left" />
-          <Link to="/news" className="text-sm font-semibold text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">All news <ArrowRight className="h-4 w-4" /></Link>
+          <SectionHeading eyebrow="Berita Terbaru" title="Kabar dari lapangan" align="left" />
+          <Link to="/news" className="text-sm font-semibold text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">Semua berita <ArrowRight className="h-4 w-4" /></Link>
         </div>
         {items && items.length === 0 ? (
-          <EmptyState className="mt-10" title="No news yet" description="Published stories will appear here." />
+          <EmptyState className="mt-10" title="Belum ada berita" description="Berita yang dipublikasikan akan muncul di sini." />
         ) : (
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {(items ?? []).map((n: any) => (
@@ -310,11 +318,11 @@ function LatestNews() {
                   </div>
                   <CardContent className="px-5 pb-5">
                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                      <span className="rounded-full bg-ocean-soft px-2.5 py-0.5 font-semibold text-[oklch(0.4_0.15_240)]">{n.tags?.[0] ?? "News"}</span>
-                      {n.published_at && <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(n.published_at).toLocaleDateString()}</span>}
+                      <span className="rounded-full bg-ocean-soft px-2.5 py-0.5 font-semibold text-[oklch(0.4_0.15_240)]">{n.tags?.[0] ?? "Berita"}</span>
+                      {n.published_at && <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(n.published_at).toLocaleDateString("id-ID")}</span>}
                     </div>
                     <h3 className="mt-3 text-lg font-bold leading-snug">{n.title}</h3>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">Read article <ArrowRight className="h-4 w-4" /></span>
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">Baca selengkapnya <ArrowRight className="h-4 w-4" /></span>
                   </CardContent>
                 </Card>
               </Link>
@@ -331,9 +339,9 @@ function UpcomingEvents() {
   return (
     <section className="py-20 md:py-28 bg-brand-soft/40 border-y border-border/60">
       <div className="container-x">
-        <SectionHeading eyebrow="Upcoming Events" title="Come, join us in person" />
+        <SectionHeading eyebrow="Kegiatan Mendatang" title="Mari bergabung bersama kami" />
         {items && items.length === 0 ? (
-          <EmptyState className="mt-12" title="No events scheduled" description="Published events will show up here." />
+          <EmptyState className="mt-12" title="Belum ada kegiatan" description="Kegiatan yang dipublikasikan akan tampil di sini." />
         ) : (
           <div className="mt-12 grid gap-4 md:grid-cols-2">
             {(items ?? []).map((e: any) => {
@@ -344,7 +352,7 @@ function UpcomingEvents() {
                     <div className="grid h-20 w-20 shrink-0 place-items-center rounded-2xl gradient-brand text-white">
                       <div className="text-center leading-tight">
                         <div className="text-2xl font-extrabold">{d.getDate().toString().padStart(2, "0")}</div>
-                        <div className="text-[11px] uppercase tracking-widest opacity-90">{d.toLocaleString("en", { month: "short" })}</div>
+                        <div className="text-[11px] uppercase tracking-widest opacity-90">{d.toLocaleString("id-ID", { month: "short" })}</div>
                       </div>
                     </div>
                     <div className="min-w-0">
@@ -371,16 +379,16 @@ function GalleryPreview() {
     <section className="py-20 md:py-28">
       <div className="container-x">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <SectionHeading eyebrow="Gallery" title="Moments of impact" align="left" />
-          <Link to="/gallery" className="text-sm font-semibold text-primary inline-flex items-center gap-1">View all <ArrowRight className="h-4 w-4" /></Link>
+          <SectionHeading eyebrow="Galeri" title="Momen kebaikan" align="left" />
+          <Link to="/gallery" className="text-sm font-semibold text-primary inline-flex items-center gap-1">Lihat semua <ArrowRight className="h-4 w-4" /></Link>
         </div>
         {items && items.length === 0 ? (
-          <EmptyState className="mt-10" title="No photos yet" description="Gallery photos will appear here once uploaded." />
+          <EmptyState className="mt-10" title="Belum ada foto" description="Foto galeri akan tampil di sini setelah diunggah." />
         ) : (
           <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {(items ?? []).map((g: any, i: number) => (
               <div key={g.id} className={`relative overflow-hidden rounded-2xl group ${i % 5 === 0 ? "md:row-span-2 md:col-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
-                <SafeImage src={g.image_url} alt={g.title ?? "Gallery"} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <SafeImage src={g.image_url} alt={g.title ?? "Galeri"} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ))}
@@ -406,7 +414,7 @@ function Testimonials() {
     return (
       <section className="py-20 md:py-28">
         <div className="container-x">
-          <EmptyState title="No stories yet" description="Testimonials from our community will appear here." />
+          <EmptyState title="Belum ada kisah" description="Testimoni dari komunitas kami akan tampil di sini." />
         </div>
       </section>
     );
@@ -430,7 +438,7 @@ function Testimonials() {
           {count > 1 && (
             <div className="mt-6 flex justify-center gap-2">
               {items.map((t: any, idx: number) => (
-                <button key={t.id} onClick={() => setI(idx)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-white" : "w-3 bg-white/40"}`} aria-label={`Quote ${idx + 1}`} />
+                <button key={t.id} onClick={() => setI(idx)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-white" : "w-3 bg-white/40"}`} aria-label={`Kutipan ${idx + 1}`} />
               ))}
             </div>
           )}
@@ -446,9 +454,9 @@ function PartnersMarquee() {
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
-        <SectionHeading eyebrow="Our Partners" title="Trusted by leaders across sectors" />
+        <SectionHeading eyebrow="Mitra Kami" title="Dipercaya oleh berbagai institusi" />
         {items && items.length === 0 && (
-          <EmptyState className="mt-12" title="No partners listed yet" description="Partner organisations will be shown here." />
+          <EmptyState className="mt-12" title="Belum ada mitra" description="Organisasi mitra akan ditampilkan di sini." />
         )}
       </div>
       {list.length > 0 && (
@@ -471,18 +479,18 @@ function NewsletterAndMap() {
     <section className="py-20 md:py-28 bg-brand-soft/40 border-t border-border/60">
       <div className="container-x grid gap-10 lg:grid-cols-2">
         <div className="rounded-3xl bg-card border border-border p-8 md:p-10 shadow-soft">
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary"><Mail className="h-3.5 w-3.5" /> Newsletter</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">Stay close to the mission</h2>
-          <p className="mt-3 text-muted-foreground">Monthly stories from the field, transparent impact reports and ways to help — straight to your inbox.</p>
+          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary"><Mail className="h-3.5 w-3.5" /> Buletin</span>
+          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">Tetap terhubung dengan misi kami</h2>
+          <p className="mt-3 text-muted-foreground">Kisah dari lapangan setiap bulan, laporan dampak yang transparan, dan cara membantu — langsung ke email Anda.</p>
           <form className="mt-6 flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
-            <Input type="email" required placeholder="you@email.com" className="h-12 rounded-full bg-background px-5" />
-            <Button type="submit" className="h-12 rounded-full px-7">Subscribe</Button>
+            <Input type="email" required placeholder="nama@email.com" className="h-12 rounded-full bg-background px-5" />
+            <Button type="submit" className="h-12 rounded-full px-7">Berlangganan</Button>
           </form>
-          <p className="mt-3 text-xs text-muted-foreground">We respect your inbox. Unsubscribe anytime.</p>
+          <p className="mt-3 text-xs text-muted-foreground">Kami menghargai privasi Anda. Berhenti berlangganan kapan saja.</p>
         </div>
         <div className="rounded-3xl overflow-hidden border border-border shadow-soft aspect-video lg:aspect-auto min-h-[320px]">
           <iframe
-            title="KBSBB Office Map"
+            title="Peta Kantor KBSBB"
             src="https://www.google.com/maps?q=Monas+Jakarta&output=embed"
             className="h-full w-full"
             loading="lazy"

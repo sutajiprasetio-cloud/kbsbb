@@ -10,10 +10,10 @@ import { EmptyState } from "@/components/empty-state";
 export const Route = createFileRoute("/programs")({
   head: () => ({
     meta: [
-      { title: "Programs — KBSBB Humanitarian Foundation" },
-      { name: "description", content: "Explore KBSBB's humanitarian programs across health, education, food security, disaster relief, water and shelter." },
-      { property: "og:title", content: "KBSBB Programs" },
-      { property: "og:description", content: "Six pillars of humanitarian action across Indonesia." },
+      { title: "Program — Yayasan Kemanusiaan KBSBB" },
+      { name: "description", content: "Jelajahi program kemanusiaan KBSBB di bidang kesehatan, pendidikan, ketahanan pangan, tanggap bencana, air bersih, dan hunian." },
+      { property: "og:title", content: "Program KBSBB" },
+      { property: "og:description", content: "Enam pilar aksi kemanusiaan di seluruh Indonesia." },
     ],
   }),
   component: Programs,
@@ -25,10 +25,10 @@ function Programs() {
   const items = useTable<any>("programs", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
   return (
     <SiteLayout>
-      <PageHero eyebrow="What we do" title="Programs that change lives" description="One mission: to serve Indonesia's most vulnerable with dignity, transparency and love." />
+      <PageHero eyebrow="Apa yang kami lakukan" title="Program yang mengubah kehidupan" description="Satu misi: melayani masyarakat Indonesia yang paling rentan dengan bermartabat, transparan, dan penuh kasih." />
       <section className="container-x py-20">
         {items && items.length === 0 ? (
-          <EmptyState title="No programs published yet" description="Our program list is being updated. Please check back shortly." />
+          <EmptyState title="Belum ada program" description="Daftar program kami sedang diperbarui. Silakan kembali lagi nanti." />
         ) : (
           <div className="grid gap-8 md:grid-cols-2">
             {(items ?? []).map((p: any) => {
@@ -45,7 +45,7 @@ function Programs() {
                     <h3 className="mt-3 text-xl font-bold">{p.title}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.summary ?? p.description}</p>
                     <Link to="/donate" className="mt-5 inline-block">
-                      <Button className="rounded-full gap-2">Support this program <ArrowRight className="h-4 w-4" /></Button>
+                      <Button className="rounded-full gap-2">Dukung program ini <ArrowRight className="h-4 w-4" /></Button>
                     </Link>
                   </CardContent>
                 </Card>
