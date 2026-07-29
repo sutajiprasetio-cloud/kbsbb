@@ -38,7 +38,7 @@ function About() {
           <SafeImage src={about?.image_url} alt="Komunitas" className="rounded-3xl object-cover w-full aspect-[4/3] shadow-soft" />
           {about?.story && (
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Kisah kami</h2>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Sejarah kami</h2>
               <p className="mt-4 text-muted-foreground leading-relaxed whitespace-pre-line">{about.story}</p>
             </div>
           )}
@@ -59,7 +59,7 @@ function About() {
           {about?.vision && (
             <Card className="rounded-3xl border-border/70">
               <CardContent className="p-8">
-                <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-brand text-white"><Eye className="h-5 w-5" /></div>
+                <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-brand text-white"><Award className="h-5 w-5" /></div>
                 <h3 className="mt-4 text-2xl font-extrabold">Visi</h3>
                 <p className="mt-2 text-muted-foreground whitespace-pre-line">{about.vision}</p>
               </CardContent>
