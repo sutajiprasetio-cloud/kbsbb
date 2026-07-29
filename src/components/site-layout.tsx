@@ -78,7 +78,7 @@ function TopBar() {
     <div className="hidden md:block gradient-brand text-white text-xs">
       <div className="container-x flex h-9 items-center justify-between">
         <div className="flex items-center gap-5">
-          <span className="inline-flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" /> +62 812 3456 7890</span>
+          <span className="inline-flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" /> +62 853 6508 9475</span>
           <span className="inline-flex items-center gap-1.5"><Mail className="h-3.5 w-3.5" /> hello@kbsbb.org</span>
         </div>
         <div className="flex items-center gap-3 opacity-90">
@@ -234,11 +234,11 @@ function Footer() {
             <img src={logo} alt="KBSBB" className="h-10 w-10" width={40} height={40} />
             <div>
               <div className="text-lg font-extrabold text-white">KBSBB</div>
-              <div className="text-[10px] uppercase tracking-widest text-white/60">Berbagi Sehat · Berkah</div>
+              <div className="text-[10px] uppercase tracking-widest text-white/60">Komunitas Berbagi Sehat · Berbagi Berkah</div>
             </div>
           </div>
           <p className="mt-4 text-sm text-white/70 leading-relaxed">
-            Komunitas Berbagi Sehat Berbagi Berkah — yayasan kemanusiaan Indonesia yang bergerak di bidang kesehatan, pendidikan, ketahanan pangan, dan tanggap bencana.
+            KBSBB — Komunitas Berbagi Sehat Berbagi Berkah merupakan komunitas wadah sosial untuk menghadirkan kepedulian dan memberikan manfaat bagi masyarakat melalui berbagai kegiatan sosial, kesehatan, pendidikan dan kemanusiaan.
           </p>
           <div className="mt-5 flex items-center gap-3">
             {[Facebook, Instagram, Twitter, Youtube].map((I, i) => (
@@ -272,16 +272,16 @@ function Footer() {
         <div>
           <h4 className="text-sm font-semibold text-white">Kontak</h4>
           <ul className="mt-4 space-y-3 text-sm text-white/70">
-            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" /> Jl. Merdeka No. 88, Jakarta Pusat 10110, Indonesia</li>
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" /> +62 812 3456 7890</li>
+            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" /> Pekanbaru, Riau - Indonesia</li>
+            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" /> +62 853 6508 9475</li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> hello@kbsbb.org</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-white/10">
         <div className="container-x py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/60">
-          <p>© {new Date().getFullYear()} Yayasan KBSBB. Seluruh hak cipta dilindungi.</p>
-          <p>Dibuat dengan <Heart className="inline h-3 w-3 text-primary fill-current" /> di Indonesia</p>
+          <p>© {new Date().getFullYear()} KBSBB. Hak Cipta Dilindungi.</p>
+          <p>Dibuat oleh <Heart className="inline h-3 w-3 text-primary fill-current" /> Tim KBSBB</p>
         </div>
       </div>
     </footer>
