@@ -13,7 +13,7 @@ const NAV = [
   { to: "/events", label: "Kegiatan" },
   { to: "/volunteer", label: "Relawan" },
   { to: "/partners", label: "Mitra" },
-  { to: "/testimonials", label: "Kisah Inspiratif" },
+ / { to: "/testimonials", label: "Kisah Inspiratif" },
   { to: "/faq", label: "Tanya Jawab" },
   { to: "/contact", label: "Kontak" },
 ] as const;
