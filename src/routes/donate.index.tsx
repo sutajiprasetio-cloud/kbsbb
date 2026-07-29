@@ -12,10 +12,10 @@ import { useCampaigns, rp, pct } from "@/lib/donations";
 export const Route = createFileRoute("/donate/")({
   head: () => ({
     meta: [
-      { title: "Donate to KBSBB — Support an Active Campaign" },
-      { name: "description", content: "Browse active KBSBB campaigns, track live progress, and give a one-time or monthly donation. Transparent, audited, and impactful." },
-      { property: "og:title", content: "Donate to KBSBB" },
-      { property: "og:description", content: "Your gift becomes someone's blessing." },
+      { title: "Donasi KBSBB — Dukung Program Donasi Aktif" },
+      { name: "description", content: "Lihat program donasi aktif KBSBB, pantau progres secara langsung, dan berdonasi sekali atau rutin bulanan. Transparan, teraudit, dan berdampak." },
+      { property: "og:title", content: "Donasi ke KBSBB" },
+      { property: "og:description", content: "Kebaikan Anda menjadi berkah bagi sesama." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -28,18 +28,18 @@ function Donate() {
 
   return (
     <SiteLayout>
-      <PageHero eyebrow="Donate" title="Your gift becomes a blessing" description="100% of your donation reaches the field. Fully transparent, audited annually." />
+      <PageHero eyebrow="Donasi" title="Kebaikan Anda menjadi berkah" description="100% donasi Anda tersalurkan ke lapangan. Transparan dan diaudit setiap tahun." />
 
       <section className="container-x py-16 md:py-20">
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Active campaigns</h2>
-        <p className="mt-2 text-muted-foreground">Choose a campaign and follow its progress in real time.</p>
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Program Donasi Aktif</h2>
+        <p className="mt-2 text-muted-foreground">Pilih program donasi dan pantau progresnya secara langsung.</p>
 
         {campaigns === null ? (
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[0, 1, 2].map((i) => <div key={i} className="h-80 rounded-3xl bg-muted animate-pulse" />)}
           </div>
         ) : campaigns.length === 0 ? (
-          <EmptyState className="mt-8" title="No active campaigns" description="There are no campaigns running right now — you can still support our general fund below." />
+          <EmptyState className="mt-8" title="Belum ada program donasi aktif" description="Saat ini belum ada program donasi berjalan — Anda tetap dapat mendukung dana umum kami di bawah ini." />
         ) : (
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {campaigns.map((c) => {
@@ -59,11 +59,11 @@ function Donate() {
                     {c.description && <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{c.description}</p>}
                     <div className="mt-4"><Progress value={p} /></div>
                     <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
-                      <span><span className="font-semibold text-foreground">Rp {rp(Number(c.raised_amount))}</span> of Rp {rp(Number(c.goal_amount))}</span>
-                      <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" />{stat?.donor_count ?? 0} donors</span>
+                      <span><span className="font-semibold text-foreground">Rp {rp(Number(c.raised_amount))}</span> dari Rp {rp(Number(c.goal_amount))}</span>
+                      <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" />{stat?.donor_count ?? 0} donatur</span>
                     </div>
                     <Button asChild className="mt-4 w-full rounded-full gap-2">
-                      <Link to="/donate/$slug" params={{ slug: c.slug }}>Donate now <ArrowRight className="h-4 w-4" /></Link>
+                      <Link to="/donate/$slug" params={{ slug: c.slug }}>Donasi Sekarang <ArrowRight className="h-4 w-4" /></Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -76,17 +76,17 @@ function Donate() {
       <section className="container-x pb-20 grid lg:grid-cols-[1.2fr_1fr] gap-8">
         <Card className="rounded-3xl border-border/70 shadow-soft">
           <CardContent className="p-6 md:p-8">
-            <h2 className="text-xl font-bold">Give to the general fund</h2>
-            <p className="mt-1 text-sm text-muted-foreground">Not sure where to give? We'll direct your gift where it's needed most.</p>
+            <h2 className="text-xl font-bold">Donasi untuk dana umum</h2>
+            <p className="mt-1 text-sm text-muted-foreground">Belum tahu ingin menyalurkan ke mana? Kami akan mengarahkan donasi Anda ke kebutuhan yang paling mendesak.</p>
             <div className="mt-6"><DonationForm /></div>
           </CardContent>
         </Card>
 
         <div className="space-y-4">
           {[
-            { icon: ShieldCheck, title: "100% to the field", text: "Operational costs covered separately. Every rupiah reaches the mission." },
-            { icon: Repeat, title: "Cancel anytime", text: "Monthly donors can pause or cancel with one click." },
-            { icon: CreditCard, title: "Secure payment", text: "Powered by BCA, Mandiri, GoPay, OVO, and Dana." },
+            { icon: ShieldCheck, title: "100% ke lapangan", text: "Biaya operasional ditanggung terpisah. Setiap rupiah sampai ke penerima manfaat." },
+            { icon: Repeat, title: "Bisa dibatalkan kapan saja", text: "Donatur bulanan dapat menjeda atau membatalkan dengan sekali klik." },
+            { icon: CreditCard, title: "Pembayaran aman", text: "Didukung BCA, Mandiri, GoPay, OVO, dan Dana." },
           ].map((c) => (
             <Card key={c.title} className="rounded-3xl border-border/70">
               <CardContent className="p-6 flex gap-4 items-start">

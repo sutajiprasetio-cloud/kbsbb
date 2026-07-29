@@ -13,20 +13,20 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/volunteer")({
   head: () => ({
     meta: [
-      { title: "Volunteer with KBSBB" },
-      { name: "description", content: "Become a KBSBB volunteer. Join 3,400+ Indonesians serving communities across 34 provinces." },
-      { property: "og:title", content: "Volunteer with KBSBB" },
-      { property: "og:description", content: "Give your time. Change a life." },
+      { title: "Jadi Relawan KBSBB" },
+      { name: "description", content: "Bergabunglah menjadi relawan KBSBB bersama 3.400+ relawan yang melayani masyarakat di 34 provinsi." },
+      { property: "og:title", content: "Jadi Relawan KBSBB" },
+      { property: "og:description", content: "Berikan waktu Anda. Ubah satu kehidupan." },
     ],
   }),
   component: Volunteer,
 });
 
 const PERKS = [
-  { icon: Users, title: "Meaningful community", text: "Join a family of 3,400+ volunteers across Indonesia." },
-  { icon: Sparkles, title: "Real training", text: "Field readiness, first aid, and leadership programs." },
-  { icon: Heart, title: "Direct impact", text: "See the change you make in every deployment." },
-  { icon: Handshake, title: "Career growth", text: "Certificates, references, and lifelong networks." },
+  { icon: Users, title: "Komunitas yang bermakna", text: "Bergabung dengan keluarga 3.400+ relawan di seluruh Indonesia." },
+  { icon: Sparkles, title: "Pelatihan nyata", text: "Kesiapan lapangan, pertolongan pertama, dan program kepemimpinan." },
+  { icon: Heart, title: "Dampak langsung", text: "Lihat sendiri perubahan yang Anda ciptakan di setiap penugasan." },
+  { icon: Handshake, title: "Pengembangan diri", text: "Sertifikat, rekomendasi, dan jejaring seumur hidup." },
 ];
 
 function Volunteer() {
@@ -39,16 +39,16 @@ function Volunteer() {
     const { error } = await supabase.from("volunteers").insert(form);
     setBusy(false);
     if (error) return toast.error(error.message);
-    toast.success("Application received — we'll be in touch within 3–5 days.");
+    toast.success("Pendaftaran diterima — kami akan menghubungi Anda dalam 3–5 hari.");
     setForm({ name: "", email: "", phone: "", city: "", skills: "", message: "" });
   }
 
   return (
     <SiteLayout>
-      <PageHero eyebrow="Volunteer" title="Give your time. Change a life." description="Whether you have an hour a week or a whole weekend, there's a place for you." />
+      <PageHero eyebrow="Relawan" title="Berikan waktu Anda. Ubah satu kehidupan." description="Baik satu jam dalam seminggu maupun satu akhir pekan penuh, selalu ada tempat untuk Anda." />
       <section className="container-x py-20 grid lg:grid-cols-2 gap-12">
         <div>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Why join us</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Mengapa bergabung</h2>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {PERKS.map((p) => (
               <Card key={p.title} className="rounded-2xl border-border/70">
@@ -63,19 +63,19 @@ function Volunteer() {
         </div>
         <Card className="rounded-3xl border-border/70 shadow-soft">
           <CardContent className="p-6 md:p-8">
-            <h3 className="text-2xl font-extrabold">Apply now</h3>
-            <p className="mt-2 text-sm text-muted-foreground">We'll get back within 3–5 days.</p>
+            <h3 className="text-2xl font-extrabold">Daftar sekarang</h3>
+            <p className="mt-2 text-sm text-muted-foreground">Kami akan menghubungi Anda dalam 3–5 hari.</p>
             <form className="mt-6 grid gap-4" onSubmit={submit}>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="grid gap-1.5"><Label>Full name</Label><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
+                <div className="grid gap-1.5"><Label>Nama lengkap</Label><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
                 <div className="grid gap-1.5"><Label>Email</Label><Input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
               </div>
-              <div className="grid gap-1.5"><Label>Phone (WhatsApp)</Label><Input required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
-              <div className="grid gap-1.5"><Label>City</Label><Input required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
-              <div className="grid gap-1.5"><Label>Skills / experience</Label><Input value={form.skills} onChange={(e) => setForm({ ...form, skills: e.target.value })} /></div>
-              <div className="grid gap-1.5"><Label>Why do you want to volunteer?</Label><Textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Nomor telepon (WhatsApp)</Label><Input required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Kota</Label><Input required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Keahlian / pengalaman</Label><Input value={form.skills} onChange={(e) => setForm({ ...form, skills: e.target.value })} /></div>
+              <div className="grid gap-1.5"><Label>Mengapa Anda ingin menjadi relawan?</Label><Textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} /></div>
               <Button type="submit" size="lg" className="rounded-full" disabled={busy}>
-                {busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Submit application
+                {busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Kirim pendaftaran
               </Button>
             </form>
           </CardContent>

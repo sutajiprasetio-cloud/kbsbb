@@ -28,7 +28,7 @@ export function DonationForm({
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!amount || amount < 10_000) return toast.error("Minimum donation is Rp 10.000");
+    if (!amount || amount < 10_000) return toast.error("Donasi minimum Rp 10.000");
     setBusy(true);
     const { error } = await supabase.from("donations").insert({
       donor_name: form.donor_name.trim().slice(0, 100),
@@ -43,7 +43,7 @@ export function DonationForm({
     } as any);
     setBusy(false);
     if (error) return toast.error(error.message);
-    toast.success("Thank you! We'll email you payment instructions shortly.");
+    toast.success("Terima kasih! Kami akan mengirimkan instruksi pembayaran melalui email.");
     setForm({ donor_name: "", donor_email: "", phone: "", message: "" });
     setAnonymous(false);
     onDone?.();
@@ -53,20 +53,20 @@ export function DonationForm({
     <form className="grid gap-5" onSubmit={submit}>
       {campaignTitle && (
         <p className="text-sm text-muted-foreground">
-          You are supporting <span className="font-semibold text-foreground">{campaignTitle}</span>.
+          Anda mendukung <span className="font-semibold text-foreground">{campaignTitle}</span>.
         </p>
       )}
 
       <div className="flex gap-2 p-1 bg-muted rounded-full w-fit">
         {(["once", "monthly"] as const).map((f) => (
           <button key={f} type="button" onClick={() => setFreq(f)} className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${freq === f ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground"}`}>
-            {f === "once" ? "One-time" : "Monthly"}
+            {f === "once" ? "Sekali" : "Bulanan"}
           </button>
         ))}
       </div>
 
       <div>
-        <h3 className="text-lg font-bold">Choose amount</h3>
+        <h3 className="text-lg font-bold">Pilih nominal</h3>
         <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
           {AMOUNTS.map((a) => (
             <button type="button" key={a} onClick={() => setAmount(a)} className={`rounded-2xl border-2 px-3 py-4 text-center font-bold transition-all ${amount === a ? "border-primary bg-brand-soft text-primary" : "border-border hover:border-primary/50"}`}>
@@ -81,20 +81,20 @@ export function DonationForm({
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        <div className="grid gap-1.5"><Label>Full name</Label><Input required maxLength={100} value={form.donor_name} onChange={(e) => setForm({ ...form, donor_name: e.target.value })} /></div>
+        <div className="grid gap-1.5"><Label>Nama lengkap</Label><Input required maxLength={100} value={form.donor_name} onChange={(e) => setForm({ ...form, donor_name: e.target.value })} /></div>
         <div className="grid gap-1.5"><Label>Email</Label><Input type="email" required maxLength={255} value={form.donor_email} onChange={(e) => setForm({ ...form, donor_email: e.target.value })} /></div>
       </div>
-      <div className="grid gap-1.5"><Label>Phone number</Label><Input required maxLength={40} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
-      <div className="grid gap-1.5"><Label>Message / prayer (optional)</Label><Textarea rows={3} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Write a short message or prayer…" /></div>
+      <div className="grid gap-1.5"><Label>Nomor telepon</Label><Input required maxLength={40} value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
+      <div className="grid gap-1.5"><Label>Pesan / doa (opsional)</Label><Textarea rows={3} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tuliskan pesan atau doa singkat…" /></div>
 
       <label className="flex items-center gap-3 text-sm">
         <Checkbox checked={anonymous} onCheckedChange={(v) => setAnonymous(!!v)} />
-        Donate anonymously (your name won't be shown publicly)
+        Donasi sebagai anonim (nama Anda tidak ditampilkan publik)
       </label>
 
       <Button size="lg" className="rounded-full gap-2 h-14 text-base shadow-glow" disabled={busy}>
         {busy ? <Loader2 className="h-5 w-5 animate-spin" /> : <Heart className="h-5 w-5 fill-current" />}
-        Donate Rp {rp(amount)} {freq === "monthly" && "/ month"}
+        Donasi Rp {rp(amount)} {freq === "monthly" && "/ bulan"}
       </Button>
     </form>
   );
