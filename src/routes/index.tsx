@@ -303,11 +303,11 @@ function LatestNews() {
     <section className="py-20 md:py-28">
       <div className="container-x">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <SectionHeading eyebrow="Latest News" title="Stories from the field" align="left" />
-          <Link to="/news" className="text-sm font-semibold text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">All news <ArrowRight className="h-4 w-4" /></Link>
+          <SectionHeading eyebrow="Berita Terbaru" title="Kabar dari lapangan" align="left" />
+          <Link to="/news" className="text-sm font-semibold text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">Semua berita <ArrowRight className="h-4 w-4" /></Link>
         </div>
         {items && items.length === 0 ? (
-          <EmptyState className="mt-10" title="No news yet" description="Published stories will appear here." />
+          <EmptyState className="mt-10" title="Belum ada berita" description="Berita yang dipublikasikan akan muncul di sini." />
         ) : (
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {(items ?? []).map((n: any) => (
@@ -318,11 +318,11 @@ function LatestNews() {
                   </div>
                   <CardContent className="px-5 pb-5">
                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                      <span className="rounded-full bg-ocean-soft px-2.5 py-0.5 font-semibold text-[oklch(0.4_0.15_240)]">{n.tags?.[0] ?? "News"}</span>
-                      {n.published_at && <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(n.published_at).toLocaleDateString()}</span>}
+                      <span className="rounded-full bg-ocean-soft px-2.5 py-0.5 font-semibold text-[oklch(0.4_0.15_240)]">{n.tags?.[0] ?? "Berita"}</span>
+                      {n.published_at && <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(n.published_at).toLocaleDateString("id-ID")}</span>}
                     </div>
                     <h3 className="mt-3 text-lg font-bold leading-snug">{n.title}</h3>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">Read article <ArrowRight className="h-4 w-4" /></span>
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">Baca selengkapnya <ArrowRight className="h-4 w-4" /></span>
                   </CardContent>
                 </Card>
               </Link>
@@ -339,9 +339,9 @@ function UpcomingEvents() {
   return (
     <section className="py-20 md:py-28 bg-brand-soft/40 border-y border-border/60">
       <div className="container-x">
-        <SectionHeading eyebrow="Upcoming Events" title="Come, join us in person" />
+        <SectionHeading eyebrow="Kegiatan Mendatang" title="Mari bergabung bersama kami" />
         {items && items.length === 0 ? (
-          <EmptyState className="mt-12" title="No events scheduled" description="Published events will show up here." />
+          <EmptyState className="mt-12" title="Belum ada kegiatan" description="Kegiatan yang dipublikasikan akan tampil di sini." />
         ) : (
           <div className="mt-12 grid gap-4 md:grid-cols-2">
             {(items ?? []).map((e: any) => {
@@ -352,7 +352,7 @@ function UpcomingEvents() {
                     <div className="grid h-20 w-20 shrink-0 place-items-center rounded-2xl gradient-brand text-white">
                       <div className="text-center leading-tight">
                         <div className="text-2xl font-extrabold">{d.getDate().toString().padStart(2, "0")}</div>
-                        <div className="text-[11px] uppercase tracking-widest opacity-90">{d.toLocaleString("en", { month: "short" })}</div>
+                        <div className="text-[11px] uppercase tracking-widest opacity-90">{d.toLocaleString("id-ID", { month: "short" })}</div>
                       </div>
                     </div>
                     <div className="min-w-0">
@@ -379,16 +379,16 @@ function GalleryPreview() {
     <section className="py-20 md:py-28">
       <div className="container-x">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <SectionHeading eyebrow="Gallery" title="Moments of impact" align="left" />
-          <Link to="/gallery" className="text-sm font-semibold text-primary inline-flex items-center gap-1">View all <ArrowRight className="h-4 w-4" /></Link>
+          <SectionHeading eyebrow="Galeri" title="Momen kebaikan" align="left" />
+          <Link to="/gallery" className="text-sm font-semibold text-primary inline-flex items-center gap-1">Lihat semua <ArrowRight className="h-4 w-4" /></Link>
         </div>
         {items && items.length === 0 ? (
-          <EmptyState className="mt-10" title="No photos yet" description="Gallery photos will appear here once uploaded." />
+          <EmptyState className="mt-10" title="Belum ada foto" description="Foto galeri akan tampil di sini setelah diunggah." />
         ) : (
           <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {(items ?? []).map((g: any, i: number) => (
               <div key={g.id} className={`relative overflow-hidden rounded-2xl group ${i % 5 === 0 ? "md:row-span-2 md:col-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
-                <SafeImage src={g.image_url} alt={g.title ?? "Gallery"} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <SafeImage src={g.image_url} alt={g.title ?? "Galeri"} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ))}
@@ -414,7 +414,7 @@ function Testimonials() {
     return (
       <section className="py-20 md:py-28">
         <div className="container-x">
-          <EmptyState title="No stories yet" description="Testimonials from our community will appear here." />
+          <EmptyState title="Belum ada kisah" description="Testimoni dari komunitas kami akan tampil di sini." />
         </div>
       </section>
     );
@@ -438,7 +438,7 @@ function Testimonials() {
           {count > 1 && (
             <div className="mt-6 flex justify-center gap-2">
               {items.map((t: any, idx: number) => (
-                <button key={t.id} onClick={() => setI(idx)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-white" : "w-3 bg-white/40"}`} aria-label={`Quote ${idx + 1}`} />
+                <button key={t.id} onClick={() => setI(idx)} className={`h-1.5 rounded-full transition-all ${i === idx ? "w-8 bg-white" : "w-3 bg-white/40"}`} aria-label={`Kutipan ${idx + 1}`} />
               ))}
             </div>
           )}
@@ -454,9 +454,9 @@ function PartnersMarquee() {
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
-        <SectionHeading eyebrow="Our Partners" title="Trusted by leaders across sectors" />
+        <SectionHeading eyebrow="Mitra Kami" title="Dipercaya oleh berbagai institusi" />
         {items && items.length === 0 && (
-          <EmptyState className="mt-12" title="No partners listed yet" description="Partner organisations will be shown here." />
+          <EmptyState className="mt-12" title="Belum ada mitra" description="Organisasi mitra akan ditampilkan di sini." />
         )}
       </div>
       {list.length > 0 && (
@@ -479,18 +479,18 @@ function NewsletterAndMap() {
     <section className="py-20 md:py-28 bg-brand-soft/40 border-t border-border/60">
       <div className="container-x grid gap-10 lg:grid-cols-2">
         <div className="rounded-3xl bg-card border border-border p-8 md:p-10 shadow-soft">
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary"><Mail className="h-3.5 w-3.5" /> Newsletter</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">Stay close to the mission</h2>
-          <p className="mt-3 text-muted-foreground">Monthly stories from the field, transparent impact reports and ways to help — straight to your inbox.</p>
+          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary"><Mail className="h-3.5 w-3.5" /> Buletin</span>
+          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">Tetap terhubung dengan misi kami</h2>
+          <p className="mt-3 text-muted-foreground">Kisah dari lapangan setiap bulan, laporan dampak yang transparan, dan cara membantu — langsung ke email Anda.</p>
           <form className="mt-6 flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
-            <Input type="email" required placeholder="you@email.com" className="h-12 rounded-full bg-background px-5" />
-            <Button type="submit" className="h-12 rounded-full px-7">Subscribe</Button>
+            <Input type="email" required placeholder="nama@email.com" className="h-12 rounded-full bg-background px-5" />
+            <Button type="submit" className="h-12 rounded-full px-7">Berlangganan</Button>
           </form>
-          <p className="mt-3 text-xs text-muted-foreground">We respect your inbox. Unsubscribe anytime.</p>
+          <p className="mt-3 text-xs text-muted-foreground">Kami menghargai privasi Anda. Berhenti berlangganan kapan saja.</p>
         </div>
         <div className="rounded-3xl overflow-hidden border border-border shadow-soft aspect-video lg:aspect-auto min-h-[320px]">
           <iframe
-            title="KBSBB Office Map"
+            title="Peta Kantor KBSBB"
             src="https://www.google.com/maps?q=Monas+Jakarta&output=embed"
             className="h-full w-full"
             loading="lazy"
