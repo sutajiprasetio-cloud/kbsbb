@@ -14,10 +14,10 @@ import { SafeImage } from "@/components/safe-image";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KBSBB — Sharing Health, Sharing Blessings" },
-      { name: "description", content: "Join KBSBB, an Indonesian humanitarian foundation delivering health, education, food and disaster relief programs. Donate, volunteer, or partner with us." },
-      { property: "og:title", content: "KBSBB — Sharing Health, Sharing Blessings" },
-      { property: "og:description", content: "Empowering Indonesian communities through health, education, food and disaster relief." },
+      { title: "KBSBB — Berbagi Sehat, Berbagi Berkah" },
+      { name: "description", content: "KBSBB adalah yayasan kemanusiaan Indonesia yang menjalankan program kesehatan, pendidikan, pangan, dan tanggap bencana. Donasi, jadi relawan, atau bermitra bersama kami." },
+      { property: "og:title", content: "KBSBB — Berbagi Sehat, Berbagi Berkah" },
+      { property: "og:description", content: "Memberdayakan masyarakat Indonesia melalui program kesehatan, pendidikan, pangan, dan tanggap bencana." },
     ],
   }),
   component: HomePage,
@@ -178,10 +178,10 @@ function HeroSlider() {
 
 
 const STATS = [
-  { icon: Users, end: 3400, suffix: "+", label: "Active volunteers" },
-  { icon: HandCoins, end: 1200000, suffix: "+", label: "Meals delivered" },
-  { icon: Sprout, end: 340, suffix: "", label: "Villages served" },
-  { icon: Heart, end: 128, suffix: "K", label: "Lives touched" },
+  { icon: Users, end: 3400, suffix: "+", label: "Relawan aktif" },
+  { icon: HandCoins, end: 1200000, suffix: "+", label: "Paket makanan tersalurkan" },
+  { icon: Sprout, end: 340, suffix: "", label: "Desa terlayani" },
+  { icon: Heart, end: 128, suffix: "K", label: "Jiwa terbantu" },
 ];
 
 function StatsSection() {
@@ -224,9 +224,9 @@ function FeaturedPrograms() {
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
-        <SectionHeading eyebrow="Our Programs" title="Real work. Real change." description="Humanitarian action delivered directly by our volunteers to the communities that need it most." />
+        <SectionHeading eyebrow="Program Kami" title="Kerja nyata. Perubahan nyata." description="Aksi kemanusiaan yang disalurkan langsung oleh relawan kami kepada masyarakat yang paling membutuhkan." />
         {items && items.length === 0 ? (
-          <EmptyState className="mt-12" title="No programs yet" description="Our programs will be listed here once published." />
+          <EmptyState className="mt-12" title="Belum ada program" description="Program kami akan ditampilkan di sini setelah dipublikasikan." />
         ) : (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {(items ?? []).map((p: any) => {
@@ -242,7 +242,7 @@ function FeaturedPrograms() {
                   <CardContent className="px-5 pb-5">
                     <h3 className="text-lg font-bold">{p.title}</h3>
                     <p className="mt-1.5 text-sm text-muted-foreground">{p.summary ?? p.description}</p>
-                    <Link to="/programs" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">Learn more <ArrowRight className="h-4 w-4" /></Link>
+                    <Link to="/programs" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">Selengkapnya <ArrowRight className="h-4 w-4" /></Link>
                   </CardContent>
                 </Card>
               );
@@ -261,9 +261,9 @@ function DonationProgress() {
   return (
     <section className="py-20 md:py-28 bg-brand-soft/40 border-y border-border/60">
       <div className="container-x">
-        <SectionHeading eyebrow="Active Campaigns" title="Turn your gift into someone's tomorrow" description="Track every campaign in real time. 100% of your donation reaches the field." />
+        <SectionHeading eyebrow="Program Donasi Aktif" title="Ubah kebaikan Anda menjadi harapan mereka" description="Pantau setiap program donasi secara real time. 100% donasi Anda tersalurkan ke lapangan." />
         {items && items.length === 0 ? (
-          <EmptyState className="mt-12" title="No active campaigns" description="There are no running campaigns right now — you can still give a general donation." />
+          <EmptyState className="mt-12" title="Belum ada program donasi aktif" description="Saat ini belum ada program donasi berjalan — Anda tetap dapat berdonasi umum." />
         ) : (
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {(items ?? []).map((c: any) => {
@@ -278,13 +278,13 @@ function DonationProgress() {
                   <CardContent className="px-5 pb-5">
                     <h3 className="text-lg font-bold">{c.title}</h3>
                     <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                      <span>Raised <b className="text-foreground">{rupiah(raised)}</b></span>
+                      <span>Dana Terkumpul <b className="text-foreground">{rupiah(raised)}</b></span>
                       <span className="font-semibold text-primary">{pct}%</span>
                     </div>
                     <Progress value={pct} className="mt-2 h-2" />
-                    <div className="mt-1 text-xs text-muted-foreground">Goal {rupiah(goal)}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">Target Dana {rupiah(goal)}</div>
                     <Link to="/donate" className="mt-5 block">
-                      <Button className="w-full rounded-full gap-2"><Heart className="h-4 w-4 fill-current" /> Donate</Button>
+                      <Button className="w-full rounded-full gap-2"><Heart className="h-4 w-4 fill-current" /> Donasi Sekarang</Button>
                     </Link>
                   </CardContent>
                 </Card>
