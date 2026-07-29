@@ -65,11 +65,11 @@ function HeroSlider() {
           <div className="max-w-2xl text-white">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">KBSBB</h1>
             <p className="mt-5 text-base md:text-lg text-white/85 max-w-xl">
-              {slides ? "No hero slides published yet — they will appear here once added." : ""}
+              {slides ? "Belum ada slide yang dipublikasikan — slide akan tampil di sini setelah ditambahkan." : ""}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/donate"><Button size="lg" className="rounded-full gap-2 px-7 bg-white text-primary hover:bg-white/90"><Heart className="h-4 w-4 fill-current" /> Donate now</Button></Link>
-              <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Our programs <ArrowRight className="h-4 w-4" /></Button></Link>
+              <Link to="/donate"><Button size="lg" className="rounded-full gap-2 px-7 bg-white text-primary hover:bg-white/90"><Heart className="h-4 w-4 fill-current" /> Donasi Sekarang</Button></Link>
+              <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Program Kami <ArrowRight className="h-4 w-4" /></Button></Link>
             </div>
           </div>
         </div>
@@ -78,6 +78,11 @@ function HeroSlider() {
   }
 
   const cur = slides[Math.min(i, count - 1)];
+  const title = (cur.title ?? "").trim();
+  const subtitle = (cur.subtitle ?? "").trim();
+  const ctaLabel = (cur.cta_label ?? "").trim();
+  const ctaHref = (cur.cta_href ?? "").trim();
+  const hasText = Boolean(title || subtitle || (ctaLabel && ctaHref));
   return (
     <section
       className="relative w-full max-w-full overflow-hidden min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] lg:max-h-[860px] touch-pan-y select-none"
@@ -100,43 +105,46 @@ function HeroSlider() {
     >
       {slides.map((s: any, idx: number) => (
         <div key={s.id} aria-hidden={i !== idx} className={`absolute inset-0 transition-opacity duration-[1400ms] ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
-          <SafeImage src={s.image_url} alt={s.title} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover object-center" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/20" />
+          <SafeImage src={s.image_url} alt={s.title || "KBSBB"} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover object-center" />
+          <div className={`absolute inset-0 ${hasText ? "bg-gradient-to-r from-black/80 via-black/50 to-black/20" : "bg-black/20"}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
         </div>
       ))}
       <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/30 blur-3xl animate-blob" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-[22rem] w-[22rem] rounded-full bg-ocean/30 blur-3xl animate-blob" style={{ animationDelay: "4s" }} />
-      <div className="relative z-10 container-x flex min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] items-center py-24">
-        <div className="max-w-2xl text-white">
-          <div key={i} className="animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full bg-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
-              <Sprout className="h-3.5 w-3.5" /> KBSBB
-            </span>
-            <h1 className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.08] tracking-tight break-words">
-              {cur.title}
-            </h1>
-            {cur.subtitle && <p className="mt-5 text-sm sm:text-base md:text-lg text-white/85 max-w-xl">{cur.subtitle}</p>}
-            <div className="mt-8 flex flex-wrap gap-3">
-              {cur.cta_href ? (
-                <a href={cur.cta_href}><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> {cur.cta_label ?? "Donate now"}</Button></a>
-              ) : (
-                <Link to="/donate"><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> {cur.cta_label ?? "Donate now"}</Button></Link>
+      {hasText && (
+        <div className="relative z-10 container-x flex min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] items-center py-24">
+          <div className="max-w-2xl text-white">
+            <div key={i} className="animate-fade-up">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
+                <Sprout className="h-3.5 w-3.5" /> KBSBB
+              </span>
+              {title && (
+                <h1 className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.08] tracking-tight break-words">
+                  {title}
+                </h1>
               )}
-              <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Our programs <ArrowRight className="h-4 w-4" /></Button></Link>
+              {subtitle && <p className="mt-5 text-sm sm:text-base md:text-lg text-white/85 max-w-xl">{subtitle}</p>}
+              <div className="mt-8 flex flex-wrap gap-3">
+                {ctaLabel && ctaHref && (
+                  <a href={ctaHref}><Button size="lg" className="rounded-full gap-2 px-7 shadow-glow"><Heart className="h-4 w-4 fill-current" /> {ctaLabel}</Button></a>
+                )}
+                <Link to="/programs"><Button size="lg" variant="outline" className="rounded-full gap-2 px-7 border-white/70 bg-white/10 text-white hover:bg-white hover:text-foreground">Program Kami <ArrowRight className="h-4 w-4" /></Button></Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+      {!hasText && <div className="min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh]" aria-hidden />}
 
       {count > 1 && (
         <>
-          {/* Arrows — desktop & tablet only */}
+          {/* Panah navigasi — hanya desktop & tablet */}
           <button
             type="button"
             onClick={() => go(-1)}
             className="hidden sm:grid absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full bg-white/20 text-white backdrop-blur hover:bg-white hover:text-foreground transition-colors"
-            aria-label="Previous slide"
+            aria-label="Slide sebelumnya"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -144,19 +152,19 @@ function HeroSlider() {
             type="button"
             onClick={() => go(1)}
             className="hidden sm:grid absolute right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full bg-white/20 text-white backdrop-blur hover:bg-white hover:text-foreground transition-colors"
-            aria-label="Next slide"
+            aria-label="Slide berikutnya"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
 
-          {/* Pagination dots */}
+          {/* Titik navigasi */}
           <div className="absolute bottom-24 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 flex max-w-[80vw] flex-wrap justify-center gap-2">
             {slides.map((s: any, idx: number) => (
               <button
                 key={s.id}
                 type="button"
                 onClick={() => setI(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
+                aria-label={`Ke slide ${idx + 1}`}
                 aria-current={i === idx}
                 className={`h-1.5 rounded-full transition-all ${i === idx ? "w-10 bg-primary" : "w-4 bg-white/50 hover:bg-white/80"}`}
               />
