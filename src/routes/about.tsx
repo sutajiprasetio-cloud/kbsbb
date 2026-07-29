@@ -37,10 +37,17 @@ function About() {
         <section className="container-x py-20 grid lg:grid-cols-2 gap-12 items-center">
           <SafeImage src={about?.image_url} alt="Komunitas" className="rounded-3xl object-cover w-full aspect-[4/3] shadow-soft" />
           {about?.story && (
-            <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Sejarah kami</h2>
-              <p className="mt-4 text-muted-foreground leading-relaxed whitespace-pre-line">{about.story}</p>
-            </div>
+         
+          <div>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Sejarah kami</h2>
+          <p
+            className="mt-4 text-muted-foreground leading-relaxed whitespace-pre-line text-justify"
+            style={{ textAlign: "justify" }}
+          >
+              {about.story}
+            </p>
+          </div>
+          
           )}
         </section>
       )}
