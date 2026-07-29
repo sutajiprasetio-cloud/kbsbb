@@ -111,7 +111,7 @@ function Header() {
           <img src={logo} alt="KBSBB" className="h-9 w-9 lg:h-11 lg:w-11 transition-transform group-hover:scale-110" width={44} height={44} />
           <div className="leading-tight min-w-0">
             <div className="text-base font-extrabold tracking-tight text-gradient-brand">KBSBB</div>
-            <div className="hidden sm:block truncate text-[10px] uppercase tracking-widest text-muted-foreground">Berbagi Sehat · Berbagi Berkah</div>
+            <div className="hidden sm:block truncate text-[10px] uppercase tracking-widest text-muted-foreground">Komunitas Berbagi Sehat · Berbagi Berkah</div>
           </div>
         </Link>
 
@@ -280,7 +280,7 @@ function Footer() {
       </div>
       <div className="border-t border-white/10">
         <div className="container-x py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/60">
-          <p>© {new Date().getFullYear()} KBSBB. Hak Cipta Dilindungi.</p>
+          <p>© {new Date().getFullYear()} KBSBB. Hak cipta dilindungi.</p>
           <p>Dibuat oleh <Heart className="inline h-3 w-3 text-primary fill-current" /> Tim KBSBB</p>
         </div>
       </div>
