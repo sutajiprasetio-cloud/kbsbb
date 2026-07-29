@@ -238,11 +238,11 @@ function Footer() {
             </div>
           </div>
           <p className="mt-4 text-sm text-white/70 leading-relaxed">
-            Komunitas Berbagi Sehat Berbagi Berkah — an Indonesian humanitarian foundation working across health, education, food security and disaster relief.
+            Komunitas Berbagi Sehat Berbagi Berkah — yayasan kemanusiaan Indonesia yang bergerak di bidang kesehatan, pendidikan, ketahanan pangan, dan tanggap bencana.
           </p>
           <div className="mt-5 flex items-center gap-3">
             {[Facebook, Instagram, Twitter, Youtube].map((I, i) => (
-              <a key={i} href="#" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 transition-all" aria-label="social">
+              <a key={i} href="#" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 transition-all" aria-label="media sosial">
                 <I className="h-4 w-4" />
               </a>
             ))}
@@ -250,7 +250,7 @@ function Footer() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-white">Explore</h4>
+          <h4 className="text-sm font-semibold text-white">Jelajahi</h4>
           <ul className="mt-4 space-y-2.5 text-sm">
             {NAV.slice(0, 6).map((n) => (
               <li key={n.to}><Link to={n.to} className="text-white/70 hover:text-primary transition-colors">{n.label}</Link></li>
@@ -259,18 +259,18 @@ function Footer() {
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-white">Get Involved</h4>
+          <h4 className="text-sm font-semibold text-white">Ikut Berperan</h4>
           <ul className="mt-4 space-y-2.5 text-sm">
-            <li><Link to="/volunteer" className="text-white/70 hover:text-primary transition-colors">Volunteer</Link></li>
-            <li><Link to="/donate" className="text-white/70 hover:text-primary transition-colors">Donate</Link></li>
-            <li><Link to="/partners" className="text-white/70 hover:text-primary transition-colors">Partnerships</Link></li>
-            <li><Link to="/events" className="text-white/70 hover:text-primary transition-colors">Upcoming Events</Link></li>
-            <li><Link to="/contact" className="text-white/70 hover:text-primary transition-colors">Contact us</Link></li>
+            <li><Link to="/volunteer" className="text-white/70 hover:text-primary transition-colors">Jadi Relawan</Link></li>
+            <li><Link to="/donate" className="text-white/70 hover:text-primary transition-colors">Donasi</Link></li>
+            <li><Link to="/partners" className="text-white/70 hover:text-primary transition-colors">Kemitraan</Link></li>
+            <li><Link to="/events" className="text-white/70 hover:text-primary transition-colors">Kegiatan Mendatang</Link></li>
+            <li><Link to="/contact" className="text-white/70 hover:text-primary transition-colors">Hubungi Kami</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold text-white">Contact</h4>
+          <h4 className="text-sm font-semibold text-white">Kontak</h4>
           <ul className="mt-4 space-y-3 text-sm text-white/70">
             <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" /> Jl. Merdeka No. 88, Jakarta Pusat 10110, Indonesia</li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-primary" /> +62 812 3456 7890</li>
@@ -280,8 +280,8 @@ function Footer() {
       </div>
       <div className="border-t border-white/10">
         <div className="container-x py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/60">
-          <p>© {new Date().getFullYear()} Yayasan KBSBB. All rights reserved.</p>
-          <p>Made with <Heart className="inline h-3 w-3 text-primary fill-current" /> in Indonesia</p>
+          <p>© {new Date().getFullYear()} Yayasan KBSBB. Seluruh hak cipta dilindungi.</p>
+          <p>Dibuat dengan <Heart className="inline h-3 w-3 text-primary fill-current" /> di Indonesia</p>
         </div>
       </div>
     </footer>
