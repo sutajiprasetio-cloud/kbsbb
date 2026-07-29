@@ -5,17 +5,17 @@ import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 
 const NAV = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/programs", label: "Programs" },
-  { to: "/news", label: "News" },
-  { to: "/gallery", label: "Gallery" },
-  { to: "/events", label: "Events" },
-  { to: "/volunteer", label: "Volunteer" },
-  { to: "/partners", label: "Partners" },
-  { to: "/testimonials", label: "Stories" },
-  { to: "/faq", label: "FAQ" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "Beranda" },
+  { to: "/about", label: "Tentang Kami" },
+  { to: "/programs", label: "Program" },
+  { to: "/news", label: "Berita" },
+  { to: "/gallery", label: "Galeri" },
+  { to: "/events", label: "Kegiatan" },
+  { to: "/volunteer", label: "Relawan" },
+  { to: "/partners", label: "Mitra" },
+  { to: "/testimonials", label: "Kisah Inspiratif" },
+  { to: "/faq", label: "Tanya Jawab" },
+  { to: "/contact", label: "Kontak" },
 ] as const;
 
 export function SiteLayout({ children }: { children: ReactNode }) {
