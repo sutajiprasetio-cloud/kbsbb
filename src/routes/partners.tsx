@@ -22,7 +22,7 @@ function Partners() {
   const items = useTable<any>("partners", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
   return (
     <SiteLayout>
-      <PageHero eyebrow="Mitra Kami" title="Bersama kita melangkah lebih jauh" description="Dari institusi global hingga usaha lokal — terima kasih telah mendukung misi kami." />
+      <PageHero eyebrow="Mitra Kami" title="Bersama Menebar Sehat, Bersama Meraih Berkah" description="Kolaborasi bersama berbagai mitra menjadi kekuatan bagi KBSBB untuk menghadirkan program kesehatan, sosial, pendidikan, dakwah dan kemanusiaan yang memberikan manfaat dan keberkahan bagi masyarakat luas" />
       <section className="container-x py-20">
         {items && items.length === 0 ? (
           <EmptyState title="Belum ada mitra terdaftar" description="Direktori mitra kami sedang diperbarui. Hubungi kami jika Anda ingin berkolaborasi." />
@@ -38,8 +38,8 @@ function Partners() {
         <Card className="mt-16 rounded-3xl border-border/70 gradient-brand text-white">
           <CardContent className="p-10 md:p-14 text-center">
             <h2 className="text-3xl md:text-4xl font-extrabold">Jadi mitra kami</h2>
-            <p className="mt-3 max-w-xl mx-auto opacity-90">Penyelarasan CSR, relawan karyawan, sponsor program — mari rancang dampak bersama.</p>
-            <Link to="/contact"><Button size="lg" className="mt-6 rounded-full bg-white text-primary hover:bg-white/90">Hubungi tim kemitraan</Button></Link>
+            <p className="mt-3 max-w-xl mx-auto opacity-90">Mari berkolaborasi menghadirkan program kesehatan, sosial, pendidikan, dakwah dan kemanusiaan yang memberikan manfaat dan keberkahan bagi masyarakat luas.</p>
+            <Link to="/contact"><Button size="lg" className="mt-6 rounded-full bg-white text-primary hover:bg-white/90">Bergabung jadi mitra</Button></Link>
           </CardContent>
         </Card>
       </section>
