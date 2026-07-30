@@ -100,7 +100,7 @@ function About() {
         {team && team.length === 0 ? (
           <EmptyState className="mt-10" title="Data pengurus segera hadir" description="Profil pengurus kami akan segera dipublikasikan di sini." />
         ) : (
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-6 gap-5">
             {(team ?? []).map((t: any) => (
               <div key={t.id} className="text-center">
                 <SafeImage src={t.photo_url} alt={t.name} className="mx-auto aspect-square w-full rounded-3xl object-cover" />
