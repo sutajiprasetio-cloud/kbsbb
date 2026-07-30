@@ -53,7 +53,7 @@ function HeroSlider() {
 
   useEffect(() => {
     if (count < 2 || paused) return;
-    const t = setInterval(() => setI((v) => (v + 1) % count), 6500);
+    const t = setInterval(() => setI((v) => (v + 1) % count), 5000);
     return () => clearInterval(t);
   }, [count, paused]);
 
@@ -85,7 +85,28 @@ function HeroSlider() {
   const hasText = Boolean(title || subtitle || (ctaLabel && ctaHref));
   return (
     <section
-      className="relative w-full max-w-full overflow-hidden min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] lg:max-h-[860px] touch-pan-y select-none"
+// coding ini diganti dengan yg dibawah    className="relative w-full max-w-full overflow-hidden min-h-[78svh] md:min-h-[80svh] lg:min-h-[86svh] lg:max-h-[860px] touch-pan-y select-none"
+// supaya hasilnya menjadi seperti ini ✅ Slider tidak full layar ✅ Mirip Dompet Dhuafa ✅ Bentuk card ✅ Ada radius ✅ Ada shadow
+// baris mulai ganti
+      <section
+      className="
+        relative
+        mx-auto
+        mt-6
+        w-[95%]
+        lg:w-[90%]
+        max-w-[1400px]
+        h-[250px]
+        md:h-[400px]
+        lg:h-[500px]
+        overflow-hidden
+        rounded-[20px]
+        shadow-2xl
+        touch-pan-y
+        select-none
+      "
+     // baris akhir ganti 
+          
       aria-roledescription="carousel"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -104,8 +125,28 @@ function HeroSlider() {
       }}
     >
       {slides.map((s: any, idx: number) => (
-        <div key={s.id} aria-hidden={i !== idx} className={`absolute inset-0 transition-opacity duration-[1400ms] ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
-          <SafeImage src={s.image_url} alt={s.title || "KBSBB"} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover object-center" />
+        <div key={s.id} aria-hidden={i !== idx} className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
+          
+// coding ini dimatikan karena diganti dengan yg di bawah ini <SafeImage src={s.image_url} alt={s.title || "KBSBB"} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover object-center" />
+
+//baris mulai diganti
+          <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute inset-0 bg-center bg-cover blur-2xl scale-110 opacity-40"
+            style={{
+              backgroundImage: `url(${s.image_url})`,
+            }}
+          />
+          <SafeImage
+            src={s.image_url}
+            alt={s.title || "KBSBB"}
+            loading={idx === 0 ? "eager" : "lazy"}
+            className="relative z-10 h-full w-full object-contain object-center"
+          />
+         </div>
+//baris akhir diganti
+
+       
           <div className={`absolute inset-0 ${hasText ? "bg-gradient-to-r from-black/80 via-black/50 to-black/20" : "bg-black/20"}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
         </div>
@@ -143,7 +184,7 @@ function HeroSlider() {
           <button
             type="button"
             onClick={() => go(-1)}
-            className="hidden sm:grid absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full bg-white/20 text-white backdrop-blur hover:bg-white hover:text-foreground transition-colors"
+          className="hidden md:grid absolute left-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 place-items-center rounded-full bg-white text-primary shadow-lg hover:scale-105 transition-all"
             aria-label="Slide sebelumnya"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -151,7 +192,7 @@ function HeroSlider() {
           <button
             type="button"
             onClick={() => go(1)}
-            className="hidden sm:grid absolute right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full bg-white/20 text-white backdrop-blur hover:bg-white hover:text-foreground transition-colors"
+           className="hidden md:grid absolute right-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 place-items-center rounded-full bg-white text-primary shadow-lg hover:scale-105 transition-all"
             aria-label="Slide berikutnya"
           >
             <ChevronRight className="h-5 w-5" />
