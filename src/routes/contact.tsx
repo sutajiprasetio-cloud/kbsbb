@@ -45,7 +45,7 @@ function Contact() {
 
   return (
     <SiteLayout>
-      <PageHero eyebrow="Kontak" title="Mari berbincang" description="Pertanyaan, kemitraan, atau media — kami senang mendengar dari Anda." />
+      <PageHero eyebrow="Kontak" title="Hubungi Kami" description="Bersama kita dapat memperluas manfaat dan menghadirkan lebih banyak kebaikan dan keberkahan" />
       <section className="container-x py-20 grid lg:grid-cols-[1fr_1.2fr] gap-8">
         <div className="space-y-4">
           {[
