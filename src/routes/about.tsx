@@ -88,7 +88,7 @@ function About() {
               <CardContent className="p-6">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-brand text-white"><v.icon className="h-5 w-5" /></div>
                 <h3 className="mt-4 text-lg font-bold">{v.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{v.text}</p>
+                <p className="mt-2 text-sm text-muted-foreground text-justify" style={{ textAlign: "justify" }}>{v.text}</p>
               </CardContent>
             </Card>
           ))}
