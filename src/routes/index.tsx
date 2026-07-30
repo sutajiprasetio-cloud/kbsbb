@@ -127,9 +127,7 @@ function HeroSlider() {
       {slides.map((s: any, idx: number) => (
         <div key={s.id} aria-hidden={i !== idx} className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} style={{ transitionProperty: "opacity, transform" }}>
           
-// coding ini dimatikan karena diganti dengan yg di bawah ini <SafeImage src={s.image_url} alt={s.title || "KBSBB"} loading={idx === 0 ? "eager" : "lazy"} className="h-full w-full object-cover object-center" />
 
-//baris mulai diganti
           <div className="absolute inset-0 overflow-hidden">
           <div
             className="absolute inset-0 bg-center bg-cover blur-2xl scale-110 opacity-40"
