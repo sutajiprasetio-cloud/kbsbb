@@ -27,7 +27,7 @@ function Partners() {
         {items && items.length === 0 ? (
           <EmptyState title="Belum ada mitra terdaftar" description="Direktori mitra kami sedang diperbarui. Hubungi kami jika Anda ingin berkolaborasi." />
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {(items ?? []).map((p: any) => (
               <a key={p.id} href={p.website ?? "#"} target={p.website ? "_blank" : undefined} rel="noreferrer" className="grid h-28 place-items-center rounded-3xl border border-border bg-card p-4 text-2xl font-black tracking-tight text-muted-foreground hover:text-primary hover:shadow-soft transition-all">
                 {p.logo_url ? <SafeImage src={p.logo_url} alt={p.name} className="max-h-16 max-w-full object-contain" /> : p.name}
