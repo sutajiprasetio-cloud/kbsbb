@@ -19,10 +19,10 @@ export const Route = createFileRoute("/about")({
 });
 
 const VALUES = [
-  { icon: Heart, title: "Empati", text: "Kami melayani dengan hati — setiap penerima manfaat adalah keluarga." },
-  { icon: Award, title: "Integritas", text: "100% transparan, diaudit setiap tahun, setiap rupiah dipertanggungjawabkan." },
-  { icon: Users, title: "Kebersamaan", text: "Tokoh lokal, solusi lokal, dampak berkelanjutan." },
-  { icon: Sprout, title: "Keberlanjutan", text: "Program jangka panjang yang bertahan melampaui masa bantuan." },
+  { icon: Heart, title: "Kepedulian", text: "Kami hadir dengan kepedulian dan kasih sayang untuk membantu masyarakat yang membutuhkan tanpa membedakan latar belakang." },
+  { icon: Award, title: "Kebersamaan", text: "Kebaikan akan lebih bermakna ketika dilakukan bersama. Kami mengajak masyarakat, relawan, dan mitra untuk tumbuh dalam semangat gotong royong." },
+  { icon: Users, title: "Pelayanan", text: "Melalui program kesehatan, sosial, pendidikan, dakwah dan kemanusiaan, kami memberikan pelayanan yang bermanfaat dan tepat sasaran." },
+  { icon: Sprout, title: "Keberkahan", text: "Setiap program dirancang untuk menghadirkan manfaat yang berkelanjutan, sehingga kebaikan yang diberikan dapat terus dirasakan oleh masyarakat yang membutuhkan." },
 ];
 
 function About() {
@@ -96,7 +96,7 @@ function About() {
       </section>
 
       <section className="container-x py-16">
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-center">Pengurus</h2>
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-center">Tim KBSBB</h2>
         {team && team.length === 0 ? (
           <EmptyState className="mt-10" title="Data pengurus segera hadir" description="Profil pengurus kami akan segera dipublikasikan di sini." />
         ) : (
