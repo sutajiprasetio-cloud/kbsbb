@@ -491,7 +491,14 @@ function NewsletterAndMap() {
         <div className="rounded-3xl overflow-hidden border border-border shadow-soft aspect-video lg:aspect-auto min-h-[320px]">
           <iframe
             title="Peta Kantor KBSBB"
-           src="https://www.google.com/maps?q=Monas+Jakarta&output=embed"
+        // src="https://www.google.com/maps?q=Monas+Jakarta&output=embed"
+            
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.6667577768058!2d101.45563771070825!3d0.4994113637166243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5afa78747ce75%3A0xe6f53406801a2152!2sRumah%20Sehat%20Islamic%20Nurse!5e0!3m2!1sen!2sid!4v1785467724715!5m2!1sen!2sid"
+  className="w-full h-full border-0"
+  loading="lazy"
+  referrerPolicy="strict-origin-when-cross-origin"
+  allowFullScreen
+        //Batas tambahan
             
             className="h-full w-full"
             loading="lazy"
