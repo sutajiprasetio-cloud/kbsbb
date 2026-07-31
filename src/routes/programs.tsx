@@ -25,7 +25,7 @@ function Programs() {
   const items = useTable<any>("programs", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
   return (
     <SiteLayout>
-      <PageHero eyebrow="Apa yang kami lakukan" title="Program Berbagi Sehat, Berbagi Berkah" description="Melalui berbagai program kesehatan, sosial, pendidikan, dakwah, dan kemanusiaan, KBSBB berupaya menghadirkan manfaat serta keberkahan bagi masyarakat yang membutuhkan." />
+      <PageHero eyebrow="Apa yang kami lakukan" title="Berbagi Sehat, Berbagi Berkah" description="Melalui berbagai program kesehatan, sosial, pendidikan, dakwah, dan kemanusiaan, KBSBB berupaya menghadirkan manfaat serta keberkahan bagi masyarakat yang membutuhkan." />
       <section className="container-x py-20">
         {items && items.length === 0 ? (
           <EmptyState title="Belum ada program" description="Daftar program kami sedang diperbarui. Silakan kembali lagi nanti." />
