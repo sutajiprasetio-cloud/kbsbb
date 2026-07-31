@@ -491,7 +491,9 @@ function NewsletterAndMap() {
         <div className="rounded-3xl overflow-hidden border border-border shadow-soft aspect-video lg:aspect-auto min-h-[320px]">
           <iframe
             title="Peta Kantor KBSBB"
-            src="https://www.google.com/maps?q=Monas+Jakarta&output=embed"
+            //src="https://www.google.com/maps?q=Monas+Jakarta&output=embed"
+            src="https://https://maps.app.goo.gl/frmatexqvmJgmz1t7=embed"
+            
             className="h-full w-full"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
