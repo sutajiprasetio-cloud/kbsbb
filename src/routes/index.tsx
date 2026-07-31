@@ -224,7 +224,7 @@ function FeaturedPrograms() {
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
-        <SectionHeading eyebrow="Program Kami" title="Kerja nyata. Perubahan nyata." description="Melalui berbagai program sosial, kesehatan, pendidikan, dakwah dan kemanusiaan, KBSBB berupaya menghadirkan manfaat, kepedulian, dan keberkahan bagi masyarakat yang membutuhkan." />
+        <SectionHeading eyebrow="Program Kami" title="Berbagi Sehat . Berbagi Berkah" description="Melalui berbagai program sosial, kesehatan, pendidikan, dakwah dan kemanusiaan, KBSBB berupaya menghadirkan manfaat, kepedulian, dan keberkahan bagi masyarakat yang membutuhkan." />
         {items && items.length === 0 ? (
           <EmptyState className="mt-12" title="Belum ada program" description="Program kami akan ditampilkan di sini setelah dipublikasikan." />
         ) : (
