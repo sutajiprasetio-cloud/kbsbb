@@ -454,7 +454,7 @@ function PartnersMarquee() {
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
-        <SectionHeading eyebrow="Mitra Kami" title="Dipercaya oleh berbagai institusi" />
+        <SectionHeading eyebrow="Didukung oleh" title="Mitra dan Sahabat KBSBB" />
         {items && items.length === 0 && (
           <EmptyState className="mt-12" title="Belum ada mitra" description="Organisasi mitra akan ditampilkan di sini." />
         )}
@@ -479,7 +479,7 @@ function NewsletterAndMap() {
     <section className="py-20 md:py-28 bg-brand-soft/40 border-t border-border/60">
       <div className="container-x grid gap-10 lg:grid-cols-2">
         <div className="rounded-3xl bg-card border border-border p-8 md:p-10 shadow-soft">
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary"><Mail className="h-3.5 w-3.5" /> Buletin</span>
+          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary"><Mail className="h-3.5 w-3.5" /> INFO KBSBB</span>
           <h2 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">Tetap terhubung dengan misi kami</h2>
           <p className="mt-3 text-muted-foreground">Kisah dari lapangan setiap bulan, laporan dampak yang transparan, dan cara membantu — langsung ke email Anda.</p>
           <form className="mt-6 flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
