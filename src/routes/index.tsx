@@ -224,7 +224,7 @@ function FeaturedPrograms() {
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
-        <SectionHeading eyebrow="Program Kami" title="Kerja nyata. Perubahan nyata." description="Aksi kemanusiaan yang disalurkan langsung oleh relawan kami kepada masyarakat yang paling membutuhkan." />
+        <SectionHeading eyebrow="Program Kami" title="Kerja nyata. Perubahan nyata." description="Melalui berbagai program sosial, kesehatan, pendidikan, dakwah dan kemanusiaan, KBSBB berupaya menghadirkan manfaat, kepedulian, dan keberkahan bagi masyarakat yang membutuhkan." />
         {items && items.length === 0 ? (
           <EmptyState className="mt-12" title="Belum ada program" description="Program kami akan ditampilkan di sini setelah dipublikasikan." />
         ) : (
@@ -261,7 +261,7 @@ function DonationProgress() {
   return (
     <section className="py-20 md:py-28 bg-brand-soft/40 border-y border-border/60">
       <div className="container-x">
-        <SectionHeading eyebrow="Program Donasi Aktif" title="Ubah kebaikan Anda menjadi harapan mereka" description="Pantau setiap program donasi secara real time. 100% donasi Anda tersalurkan ke lapangan." />
+        <SectionHeading eyebrow="PROGRAM KEBAIKAN" title="Satu Kebaikan, Seribu Senyuman" description="Setiap dukungan yang diberikan menjadi langkah untuk membantu masyarakat yang membutuhkan melalui berbagai program sosial dan kemanusiaan." />
         {items && items.length === 0 ? (
           <EmptyState className="mt-12" title="Belum ada program donasi aktif" description="Saat ini belum ada program donasi berjalan — Anda tetap dapat berdonasi umum." />
         ) : (
@@ -303,7 +303,7 @@ function LatestNews() {
     <section className="py-20 md:py-28">
       <div className="container-x">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <SectionHeading eyebrow="Berita Terbaru" title="Kabar dari lapangan" align="left" />
+          <SectionHeading eyebrow="Berita Terbaru" title="Berita KBSBB" align="left" />
           <Link to="/news" className="text-sm font-semibold text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">Semua berita <ArrowRight className="h-4 w-4" /></Link>
         </div>
         {items && items.length === 0 ? (
@@ -480,8 +480,8 @@ function NewsletterAndMap() {
       <div className="container-x grid gap-10 lg:grid-cols-2">
         <div className="rounded-3xl bg-card border border-border p-8 md:p-10 shadow-soft">
           <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary"><Mail className="h-3.5 w-3.5" /> INFO KBSBB</span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">Tetap terhubung dengan misi kami</h2>
-          <p className="mt-3 text-muted-foreground">Kisah dari lapangan setiap bulan, laporan dampak yang transparan, dan cara membantu — langsung ke email Anda.</p>
+          <h2 className="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight">Tetap Terhubung dengan Kegiatan Kami</h2>
+          <p className="mt-3 text-muted-foreground">Dapatkan informasi program, kegiatan sosial, laporan penyaluran bantuan, dan kisah inspiratif dari KBSBB langsung melalui email Anda.</p>
           <form className="mt-6 flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
             <Input type="email" required placeholder="nama@email.com" className="h-12 rounded-full bg-background px-5" />
             <Button type="submit" className="h-12 rounded-full px-7">Berlangganan</Button>
