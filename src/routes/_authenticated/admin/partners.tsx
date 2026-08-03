@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_authenticated/admin/partners")({
       table="partners"
       searchFields={["name"]}
       orderBy={{ column: "sort_order", ascending: true }}
-      defaultValues={{ is_active: true, sort_order: 0 }}
+      defaultValues={{ display_mode: "cover",  is_active: true, sort_order: 0 }}
       columns={[
         { name: "logo_url", label: "Logo" },
         { name: "name", label: "Name" },
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/_authenticated/admin/partners")({
         { name: "name", label: "Name", type: "text", required: true },
         { name: "website", label: "Website", type: "text" },
         { name: "logo_url", label: "Logo", type: "image", span: 2 },
+        { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "logo_url" },
         { name: "sort_order", label: "Sort order", type: "number" },
         { name: "is_active", label: "Active", type: "boolean" },
       ]}

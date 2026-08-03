@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_authenticated/admin/programs")({
       table="programs"
       searchFields={["title", "slug", "summary"]}
       orderBy={{ column: "sort_order", ascending: true }}
-      defaultValues={{ is_active: true, sort_order: 0 }}
+      defaultValues={{ display_mode: "cover",  is_active: true, sort_order: 0 }}
       columns={[
         { name: "image_url", label: "Image" },
         { name: "title", label: "Title" },
@@ -23,6 +23,7 @@ export const Route = createFileRoute("/_authenticated/admin/programs")({
         { name: "summary", label: "Summary", type: "textarea", span: 2 },
         { name: "description", label: "Description", type: "textarea", span: 2 },
         { name: "image_url", label: "Image", type: "image", span: 2 },
+        { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "image_url" },
         { name: "icon", label: "Icon (lucide name)", type: "text" },
         { name: "sort_order", label: "Sort order", type: "number" },
         { name: "is_active", label: "Active", type: "boolean" },
