@@ -7,10 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Loader2, Globe, Share2, Mail, Map, Search } from "lucide-react";
+import { Loader2, Globe, Share2, Mail, Map, Search, LayoutTemplate } from "lucide-react";
 import { MediaPicker } from "@/components/admin/media-picker";
+import { Switch } from "@/components/ui/switch";
 
-type Group = { key: string; icon: any; title: string; fields: { name: string; label: string; kind?: "text" | "textarea" | "image" }[] };
+type Group = { key: string; icon: any; title: string; fields: { name: string; label: string; kind?: "text" | "textarea" | "image" | "boolean" }[] };
 
 const GROUPS: Group[] = [
   {
@@ -20,6 +21,12 @@ const GROUPS: Group[] = [
       { name: "tagline", label: "Tagline" },
       { name: "logo_url", label: "Logo", kind: "image" },
       { name: "favicon_url", label: "Favicon", kind: "image" },
+    ],
+  },
+  {
+    key: "homepage", icon: LayoutTemplate, title: "Homepage",
+    fields: [
+      { name: "show_impact_stats", label: "Tampilkan Statistik Dampak", kind: "boolean" },
     ],
   },
   {
@@ -98,7 +105,12 @@ function SettingsPage() {
               return (
                 <div key={f.name} className={`space-y-2 ${f.kind === "textarea" || f.kind === "image" ? "md:col-span-2" : ""}`}>
                   <Label>{f.label}</Label>
-                  {f.kind === "textarea" ? (
+                  {f.kind === "boolean" ? (
+                    <div className="flex h-10 items-center gap-2">
+                      <Switch checked={v !== false && v !== "false"} onCheckedChange={(c) => set(c as any)} />
+                      <span className="text-sm text-muted-foreground">{v !== false && v !== "false" ? "Aktif" : "Nonaktif"}</span>
+                    </div>
+                  ) : f.kind === "textarea" ? (
                     <Textarea value={v} onChange={(e) => set(e.target.value)} rows={3} />
                   ) : f.kind === "image" ? (
                     <MediaPicker value={v} onChange={set} />
