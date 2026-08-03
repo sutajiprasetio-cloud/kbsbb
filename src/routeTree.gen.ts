@@ -17,6 +17,7 @@ import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EventsRouteImport } from './routes/events'
+import { Route as DonasiRouteImport } from './routes/donasi'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
@@ -45,6 +46,7 @@ import { Route as AuthenticatedAdminDonationsRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminDonationCategoriesRouteImport } from './routes/_authenticated/admin/donation-categories'
 import { Route as AuthenticatedAdminContactRouteImport } from './routes/_authenticated/admin/contact'
 import { Route as AuthenticatedAdminCampaignsRouteImport } from './routes/_authenticated/admin/campaigns'
+import { Route as AuthenticatedAdminBankAccountsRouteImport } from './routes/_authenticated/admin/bank-accounts'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin/about'
 
 const VolunteerRoute = VolunteerRouteImport.update({
@@ -85,6 +87,11 @@ const FaqRoute = FaqRouteImport.update({
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonasiRoute = DonasiRouteImport.update({
+  id: '/donasi',
+  path: '/donasi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -238,6 +245,12 @@ const AuthenticatedAdminCampaignsRoute =
     path: '/campaigns',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminBankAccountsRoute =
+  AuthenticatedAdminBankAccountsRouteImport.update({
+    id: '/bank-accounts',
+    path: '/bank-accounts',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminAboutRoute = AuthenticatedAdminAboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -249,6 +262,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/donasi': typeof DonasiRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -263,6 +277,7 @@ export interface FileRoutesByFullPath {
   '/donate/': typeof DonateIndexRoute
   '/news/': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
   '/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
@@ -287,6 +302,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/donasi': typeof DonasiRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -300,6 +316,7 @@ export interface FileRoutesByTo {
   '/donate': typeof DonateIndexRoute
   '/news': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
   '/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
@@ -326,6 +343,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/donasi': typeof DonasiRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -340,6 +358,7 @@ export interface FileRoutesById {
   '/donate/': typeof DonateIndexRoute
   '/news/': typeof NewsIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/_authenticated/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
   '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/_authenticated/admin/contact': typeof AuthenticatedAdminContactRoute
   '/_authenticated/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
@@ -366,6 +385,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/donasi'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -380,6 +400,7 @@ export interface FileRouteTypes {
     | '/donate/'
     | '/news/'
     | '/admin/about'
+    | '/admin/bank-accounts'
     | '/admin/campaigns'
     | '/admin/contact'
     | '/admin/donation-categories'
@@ -404,6 +425,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/donasi'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -417,6 +439,7 @@ export interface FileRouteTypes {
     | '/donate'
     | '/news'
     | '/admin/about'
+    | '/admin/bank-accounts'
     | '/admin/campaigns'
     | '/admin/contact'
     | '/admin/donation-categories'
@@ -442,6 +465,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/donasi'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -456,6 +480,7 @@ export interface FileRouteTypes {
     | '/donate/'
     | '/news/'
     | '/_authenticated/admin/about'
+    | '/_authenticated/admin/bank-accounts'
     | '/_authenticated/admin/campaigns'
     | '/_authenticated/admin/contact'
     | '/_authenticated/admin/donation-categories'
@@ -482,6 +507,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  DonasiRoute: typeof DonasiRoute
   EventsRoute: typeof EventsRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
@@ -552,6 +578,13 @@ declare module '@tanstack/react-router' {
       path: '/events'
       fullPath: '/events'
       preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donasi': {
+      id: '/donasi'
+      path: '/donasi'
+      fullPath: '/donasi'
+      preLoaderRoute: typeof DonasiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -750,6 +783,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCampaignsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/bank-accounts': {
+      id: '/_authenticated/admin/bank-accounts'
+      path: '/bank-accounts'
+      fullPath: '/admin/bank-accounts'
+      preLoaderRoute: typeof AuthenticatedAdminBankAccountsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/about': {
       id: '/_authenticated/admin/about'
       path: '/about'
@@ -762,6 +802,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
+  AuthenticatedAdminBankAccountsRoute: typeof AuthenticatedAdminBankAccountsRoute
   AuthenticatedAdminCampaignsRoute: typeof AuthenticatedAdminCampaignsRoute
   AuthenticatedAdminContactRoute: typeof AuthenticatedAdminContactRoute
   AuthenticatedAdminDonationCategoriesRoute: typeof AuthenticatedAdminDonationCategoriesRoute
@@ -785,6 +826,7 @@ interface AuthenticatedAdminRouteRouteChildren {
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
     AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
+    AuthenticatedAdminBankAccountsRoute: AuthenticatedAdminBankAccountsRoute,
     AuthenticatedAdminCampaignsRoute: AuthenticatedAdminCampaignsRoute,
     AuthenticatedAdminContactRoute: AuthenticatedAdminContactRoute,
     AuthenticatedAdminDonationCategoriesRoute:
@@ -828,6 +870,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  DonasiRoute: DonasiRoute,
   EventsRoute: EventsRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
