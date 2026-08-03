@@ -27,11 +27,20 @@ export const Route = createFileRoute("/")({
 const ICONS: Record<string, any> = { Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home: HomeIcon, HandHeart };
 
 function HomePage() {
+  const settings = useSettings();
+  const stats = useTable<any>("impact_stats", {
+    filter: (q) => q.eq("is_active", true),
+    order: { column: "sort_order", ascending: true },
+  });
+
+  const enabled = settings.homepage?.show_impact_stats;
+  const showStats = !(enabled === false || enabled === "false") && !!stats && stats.length > 0;
+
   return (
     <SiteLayout>
       <HeroSlider />
-      <StatsSection />
-      <FeaturedPrograms />
+      {showStats && <StatsSection stats={stats!} />}
+      <FeaturedPrograms compactTop={!showStats} />
       <DonationProgress />
       <LatestNews />
       <UpcomingEvents />
@@ -43,20 +52,7 @@ function HomePage() {
   );
 }
 
-
-
-
-function StatsSection() {
-  const settings = useSettings();
-  const stats = useTable<any>("impact_stats", {
-    filter: (q) => q.eq("is_active", true),
-    order: { column: "sort_order", ascending: true },
-  });
-
-  const enabled = settings.homepage?.show_impact_stats;
-  if (enabled === false || enabled === "false") return null;
-  if (!stats || stats.length === 0) return null;
-
+function StatsSection({ stats }: { stats: any[] }) {
   const cols =
     stats.length <= 2 ? "sm:grid-cols-2"
     : stats.length === 3 ? "sm:grid-cols-3"
@@ -86,6 +82,7 @@ function StatsSection() {
     </section>
   );
 }
+
 
 export function SectionHeading({ eyebrow, title, description, align = "center" }: { eyebrow: string; title: string; description?: string; align?: "left" | "center" }) {
   return (
