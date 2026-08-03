@@ -15,6 +15,7 @@ type Slide = {
   subtitle?: string | null;
   cta_label?: string | null;
   cta_href?: string | null;
+  display_mode?: string | null;
 };
 
 const text = (v?: string | null) => (v ?? "").trim();
@@ -26,6 +27,8 @@ const FRAME_H = "h-[200px] md:h-[400px] lg:h-[500px]";
 
 function Slide({ slide, active, eager }: { slide: Slide; active: boolean; eager: boolean }) {
   const url = useMediaUrl(slide.image_url);
+  const mode = text(slide.display_mode) || "cover";
+  const fit = mode === "contain" ? "object-contain" : mode === "fill" ? "object-fill" : "object-cover";
 
   return (
     <div
@@ -35,16 +38,18 @@ function Slide({ slide, active, eager }: { slide: Slide; active: boolean; eager:
       }`}
     >
       {/* Blurred fill so portrait/square images never crop or letterbox awkwardly */}
-      <div
-        className="absolute inset-0 scale-110 bg-cover bg-center"
-        style={{ backgroundImage: `url("${url}")`, filter: "blur(20px)", opacity: 0.3 }}
-        aria-hidden
-      />
+      {mode === "contain" && (
+        <div
+          className="absolute inset-0 scale-110 bg-cover bg-center"
+          style={{ backgroundImage: `url("${url}")`, filter: "blur(20px)", opacity: 0.3 }}
+          aria-hidden
+        />
+      )}
       <SafeImage
         src={slide.image_url}
         alt={text(slide.title) || "Kegiatan KBSBB"}
         loading={eager ? "eager" : "lazy"}
-        className="absolute inset-0 h-full w-full object-contain object-center"
+        className={`absolute inset-0 h-full w-full object-center ${fit}`}
       />
     </div>
   );
