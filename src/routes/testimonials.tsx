@@ -3,7 +3,7 @@ import { SiteLayout, PageHero } from "@/components/site-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Quote } from "lucide-react";
 import { useTable } from "@/lib/public-data";
-import { SafeImage } from "@/components/safe-image";
+import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 
 export const Route = createFileRoute("/testimonials")({
@@ -34,7 +34,7 @@ function Testimonials() {
                   <Quote className="h-8 w-8 text-primary/50" />
                   <p className="mt-4 text-base leading-relaxed">"{q.quote}"</p>
                   <div className="mt-6 flex items-center gap-3">
-                    {q.avatar_url && <SafeImage src={q.avatar_url} alt={q.name} className="h-12 w-12 shrink-0 rounded-full object-cover" />}
+                    {q.avatar_url && <ModeImage src={q.avatar_url} alt={q.name} mode={q.display_mode} className="h-12 w-12 shrink-0 rounded-full" />}
                     <div>
                       <div className="font-bold">{q.name}</div>
                       <div className="text-xs text-muted-foreground">{q.role}</div>

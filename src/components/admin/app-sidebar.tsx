@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, FileText, Image as ImageIcon, Users, HandHeart, Calendar,
   MessageSquare, Handshake, HelpCircle, Building2, UserCog, Settings, Sparkles, Heart,
-  Info, Tag, Megaphone,
+  Info, Tag, Megaphone, BarChart3,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -19,6 +19,7 @@ const GROUPS = [
     items: [
       { title: "Hero Slider", url: "/admin/hero", icon: Sparkles },
       { title: "About & Vision", url: "/admin/about", icon: Info },
+      { title: "Statistik Dampak", url: "/admin/impact-stats", icon: BarChart3 },
       { title: "Programs", url: "/admin/programs", icon: HandHeart },
       { title: "News", url: "/admin/news", icon: FileText },
       { title: "Events", url: "/admin/events", icon: Calendar },

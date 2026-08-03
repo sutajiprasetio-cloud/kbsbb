@@ -2,14 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Calendar, MapPin, Heart, Users, HandCoins, Sprout, Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home as HomeIcon, HandHeart, Quote, Mail } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
-import { CountUp } from "@/components/count-up";
+import * as LucideIcons from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
-import { useTable } from "@/lib/public-data";
+import { useTable, useSettings } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
-import { SafeImage } from "@/components/safe-image";
+import { ModeImage } from "@/components/safe-image";
 import { HeroSlider } from "@/components/hero-slider";
 
 export const Route = createFileRoute("/")({
@@ -46,33 +46,42 @@ function HomePage() {
 
 
 
-const STATS = [
-  { icon: Users, end: 3400, suffix: "+", label: "Relawan aktif" },
-  { icon: HandCoins, end: 1200000, suffix: "+", label: "Paket makanan tersalurkan" },
-  { icon: Sprout, end: 340, suffix: "", label: "Desa terlayani" },
-  { icon: Heart, end: 128, suffix: "K", label: "Jiwa terbantu" },
-];
-
 function StatsSection() {
+  const settings = useSettings();
+  const stats = useTable<any>("impact_stats", {
+    filter: (q) => q.eq("is_active", true),
+    order: { column: "sort_order", ascending: true },
+  });
+
+  const enabled = settings.homepage?.show_impact_stats;
+  if (enabled === false || enabled === "false") return null;
+  if (!stats || stats.length === 0) return null;
+
+  const cols =
+    stats.length <= 2 ? "sm:grid-cols-2"
+    : stats.length === 3 ? "sm:grid-cols-3"
+    : stats.length % 3 === 0 ? "sm:grid-cols-2 lg:grid-cols-3"
+    : "sm:grid-cols-2 lg:grid-cols-4";
+
   return (
     <section className="relative -mt-16 z-20">
       <div className="container-x">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 rounded-3xl bg-card shadow-soft border border-border p-3 sm:p-4 md:p-6">
-          {STATS.map((s, i) => (
-            <div key={i} className="flex min-w-0 flex-col items-start gap-2 rounded-2xl p-3 sm:flex-row sm:items-center sm:gap-4 sm:p-4 hover:bg-brand-soft/50 transition-colors">
-              <div className="grid h-10 w-10 sm:h-12 sm:w-12 shrink-0 place-items-center rounded-2xl gradient-brand text-white">
-                <s.icon className="h-4 w-4 sm:h-5 sm:w-5" />
-              </div>
-              <div className="min-w-0 w-full">
-                <div className="truncate text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight text-foreground">
-                  <CountUp end={s.end} suffix={s.suffix} />
+        <div className={`grid grid-cols-2 ${cols} gap-2 sm:gap-4 rounded-3xl bg-card shadow-soft border border-border p-3 sm:p-4 md:p-6`}>
+          {stats.map((s: any) => {
+            const Icon = (LucideIcons as any)[s.icon] ?? Heart;
+            return (
+              <div key={s.id} className="flex min-w-0 flex-col items-start gap-2 rounded-2xl p-3 sm:flex-row sm:items-center sm:gap-4 sm:p-4 hover:bg-brand-soft/50 transition-colors">
+                <div className="grid h-10 w-10 sm:h-12 sm:w-12 shrink-0 place-items-center rounded-2xl gradient-brand text-white">
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div className="text-[11px] sm:text-xs md:text-sm text-muted-foreground">{s.label}</div>
+                <div className="min-w-0 w-full">
+                  <div className="truncate text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight text-foreground">{s.value}</div>
+                  <div className="text-[11px] sm:text-xs md:text-sm text-muted-foreground">{s.title}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-
       </div>
     </section>
   );
@@ -103,7 +112,7 @@ function FeaturedPrograms() {
               return (
                 <Card key={p.id} className="group overflow-hidden rounded-3xl border-border/70 pt-0 transition-all hover:-translate-y-1 hover:shadow-soft">
                   <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                    <SafeImage src={p.image_url} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <ModeImage src={p.image_url} alt={p.title} mode={p.display_mode} className="absolute inset-0 h-full w-full" imgClassName="transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-primary">
                       <Icon className="h-3.5 w-3.5" /> {p.tag ?? p.slug ?? "Program"}
                     </div>
@@ -141,9 +150,7 @@ function DonationProgress() {
               const pct = goal > 0 ? Math.min(100, Math.round((raised / goal) * 100)) : 0;
               return (
                 <Card key={c.id} className="overflow-hidden rounded-3xl border-border/70 pt-0">
-                  <div className="aspect-[16/10] overflow-hidden bg-muted">
-                    <SafeImage src={c.cover_url} alt={c.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  </div>
+                  <ModeImage src={c.cover_url} alt={c.title} mode={c.display_mode} className="aspect-[16/10] bg-muted" imgClassName="transition-transform duration-700 group-hover:scale-105" />
                   <CardContent className="px-5 pb-5">
                     <h3 className="text-lg font-bold">{c.title}</h3>
                     <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
@@ -182,9 +189,7 @@ function LatestNews() {
             {(items ?? []).map((n: any) => (
               <Link key={n.id} to="/news/$slug" params={{ slug: n.slug }} className="block focus:outline-none">
                 <Card className="group h-full overflow-hidden rounded-3xl border-border/70 pt-0 hover:shadow-soft transition-all">
-                  <div className="aspect-[16/10] overflow-hidden bg-muted">
-                    <SafeImage src={n.cover_url} alt={n.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  </div>
+                  <ModeImage src={n.cover_url} alt={n.title} mode={n.display_mode} className="aspect-[16/10] bg-muted" imgClassName="transition-transform duration-700 group-hover:scale-105" />
                   <CardContent className="px-5 pb-5">
                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
                       <span className="rounded-full bg-ocean-soft px-2.5 py-0.5 font-semibold text-[oklch(0.4_0.15_240)]">{n.tags?.[0] ?? "Berita"}</span>
@@ -257,7 +262,7 @@ function GalleryPreview() {
           <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {(items ?? []).map((g: any, i: number) => (
               <div key={g.id} className={`relative overflow-hidden rounded-2xl group ${i % 5 === 0 ? "md:row-span-2 md:col-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
-                <SafeImage src={g.image_url} alt={g.title ?? "Galeri"} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <ModeImage src={g.image_url} alt={g.title ?? "Galeri"} mode={g.display_mode} className="absolute inset-0 h-full w-full" imgClassName="transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             ))}
@@ -298,7 +303,7 @@ function Testimonials() {
             "{q.quote}"
           </p>
           <div className="mt-8 flex items-center justify-center gap-3">
-            {q.avatar_url && <SafeImage src={q.avatar_url} alt={q.name} className="h-12 w-12 shrink-0 rounded-full object-cover border-2 border-white/60" />}
+            {q.avatar_url && <ModeImage src={q.avatar_url} alt={q.name} mode={q.display_mode} className="h-12 w-12 shrink-0 rounded-full border-2 border-white/60" />}
             <div className="text-left">
               <div className="font-bold">{q.name}</div>
               <div className="text-xs opacity-80">{q.role}</div>
@@ -333,7 +338,7 @@ function PartnersMarquee() {
           <div className="flex gap-12 animate-marquee w-max">
             {list.map((p: any, i: number) => (
               <div key={`${p.id}-${i}`} className="grid h-20 min-w-[180px] place-items-center rounded-2xl border border-border bg-card px-8 text-xl font-black tracking-tight text-muted-foreground/70 hover:text-primary transition-colors">
-                {p.logo_url ? <SafeImage src={p.logo_url} alt={p.name} className="max-h-12 max-w-full object-contain" /> : p.name}
+                {p.logo_url ? <ModeImage src={p.logo_url} alt={p.name} mode={p.display_mode ?? "contain"} className="h-12 w-full" /> : p.name}
               </div>
             ))}
           </div>

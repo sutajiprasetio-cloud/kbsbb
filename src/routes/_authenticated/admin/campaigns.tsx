@@ -15,7 +15,7 @@ function CampaignsPage() {
         table="donation_campaigns"
         searchFields={["title", "slug"]}
         orderBy={{ column: "created_at", ascending: false }}
-        defaultValues={{ is_active: true, goal_amount: 0, raised_amount: 0 }}
+        defaultValues={{ display_mode: "cover",  is_active: true, goal_amount: 0, raised_amount: 0 }}
         columns={[
           { name: "cover_url", label: "Cover" },
           { name: "title", label: "Title" },
@@ -28,6 +28,7 @@ function CampaignsPage() {
           { name: "slug", label: "Slug", type: "text", required: true },
           { name: "description", label: "Description", type: "textarea", span: 2 },
           { name: "cover_url", label: "Cover image", type: "image", span: 2 },
+          { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "cover_url" },
           { name: "goal_amount", label: "Goal amount (IDR)", type: "number" },
           { name: "raised_amount", label: "Raised amount (IDR)", type: "number" },
           { name: "ends_at", label: "Ends at", type: "datetime" },

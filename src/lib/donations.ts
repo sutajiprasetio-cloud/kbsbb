@@ -7,6 +7,8 @@ export type Campaign = {
   title: string;
   description: string | null;
   cover_url: string | null;
+  display_mode?: string | null;
+
   goal_amount: number;
   raised_amount: number;
   is_active: boolean;

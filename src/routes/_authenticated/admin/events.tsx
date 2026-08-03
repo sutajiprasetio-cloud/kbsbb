@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_authenticated/admin/events")({
       table="events"
       searchFields={["title", "location"]}
       orderBy={{ column: "starts_at", ascending: false }}
-      defaultValues={{ is_published: true }}
+      defaultValues={{ display_mode: "cover",  is_published: true }}
       columns={[
         { name: "image_url", label: "Image" },
         { name: "title", label: "Title" },
@@ -24,6 +24,7 @@ export const Route = createFileRoute("/_authenticated/admin/events")({
         { name: "starts_at", label: "Starts at", type: "datetime", required: true },
         { name: "ends_at", label: "Ends at", type: "datetime" },
         { name: "image_url", label: "Image", type: "image", span: 2 },
+        { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "image_url" },
         { name: "cta_href", label: "CTA link", type: "text", span: 2 },
         { name: "is_published", label: "Published", type: "boolean" },
       ]}

@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Users, Target, CalendarClock, Quote } from "lucide-react";
-import { SafeImage } from "@/components/safe-image";
+import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
 import { useCampaign, rp, pct } from "@/lib/donations";
@@ -57,9 +57,7 @@ function CampaignDetail() {
 
         <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] items-start">
           <div>
-            <div className="overflow-hidden rounded-3xl bg-muted aspect-[16/9]">
-              <SafeImage src={campaign.cover_url} alt={campaign.title} loading="eager" className="h-full w-full object-cover" />
-            </div>
+            <ModeImage src={campaign.cover_url} alt={campaign.title} mode={campaign.display_mode} loading="eager" className="rounded-3xl bg-muted aspect-[16/9]" />
             <h1 className="mt-6 text-3xl md:text-4xl font-bold tracking-tight">{campaign.title}</h1>
             {campaign.description && (
               <div className="mt-4 whitespace-pre-line text-muted-foreground leading-relaxed">{campaign.description}</div>

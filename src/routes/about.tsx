@@ -3,7 +3,7 @@ import { SiteLayout, PageHero } from "@/components/site-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Eye, Heart, Award, Users, Sprout } from "lucide-react";
 import { useSingleton, useTable } from "@/lib/public-data";
-import { SafeImage } from "@/components/safe-image";
+import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 
 export const Route = createFileRoute("/about")({
@@ -35,7 +35,7 @@ function About() {
 
       {(about?.story || about?.image_url) && (
         <section className="container-x py-20 grid lg:grid-cols-2 gap-12 items-center">
-          <SafeImage src={about?.image_url} alt="Komunitas" className="rounded-3xl object-cover w-full aspect-[4/3] shadow-soft" />
+          <ModeImage src={about?.image_url} alt="Komunitas" mode={about?.display_mode} className="rounded-3xl w-full aspect-[4/3] shadow-soft bg-muted" />
           {about?.story && (
          
           <div>
@@ -103,7 +103,7 @@ function About() {
           <div className="mt-10 grid grid-cols-2 md:grid-cols-6 gap-5">
             {(team ?? []).map((t: any) => (
               <div key={t.id} className="text-center">
-                <SafeImage src={t.photo_url} alt={t.name} className="mx-auto aspect-square w-full rounded-3xl object-cover" />
+                <ModeImage src={t.photo_url} alt={t.name} mode={t.display_mode} className="mx-auto aspect-square w-full rounded-3xl bg-muted" />
                 <div className="mt-3 font-bold">{t.name}</div>
                 <div className="text-xs text-muted-foreground">{t.role}</div>
               </div>

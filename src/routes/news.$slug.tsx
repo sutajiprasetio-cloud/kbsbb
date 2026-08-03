@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/empty-state";
-import { SafeImage } from "@/components/safe-image";
+import { ModeImage } from "@/components/safe-image";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 
 export const Route = createFileRoute("/news/$slug")({
@@ -58,9 +58,7 @@ function NewsDetail() {
           <EmptyState title="Artikel tidak ditemukan" description="Berita ini mungkin telah dihapus atau tautannya tidak sesuai." />
         ) : (
           <>
-            <div className="aspect-[16/9] overflow-hidden rounded-3xl bg-muted">
-              <SafeImage src={post.cover_url} alt={post.title} loading="eager" className="h-full w-full object-cover" />
-            </div>
+            <ModeImage src={post.cover_url} alt={post.title} mode={post.display_mode} loading="eager" className="aspect-[16/9] rounded-3xl bg-muted" />
             <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
               <span className="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-primary">{post.tags?.[0] ?? "Berita"}</span>
               {post.author && <span className="inline-flex items-center gap-1"><User className="h-3 w-3" /> {post.author}</span>}
