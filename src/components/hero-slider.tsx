@@ -55,7 +55,7 @@ function Slide({ slide, active, eager }: { slide: Slide; active: boolean; eager:
   );
 }
 
-export function HeroSlider() {
+export function HeroSlider({ compactBottom = false }: { compactBottom?: boolean }) {
   const slides = useTable<Slide>("hero_slides", {
     filter: (q) => q.eq("is_active", true),
     order: { column: "sort_order", ascending: true },
@@ -78,7 +78,7 @@ export function HeroSlider() {
 
   if (!slides || count === 0) {
     return (
-      <section className="py-10 md:py-14">
+      <section className={compactBottom ? "pt-10 pb-2 md:pt-14 md:pb-4" : "py-10 md:py-14"}>
         <div className={`${FRAME} ${FRAME_H} gradient-brand`}>
           <div className="flex h-full flex-col items-center justify-center px-6 text-center text-white">
             <h1 className="text-3xl font-extrabold tracking-tight md:text-5xl">KBSBB</h1>
@@ -105,7 +105,7 @@ export function HeroSlider() {
   const hasText = Boolean(title || subtitle || hasCta);
 
   return (
-    <section className="py-10 md:py-14">
+    <section className={compactBottom ? "pt-10 pb-2 md:pt-14 md:pb-4" : "py-10 md:py-14"}>
       <div
         className={`${FRAME} ${FRAME_H} touch-pan-y select-none bg-muted`}
         role="region"
