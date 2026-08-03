@@ -46,6 +46,57 @@ export function useMediaUrl(src?: string | null) {
   return resolved;
 }
 
+/** Tailwind object-fit class for a stored display_mode value. */
+export function fitClass(mode?: string | null) {
+  const m = (mode ?? "").trim();
+  if (m === "contain") return "object-contain object-center";
+  if (m === "fill") return "object-fill";
+  return "object-cover object-center";
+}
+
+/**
+ * Image that honours a per-record `display_mode` ("cover" | "contain" | "fill").
+ * `className` sizes the frame; `imgClassName` adds effects (e.g. hover scale).
+ */
+export function ModeImage({
+  src,
+  alt,
+  mode,
+  className,
+  imgClassName,
+  loading = "lazy",
+}: {
+  src?: string | null;
+  alt: string;
+  mode?: string | null;
+  className?: string;
+  imgClassName?: string;
+  loading?: "lazy" | "eager";
+}) {
+  const url = useMediaUrl(src);
+  const m = (mode ?? "").trim() || "cover";
+
+  return (
+    <div className={`relative overflow-hidden ${className ?? ""}`}>
+      {m === "contain" && (
+        <div
+          className="absolute inset-0 scale-110 bg-cover bg-center"
+          style={{ backgroundImage: `url("${url}")`, filter: "blur(20px)", opacity: 0.3 }}
+          aria-hidden
+        />
+      )}
+      <SafeImage
+        src={src}
+        alt={alt}
+        loading={loading}
+        className={`absolute inset-0 h-full w-full ${fitClass(m)} ${imgClassName ?? ""}`}
+      />
+    </div>
+  );
+}
+
+
+
 export function SafeImage({
   src,
   alt,
