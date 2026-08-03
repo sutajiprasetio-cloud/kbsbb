@@ -162,7 +162,7 @@ function Header() {
       </div>
 
       {open && (
-        <div className="xl:hidden border-t border-border glass">
+        <div className="xl:hidden border-t border-border bg-background/95 backdrop-blur-md">
           <div className="container-x py-3 grid gap-1">
             {NAV.map((n) => (
               <Link
