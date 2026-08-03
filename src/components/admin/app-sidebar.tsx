@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, FileText, Image as ImageIcon, Users, HandHeart, Calendar,
   MessageSquare, Handshake, HelpCircle, Building2, UserCog, Settings, Sparkles, Heart,
-  Info, Tag, Megaphone, BarChart3, ReceiptText, Landmark, QrCode,
+  Info, Tag, Megaphone, BarChart3, ReceiptText, Landmark, QrCode, LayoutTemplate,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -51,6 +51,7 @@ const GROUPS = [
   {
     label: "System",
     items: [
+      { title: "Homepage", url: "/admin/homepage", icon: LayoutTemplate },
       { title: "Users", url: "/admin/users", icon: UserCog },
       { title: "Settings", url: "/admin/settings", icon: Settings },
     ],
