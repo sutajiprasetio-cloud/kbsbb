@@ -94,10 +94,10 @@ export function SectionHeading({ eyebrow, title, description, align = "center" }
   );
 }
 
-function FeaturedPrograms() {
+function FeaturedPrograms({ compactTop = false }: { compactTop?: boolean }) {
   const items = useTable<any>("programs", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true }, limit: 4 });
   return (
-    <section className="py-20 md:py-28">
+    <section className={`${compactTop ? "pt-12 md:pt-16" : "pt-20 md:pt-28"} pb-20 md:pb-28`}>
       <div className="container-x">
         <SectionHeading eyebrow="Program Kami" title="Berbagi Sehat . Berbagi Berkah" description="Melalui berbagai program sosial, kesehatan, pendidikan, dakwah dan kemanusiaan, KBSBB berupaya menghadirkan manfaat, kepedulian, dan keberkahan bagi masyarakat yang membutuhkan." />
         {items && items.length === 0 ? (
