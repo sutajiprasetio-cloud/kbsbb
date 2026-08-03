@@ -122,6 +122,7 @@ function SettingsPage() {
                   ) : (
                     <Input value={v} onChange={(e) => set(e.target.value)} />
                   )}
+                  {f.help && <p className="text-xs text-muted-foreground">{f.help}</p>}
                 </div>
               );
             })}
