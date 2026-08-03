@@ -22,7 +22,7 @@ const text = (v?: string | null) => (v ?? "").trim();
 /** Frame sizing shared by the slider and its empty state. */
 const FRAME =
   "relative mx-auto w-[95%] md:w-[90%] max-w-[1400px] overflow-hidden rounded-[20px] shadow-xl";
-const FRAME_H = "h-[250px] md:h-[400px] lg:h-[500px]";
+const FRAME_H = "h-[250px] md:h-[400px] lg:h-[720px]";
 
 function Slide({ slide, active, eager }: { slide: Slide; active: boolean; eager: boolean }) {
   const url = useMediaUrl(slide.image_url);
@@ -141,7 +141,7 @@ export function HeroSlider() {
           <div className="absolute inset-0 flex items-center px-6 md:px-12">
             <div
               key={index}
-              className="animate-fade-up w-full max-w-[600px] text-center text-white sm:text-left"
+              className="animate-fade-up w-full max-w-[720px] text-center text-white sm:text-left"
             >
               {title && (
                 <h1
