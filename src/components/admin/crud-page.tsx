@@ -17,6 +17,7 @@ import {
 import { Plus, Pencil, Trash2, Search, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { MediaPicker } from "./media-picker";
+import { SafeImage, useMediaUrl } from "@/components/safe-image";
 
 export type FieldType = "text" | "textarea" | "number" | "boolean" | "image" | "datetime" | "select" | "tags" | "display_mode";
 
@@ -312,4 +313,94 @@ function toLocalInput(v: any) {
   const off = d.getTimezoneOffset();
   const local = new Date(d.getTime() - off * 60000);
   return local.toISOString().slice(0, 16);
+}
+
+export const DISPLAY_MODES = [
+  {
+    value: "cover",
+    label: "Memenuhi Frame",
+    desc: "Gambar memenuhi seluruh area slider. Sebagian gambar mungkin terpotong agar frame terisi penuh.",
+  },
+  {
+    value: "contain",
+    label: "Sesuai Ukuran Foto",
+    desc: "Gambar ditampilkan utuh tanpa terpotong. Area kosong diisi background blur dari gambar yang sama.",
+  },
+  {
+    value: "fill",
+    label: "Stretch ke Frame",
+    desc: "Gambar dipaksa mengikuti ukuran slider. Tidak ada ruang kosong, namun gambar bisa terlihat melebar.",
+  },
+] as const;
+
+function DisplayModeField({
+  value,
+  onChange,
+  imageSrc,
+}: {
+  value: string;
+  onChange: (mode: string) => void;
+  imageSrc?: string | null;
+}) {
+  const url = useMediaUrl(imageSrc);
+  const fit = value === "contain" ? "object-contain" : value === "fill" ? "object-fill" : "object-cover";
+
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-3 sm:grid-cols-3">
+        {DISPLAY_MODES.map((m) => {
+          const active = value === m.value;
+          return (
+            <button
+              key={m.value}
+              type="button"
+              onClick={() => onChange(m.value)}
+              aria-pressed={active}
+              className={`rounded-lg border p-3 text-left transition-colors ${
+                active ? "border-primary bg-primary/5 ring-1 ring-primary" : "hover:bg-muted/50"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span
+                  className={`grid h-4 w-4 shrink-0 place-items-center rounded-full border ${
+                    active ? "border-primary" : "border-muted-foreground/40"
+                  }`}
+                >
+                  {active && <span className="h-2 w-2 rounded-full bg-primary" />}
+                </span>
+                <span className="text-sm font-medium">{m.label}</span>
+              </div>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{m.desc}</p>
+            </button>
+          );
+        })}
+      </div>
+
+      <div>
+        <p className="mb-2 text-xs text-muted-foreground">Pratinjau langsung</p>
+        <div className="relative h-40 w-full overflow-hidden rounded-lg border bg-muted md:h-56">
+          {imageSrc ? (
+            <>
+              {value === "contain" && (
+                <div
+                  className="absolute inset-0 scale-110 bg-cover bg-center"
+                  style={{ backgroundImage: `url("${url}")`, filter: "blur(20px)", opacity: 0.3 }}
+                  aria-hidden
+                />
+              )}
+              <SafeImage
+                src={imageSrc}
+                alt="Pratinjau slide"
+                className={`absolute inset-0 h-full w-full object-center ${fit}`}
+              />
+            </>
+          ) : (
+            <div className="grid h-full place-items-center text-xs text-muted-foreground">
+              Unggah gambar untuk melihat pratinjau
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
