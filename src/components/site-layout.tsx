@@ -99,15 +99,23 @@ function Header() {
   const { dark, toggle } = useDarkMode();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const solid = scrolled || open;
+
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 glass ${scrolled ? "shadow-soft border-b border-border/60" : "border-b border-transparent"}`}>
-      <div className="container-x flex h-16 items-center justify-between gap-3 lg:h-20">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        solid
+          ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border/60"
+          : "bg-transparent border-b border-transparent"
+      }`}
+    >
+      <div className={`container-x flex items-center justify-between gap-3 transition-all duration-300 ${solid ? "h-14 lg:h-16" : "h-16 lg:h-20"}`}>
         <Link to="/" className="flex items-center gap-2 shrink-0 group" onClick={() => setOpen(false)}>
           <img src={logo} alt="KBSBB" className="h-9 w-9 lg:h-11 lg:w-11 transition-transform group-hover:scale-110" width={44} height={44} />
           <div className="leading-tight min-w-0">
