@@ -27,11 +27,20 @@ export const Route = createFileRoute("/")({
 const ICONS: Record<string, any> = { Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home: HomeIcon, HandHeart };
 
 function HomePage() {
+  const settings = useSettings();
+  const stats = useTable<any>("impact_stats", {
+    filter: (q) => q.eq("is_active", true),
+    order: { column: "sort_order", ascending: true },
+  });
+
+  const enabled = settings.homepage?.show_impact_stats;
+  const showStats = !(enabled === false || enabled === "false") && !!stats && stats.length > 0;
+
   return (
     <SiteLayout>
       <HeroSlider />
-      <StatsSection />
-      <FeaturedPrograms />
+      {showStats && <StatsSection stats={stats!} />}
+      <FeaturedPrograms compactTop={!showStats} />
       <DonationProgress />
       <LatestNews />
       <UpcomingEvents />
@@ -43,20 +52,7 @@ function HomePage() {
   );
 }
 
-
-
-
-function StatsSection() {
-  const settings = useSettings();
-  const stats = useTable<any>("impact_stats", {
-    filter: (q) => q.eq("is_active", true),
-    order: { column: "sort_order", ascending: true },
-  });
-
-  const enabled = settings.homepage?.show_impact_stats;
-  if (enabled === false || enabled === "false") return null;
-  if (!stats || stats.length === 0) return null;
-
+function StatsSection({ stats }: { stats: any[] }) {
   const cols =
     stats.length <= 2 ? "sm:grid-cols-2"
     : stats.length === 3 ? "sm:grid-cols-3"
@@ -87,6 +83,7 @@ function StatsSection() {
   );
 }
 
+
 export function SectionHeading({ eyebrow, title, description, align = "center" }: { eyebrow: string; title: string; description?: string; align?: "left" | "center" }) {
   return (
     <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
@@ -97,10 +94,10 @@ export function SectionHeading({ eyebrow, title, description, align = "center" }
   );
 }
 
-function FeaturedPrograms() {
+function FeaturedPrograms({ compactTop = false }: { compactTop?: boolean }) {
   const items = useTable<any>("programs", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true }, limit: 4 });
   return (
-    <section className="py-20 md:py-28">
+    <section className={`${compactTop ? "pt-12 md:pt-16" : "pt-20 md:pt-28"} pb-20 md:pb-28`}>
       <div className="container-x">
         <SectionHeading eyebrow="Program Kami" title="Berbagi Sehat . Berbagi Berkah" description="Melalui berbagai program sosial, kesehatan, pendidikan, dakwah dan kemanusiaan, KBSBB berupaya menghadirkan manfaat, kepedulian, dan keberkahan bagi masyarakat yang membutuhkan." />
         {items && items.length === 0 ? (
