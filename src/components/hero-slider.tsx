@@ -22,7 +22,7 @@ const text = (v?: string | null) => (v ?? "").trim();
 /** Frame sizing shared by the slider and its empty state. */
 const FRAME =
   "relative mx-auto w-[95%] md:w-[80%] max-w-[1400px] overflow-hidden rounded-[20px] shadow-xl";
-const FRAME_H = "h-[250px] md:h-[400px] lg:h-[500px]";
+const FRAME_H = "h-[200px] md:h-[400px] lg:h-[500px]";
 
 function Slide({ slide, active, eager }: { slide: Slide; active: boolean; eager: boolean }) {
   const url = useMediaUrl(slide.image_url);
