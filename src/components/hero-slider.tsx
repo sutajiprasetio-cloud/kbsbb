@@ -141,7 +141,7 @@ export function HeroSlider() {
           <div className="absolute inset-0 flex items-center px-6 md:px-12">
             <div
               key={index}
-              className="animate-fade-up w-full max-w-[500px] text-center text-white sm:text-left"
+              className="animate-fade-up w-full max-w-[600px] text-center text-white sm:text-left"
             >
               {title && (
                 <h1
