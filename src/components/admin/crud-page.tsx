@@ -18,7 +18,7 @@ import { Plus, Pencil, Trash2, Search, ChevronLeft, ChevronRight, Loader2 } from
 import { toast } from "sonner";
 import { MediaPicker } from "./media-picker";
 
-export type FieldType = "text" | "textarea" | "number" | "boolean" | "image" | "datetime" | "select" | "tags";
+export type FieldType = "text" | "textarea" | "number" | "boolean" | "image" | "datetime" | "select" | "tags" | "display_mode";
 
 export type Field = {
   name: string;
@@ -28,6 +28,8 @@ export type Field = {
   options?: { label: string; value: string }[];
   placeholder?: string;
   span?: 1 | 2;
+  /** For type "display_mode": which field holds the image to preview. */
+  previewField?: string;
 };
 
 export type Column = {
