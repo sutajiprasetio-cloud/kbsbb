@@ -244,7 +244,7 @@ function UpcomingEvents() {
   );
 }
 
-{/* untuk mematikan coding tampilan galleri di beranda
+/* untuk mematikan coding tampilan galleri di beranda
 function GalleryPreview() {
   const items = useTable<any>("gallery_items", { order: { column: "sort_order", ascending: true }, limit: 8 });
   return (
@@ -270,7 +270,7 @@ function GalleryPreview() {
     </section>
   );
 }
-*/}
+*/
 
 
 function Testimonials() {
