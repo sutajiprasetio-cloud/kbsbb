@@ -278,6 +278,12 @@ function FormFields({ fields, value, onChange }: { fields: Field[]; value: any; 
               </div>
             ) : f.type === "image" ? (
               <MediaPicker value={v} onChange={(u) => set(f.name, u)} />
+            ) : f.type === "display_mode" ? (
+              <DisplayModeField
+                value={v || "cover"}
+                onChange={(m) => set(f.name, m)}
+                imageSrc={value[f.previewField ?? "image_url"]}
+              />
             ) : f.type === "select" ? (
               <select id={f.name} value={v} onChange={(e) => set(f.name, e.target.value)} className="h-10 w-full rounded-md border bg-background px-3 text-sm">
                 <option value="">—</option>
