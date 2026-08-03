@@ -107,8 +107,8 @@ function SettingsPage() {
                   <Label>{f.label}</Label>
                   {f.kind === "boolean" ? (
                     <div className="flex h-10 items-center gap-2">
-                      <Switch checked={v !== false && v !== "false"} onCheckedChange={(c) => set(c as any)} />
-                      <span className="text-sm text-muted-foreground">{v !== false && v !== "false" ? "Aktif" : "Nonaktif"}</span>
+                      <Switch checked={(v as any) !== false && v !== "false"} onCheckedChange={(c) => set(c as any)} />
+                      <span className="text-sm text-muted-foreground">{(v as any) !== false && v !== "false" ? "Aktif" : "Nonaktif"}</span>
                     </div>
                   ) : f.kind === "textarea" ? (
                     <Textarea value={v} onChange={(e) => set(e.target.value)} rows={3} />
