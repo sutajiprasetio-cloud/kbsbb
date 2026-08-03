@@ -26,7 +26,12 @@ const GROUPS: Group[] = [
   {
     key: "homepage", icon: LayoutTemplate, title: "Homepage",
     fields: [
-      { name: "show_impact_stats", label: "Tampilkan Statistik Dampak", kind: "boolean" },
+      {
+        name: "show_impact_stats",
+        label: "Tampilkan Statistik Dampak",
+        kind: "boolean",
+        help: "Jika dinonaktifkan, section Statistik Dampak tidak akan tampil di Homepage, namun seluruh data statistik tetap tersimpan.",
+      },
     ],
   },
   {
