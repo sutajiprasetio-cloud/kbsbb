@@ -3,6 +3,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Menu, X, Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, Heart, Sun, Moon, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
+import { useSettings } from "@/lib/public-data";
 
 const NAV = [
   { to: "/", label: "Beranda" },
@@ -185,23 +186,37 @@ function Header() {
   );
 }
 
+const DEFAULT_WA_NUMBER = "6285365089475";
+const DEFAULT_WA_MESSAGE =
+  "Assalamu'alaikum, saya mendapatkan informasi dari website KBSBB dan ingin bertanya mengenai program yang tersedia.";
+
 function FloatingActions() {
+  const settings = useSettings();
+  const wa = settings.whatsapp ?? {};
+  const enabled = wa.enabled !== false && wa.enabled !== "false";
+  const number = String(wa.number ?? "").replace(/[^\d]/g, "") || DEFAULT_WA_NUMBER;
+  const message = String(wa.default_message ?? "").trim() || DEFAULT_WA_MESSAGE;
+  const adminName = String(wa.admin_name ?? "").trim() || "Admin KBSBB";
+  const waHref = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+
   return (
     <>
-      {/* WhatsApp — kiri bawah */}
-      <a
-        href="https://wa.me/6285365089475"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Chat via WhatsApp"
-        className="group fixed bottom-5 left-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-glow animate-float hover:scale-110 transition-transform"
-      >
-        <span className="absolute inset-0 rounded-full animate-pulse-ring" />
-        <MessageCircle className="h-6 w-6 fill-white" />
-        <span className="absolute right-full mr-3 whitespace-nowrap rounded-full bg-foreground text-background px-3 py-1.5 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
-          Hubungi kami
-        </span>
-      </a>
+      {/* WhatsApp — kanan bawah */}
+      {enabled && (
+        <a
+          href={waHref}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Chat WhatsApp dengan ${adminName}`}
+          className="group fixed bottom-6 right-6 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-glow hover:scale-110 transition-transform"
+        >
+          <span className="absolute inset-0 rounded-full animate-pulse-ring" />
+          <MessageCircle className="h-6 w-6 fill-white" />
+          <span className="absolute right-full mr-3 whitespace-nowrap rounded-full bg-foreground text-background px-3 py-1.5 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
+            Chat {adminName}
+          </span>
+        </a>
+      )}
 
       {/* Tombol donasi tetap — sisi kanan */}
       <Link
@@ -217,7 +232,7 @@ function FloatingActions() {
       <Link
         to="/donate"
         aria-label="Donasi sekarang"
-        className="md:hidden fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 gradient-brand text-white px-5 h-14 rounded-full shadow-glow font-semibold text-sm hover:scale-105 transition-transform"
+        className="md:hidden fixed bottom-6 left-5 z-40 inline-flex items-center gap-2 gradient-brand text-white px-5 h-14 rounded-full shadow-glow font-semibold text-sm hover:scale-105 transition-transform"
       >
         <Heart className="h-4 w-4 fill-current" /> Donasi
       </Link>
