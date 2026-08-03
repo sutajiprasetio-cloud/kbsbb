@@ -134,7 +134,7 @@ export function HeroSlider() {
         ))}
 
         {hasText && (
-          <div className="absolute inset-0 bg-black/10" aria-hidden />
+          <div className="absolute inset-0 bg-green-900/10" aria-hidden />
         )}
 
         {hasText && (
