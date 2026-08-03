@@ -11,7 +11,7 @@ import { Loader2, Globe, Share2, Mail, Map, Search, LayoutTemplate } from "lucid
 import { MediaPicker } from "@/components/admin/media-picker";
 import { Switch } from "@/components/ui/switch";
 
-type Group = { key: string; icon: any; title: string; fields: { name: string; label: string; kind?: "text" | "textarea" | "image" | "boolean" }[] };
+type Group = { key: string; icon: any; title: string; fields: { name: string; label: string; kind?: "text" | "textarea" | "image" | "boolean"; help?: string }[] };
 
 const GROUPS: Group[] = [
   {
