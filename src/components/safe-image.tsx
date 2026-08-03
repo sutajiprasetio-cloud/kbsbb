@@ -23,19 +23,8 @@ function mediaPath(url?: string | null) {
   return decodeURIComponent(trimmed.replace(/^media\//, ""));
 }
 
-export function SafeImage({
-  src,
-  alt,
-  className,
-  loading = "lazy",
-  sizes,
-}: {
-  src?: string | null;
-  alt: string;
-  className?: string;
-  loading?: "lazy" | "eager";
-  sizes?: string;
-}) {
+/** Resolves a media value (storage path or URL) into a usable image URL. */
+export function useMediaUrl(src?: string | null) {
   const [resolved, setResolved] = useState<string>(src || placeholder);
 
   useEffect(() => {
@@ -53,6 +42,25 @@ export function SafeImage({
       cancelled = true;
     };
   }, [src]);
+
+  return resolved;
+}
+
+export function SafeImage({
+  src,
+  alt,
+  className,
+  loading = "lazy",
+  sizes,
+}: {
+  src?: string | null;
+  alt: string;
+  className?: string;
+  loading?: "lazy" | "eager";
+  sizes?: string;
+}) {
+  const resolved = useMediaUrl(src);
+
 
   return (
     <img
