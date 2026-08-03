@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ShieldCheck, Repeat, CreditCard, Users, ArrowRight } from "lucide-react";
-import { SafeImage } from "@/components/safe-image";
+import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
 import { useCampaigns, rp, pct } from "@/lib/donations";
@@ -48,9 +48,7 @@ function Donate() {
               return (
                 <Card key={c.id} className="group overflow-hidden rounded-3xl border-border/70 shadow-soft transition-all hover:-translate-y-1 hover:shadow-lg">
                   <Link to="/donate/$slug" params={{ slug: c.slug }} className="block">
-                    <div className="aspect-[16/10] overflow-hidden bg-muted">
-                      <SafeImage src={c.cover_url} alt={c.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    </div>
+                    <ModeImage src={c.cover_url} alt={c.title} mode={c.display_mode} className="aspect-[16/10] bg-muted" imgClassName="transition-transform duration-500 group-hover:scale-105" />
                   </Link>
                   <CardContent className="p-5">
                     <Link to="/donate/$slug" params={{ slug: c.slug }}>

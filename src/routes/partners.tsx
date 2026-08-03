@@ -3,7 +3,7 @@ import { SiteLayout, PageHero } from "@/components/site-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useTable } from "@/lib/public-data";
-import { SafeImage } from "@/components/safe-image";
+import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 
 export const Route = createFileRoute("/partners")({
@@ -30,7 +30,7 @@ function Partners() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {(items ?? []).map((p: any) => (
               <a key={p.id} href={p.website ?? "#"} target={p.website ? "_blank" : undefined} rel="noreferrer" className="grid h-28 place-items-center rounded-3xl border border-border bg-card p-4 text-2xl font-black tracking-tight text-muted-foreground hover:text-primary hover:shadow-soft transition-all">
-                {p.logo_url ? <SafeImage src={p.logo_url} alt={p.name} className="max-h-16 max-w-full object-contain" /> : p.name}
+                {p.logo_url ? <ModeImage src={p.logo_url} alt={p.name} mode={p.display_mode ?? "contain"} className="h-16 w-full" /> : p.name}
               </a>
             ))}
           </div>

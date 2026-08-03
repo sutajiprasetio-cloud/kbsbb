@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, ArrowRight } from "lucide-react";
 import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
-import { SafeImage } from "@/components/safe-image";
+import { ModeImage } from "@/components/safe-image";
 
 export const Route = createFileRoute("/news/")({
   head: () => ({
@@ -31,9 +31,7 @@ function News() {
             {(items ?? []).map((n: any) => (
               <Link key={n.id} to="/news/$slug" params={{ slug: n.slug }} className="block focus:outline-none">
                 <Card className="group h-full overflow-hidden rounded-3xl border-border/70 pt-0 hover:shadow-soft transition-all">
-                  <div className="aspect-[16/10] overflow-hidden bg-muted">
-                    <SafeImage src={n.cover_url} alt={n.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  </div>
+                  <ModeImage src={n.cover_url} alt={n.title} mode={n.display_mode} className="aspect-[16/10] bg-muted" imgClassName="transition-transform duration-700 group-hover:scale-105" />
                   <CardContent className="px-5 pb-5">
                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
                       <span className="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-primary">{(n.tags?.[0]) ?? "Berita"}</span>
