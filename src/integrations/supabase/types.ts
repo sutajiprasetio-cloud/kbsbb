@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       about_content: {
         Row: {
+          display_mode: string
           headline: string | null
           id: number
           image_url: string | null
@@ -26,6 +27,7 @@ export type Database = {
           vision: string | null
         }
         Insert: {
+          display_mode?: string
           headline?: string | null
           id?: number
           image_url?: string | null
@@ -36,6 +38,7 @@ export type Database = {
           vision?: string | null
         }
         Update: {
+          display_mode?: string
           headline?: string | null
           id?: number
           image_url?: string | null
@@ -116,6 +119,7 @@ export type Database = {
           cover_url: string | null
           created_at: string
           description: string | null
+          display_mode: string
           ends_at: string | null
           goal_amount: number
           id: string
@@ -130,6 +134,7 @@ export type Database = {
           cover_url?: string | null
           created_at?: string
           description?: string | null
+          display_mode?: string
           ends_at?: string | null
           goal_amount?: number
           id?: string
@@ -144,6 +149,7 @@ export type Database = {
           cover_url?: string | null
           created_at?: string
           description?: string | null
+          display_mode?: string
           ends_at?: string | null
           goal_amount?: number
           id?: string
@@ -257,6 +263,7 @@ export type Database = {
           created_at: string
           cta_href: string | null
           description: string | null
+          display_mode: string
           ends_at: string | null
           id: string
           image_url: string | null
@@ -270,6 +277,7 @@ export type Database = {
           created_at?: string
           cta_href?: string | null
           description?: string | null
+          display_mode?: string
           ends_at?: string | null
           id?: string
           image_url?: string | null
@@ -283,6 +291,7 @@ export type Database = {
           created_at?: string
           cta_href?: string | null
           description?: string | null
+          display_mode?: string
           ends_at?: string | null
           id?: string
           image_url?: string | null
@@ -331,6 +340,7 @@ export type Database = {
         Row: {
           category: string | null
           created_at: string
+          display_mode: string
           id: string
           image_url: string
           sort_order: number
@@ -340,6 +350,7 @@ export type Database = {
         Insert: {
           category?: string | null
           created_at?: string
+          display_mode?: string
           id?: string
           image_url: string
           sort_order?: number
@@ -349,6 +360,7 @@ export type Database = {
         Update: {
           category?: string | null
           created_at?: string
+          display_mode?: string
           id?: string
           image_url?: string
           sort_order?: number
@@ -399,12 +411,46 @@ export type Database = {
         }
         Relationships: []
       }
+      impact_stats: {
+        Row: {
+          created_at: string
+          icon: string
+          id: string
+          is_active: boolean
+          sort_order: number
+          title: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          icon?: string
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          value?: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
       news_posts: {
         Row: {
           author: string | null
           content: string | null
           cover_url: string | null
           created_at: string
+          display_mode: string
           excerpt: string | null
           id: string
           is_published: boolean
@@ -419,6 +465,7 @@ export type Database = {
           content?: string | null
           cover_url?: string | null
           created_at?: string
+          display_mode?: string
           excerpt?: string | null
           id?: string
           is_published?: boolean
@@ -433,6 +480,7 @@ export type Database = {
           content?: string | null
           cover_url?: string | null
           created_at?: string
+          display_mode?: string
           excerpt?: string | null
           id?: string
           is_published?: boolean
@@ -447,6 +495,7 @@ export type Database = {
       partners: {
         Row: {
           created_at: string
+          display_mode: string
           id: string
           is_active: boolean
           logo_url: string | null
@@ -457,6 +506,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          display_mode?: string
           id?: string
           is_active?: boolean
           logo_url?: string | null
@@ -467,6 +517,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          display_mode?: string
           id?: string
           is_active?: boolean
           logo_url?: string | null
@@ -508,6 +559,7 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          display_mode: string
           icon: string | null
           id: string
           image_url: string | null
@@ -521,6 +573,7 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
+          display_mode?: string
           icon?: string | null
           id?: string
           image_url?: string | null
@@ -534,6 +587,7 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
+          display_mode?: string
           icon?: string | null
           id?: string
           image_url?: string | null
@@ -568,6 +622,7 @@ export type Database = {
         Row: {
           bio: string | null
           created_at: string
+          display_mode: string
           id: string
           is_active: boolean
           name: string
@@ -580,6 +635,7 @@ export type Database = {
         Insert: {
           bio?: string | null
           created_at?: string
+          display_mode?: string
           id?: string
           is_active?: boolean
           name: string
@@ -592,6 +648,7 @@ export type Database = {
         Update: {
           bio?: string | null
           created_at?: string
+          display_mode?: string
           id?: string
           is_active?: boolean
           name?: string
@@ -607,6 +664,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string
+          display_mode: string
           id: string
           is_active: boolean
           name: string
@@ -619,6 +677,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          display_mode?: string
           id?: string
           is_active?: boolean
           name: string
@@ -631,6 +690,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           created_at?: string
+          display_mode?: string
           id?: string
           is_active?: boolean
           name?: string
