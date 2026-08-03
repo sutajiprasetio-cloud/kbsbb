@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Calendar, MapPin, Heart, Users, HandCoins, Sprout, Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home as HomeIcon, HandHeart, Quote, Mail, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Heart, Users, HandCoins, Sprout, Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home as HomeIcon, HandHeart, Quote, Mail } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
 import { CountUp } from "@/components/count-up";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
 import { SafeImage } from "@/components/safe-image";
+import { HeroSlider } from "@/components/hero-slider";
 
 export const Route = createFileRoute("/")({
   head: () => ({
