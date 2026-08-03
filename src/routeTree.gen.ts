@@ -17,6 +17,7 @@ import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EventsRouteImport } from './routes/events'
+import { Route as DonasiRouteImport } from './routes/donasi'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
@@ -33,6 +34,7 @@ import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminTestimonialsRouteImport } from './routes/_authenticated/admin/testimonials'
 import { Route as AuthenticatedAdminTeamRouteImport } from './routes/_authenticated/admin/team'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
+import { Route as AuthenticatedAdminQrisRouteImport } from './routes/_authenticated/admin/qris'
 import { Route as AuthenticatedAdminProgramsRouteImport } from './routes/_authenticated/admin/programs'
 import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authenticated/admin/partners'
 import { Route as AuthenticatedAdminNewsRouteImport } from './routes/_authenticated/admin/news'
@@ -42,9 +44,11 @@ import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminFaqRouteImport } from './routes/_authenticated/admin/faq'
 import { Route as AuthenticatedAdminEventsRouteImport } from './routes/_authenticated/admin/events'
 import { Route as AuthenticatedAdminDonationsRouteImport } from './routes/_authenticated/admin/donations'
+import { Route as AuthenticatedAdminDonationConfirmationsRouteImport } from './routes/_authenticated/admin/donation-confirmations'
 import { Route as AuthenticatedAdminDonationCategoriesRouteImport } from './routes/_authenticated/admin/donation-categories'
 import { Route as AuthenticatedAdminContactRouteImport } from './routes/_authenticated/admin/contact'
 import { Route as AuthenticatedAdminCampaignsRouteImport } from './routes/_authenticated/admin/campaigns'
+import { Route as AuthenticatedAdminBankAccountsRouteImport } from './routes/_authenticated/admin/bank-accounts'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin/about'
 
 const VolunteerRoute = VolunteerRouteImport.update({
@@ -85,6 +89,11 @@ const FaqRoute = FaqRouteImport.update({
 const EventsRoute = EventsRouteImport.update({
   id: '/events',
   path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonasiRoute = DonasiRouteImport.update({
+  id: '/donasi',
+  path: '/donasi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -169,6 +178,11 @@ const AuthenticatedAdminSettingsRoute =
     path: '/settings',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminQrisRoute = AuthenticatedAdminQrisRouteImport.update({
+  id: '/qris',
+  path: '/qris',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
 const AuthenticatedAdminProgramsRoute =
   AuthenticatedAdminProgramsRouteImport.update({
     id: '/programs',
@@ -220,6 +234,12 @@ const AuthenticatedAdminDonationsRoute =
     path: '/donations',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminDonationConfirmationsRoute =
+  AuthenticatedAdminDonationConfirmationsRouteImport.update({
+    id: '/donation-confirmations',
+    path: '/donation-confirmations',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminDonationCategoriesRoute =
   AuthenticatedAdminDonationCategoriesRouteImport.update({
     id: '/donation-categories',
@@ -238,6 +258,12 @@ const AuthenticatedAdminCampaignsRoute =
     path: '/campaigns',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminBankAccountsRoute =
+  AuthenticatedAdminBankAccountsRouteImport.update({
+    id: '/bank-accounts',
+    path: '/bank-accounts',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminAboutRoute = AuthenticatedAdminAboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -249,6 +275,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/donasi': typeof DonasiRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -263,9 +290,11 @@ export interface FileRoutesByFullPath {
   '/donate/': typeof DonateIndexRoute
   '/news/': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
   '/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
+  '/admin/donation-confirmations': typeof AuthenticatedAdminDonationConfirmationsRoute
   '/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/admin/events': typeof AuthenticatedAdminEventsRoute
   '/admin/faq': typeof AuthenticatedAdminFaqRoute
@@ -275,6 +304,7 @@ export interface FileRoutesByFullPath {
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/programs': typeof AuthenticatedAdminProgramsRoute
+  '/admin/qris': typeof AuthenticatedAdminQrisRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/team': typeof AuthenticatedAdminTeamRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
@@ -287,6 +317,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/donasi': typeof DonasiRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -300,9 +331,11 @@ export interface FileRoutesByTo {
   '/donate': typeof DonateIndexRoute
   '/news': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
   '/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
+  '/admin/donation-confirmations': typeof AuthenticatedAdminDonationConfirmationsRoute
   '/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/admin/events': typeof AuthenticatedAdminEventsRoute
   '/admin/faq': typeof AuthenticatedAdminFaqRoute
@@ -312,6 +345,7 @@ export interface FileRoutesByTo {
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/programs': typeof AuthenticatedAdminProgramsRoute
+  '/admin/qris': typeof AuthenticatedAdminQrisRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/team': typeof AuthenticatedAdminTeamRoute
   '/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
@@ -326,6 +360,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/donasi': typeof DonasiRoute
   '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -340,9 +375,11 @@ export interface FileRoutesById {
   '/donate/': typeof DonateIndexRoute
   '/news/': typeof NewsIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/_authenticated/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
   '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/_authenticated/admin/contact': typeof AuthenticatedAdminContactRoute
   '/_authenticated/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
+  '/_authenticated/admin/donation-confirmations': typeof AuthenticatedAdminDonationConfirmationsRoute
   '/_authenticated/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/_authenticated/admin/events': typeof AuthenticatedAdminEventsRoute
   '/_authenticated/admin/faq': typeof AuthenticatedAdminFaqRoute
@@ -352,6 +389,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
   '/_authenticated/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/_authenticated/admin/programs': typeof AuthenticatedAdminProgramsRoute
+  '/_authenticated/admin/qris': typeof AuthenticatedAdminQrisRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/team': typeof AuthenticatedAdminTeamRoute
   '/_authenticated/admin/testimonials': typeof AuthenticatedAdminTestimonialsRoute
@@ -366,6 +404,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/donasi'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -380,9 +419,11 @@ export interface FileRouteTypes {
     | '/donate/'
     | '/news/'
     | '/admin/about'
+    | '/admin/bank-accounts'
     | '/admin/campaigns'
     | '/admin/contact'
     | '/admin/donation-categories'
+    | '/admin/donation-confirmations'
     | '/admin/donations'
     | '/admin/events'
     | '/admin/faq'
@@ -392,6 +433,7 @@ export interface FileRouteTypes {
     | '/admin/news'
     | '/admin/partners'
     | '/admin/programs'
+    | '/admin/qris'
     | '/admin/settings'
     | '/admin/team'
     | '/admin/testimonials'
@@ -404,6 +446,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/donasi'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -417,9 +460,11 @@ export interface FileRouteTypes {
     | '/donate'
     | '/news'
     | '/admin/about'
+    | '/admin/bank-accounts'
     | '/admin/campaigns'
     | '/admin/contact'
     | '/admin/donation-categories'
+    | '/admin/donation-confirmations'
     | '/admin/donations'
     | '/admin/events'
     | '/admin/faq'
@@ -429,6 +474,7 @@ export interface FileRouteTypes {
     | '/admin/news'
     | '/admin/partners'
     | '/admin/programs'
+    | '/admin/qris'
     | '/admin/settings'
     | '/admin/team'
     | '/admin/testimonials'
@@ -442,6 +488,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/donasi'
     | '/events'
     | '/faq'
     | '/gallery'
@@ -456,9 +503,11 @@ export interface FileRouteTypes {
     | '/donate/'
     | '/news/'
     | '/_authenticated/admin/about'
+    | '/_authenticated/admin/bank-accounts'
     | '/_authenticated/admin/campaigns'
     | '/_authenticated/admin/contact'
     | '/_authenticated/admin/donation-categories'
+    | '/_authenticated/admin/donation-confirmations'
     | '/_authenticated/admin/donations'
     | '/_authenticated/admin/events'
     | '/_authenticated/admin/faq'
@@ -468,6 +517,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/news'
     | '/_authenticated/admin/partners'
     | '/_authenticated/admin/programs'
+    | '/_authenticated/admin/qris'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/team'
     | '/_authenticated/admin/testimonials'
@@ -482,6 +532,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  DonasiRoute: typeof DonasiRoute
   EventsRoute: typeof EventsRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
@@ -552,6 +603,13 @@ declare module '@tanstack/react-router' {
       path: '/events'
       fullPath: '/events'
       preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donasi': {
+      id: '/donasi'
+      path: '/donasi'
+      fullPath: '/donasi'
+      preLoaderRoute: typeof DonasiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -666,6 +724,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/qris': {
+      id: '/_authenticated/admin/qris'
+      path: '/qris'
+      fullPath: '/admin/qris'
+      preLoaderRoute: typeof AuthenticatedAdminQrisRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/programs': {
       id: '/_authenticated/admin/programs'
       path: '/programs'
@@ -729,6 +794,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminDonationsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/donation-confirmations': {
+      id: '/_authenticated/admin/donation-confirmations'
+      path: '/donation-confirmations'
+      fullPath: '/admin/donation-confirmations'
+      preLoaderRoute: typeof AuthenticatedAdminDonationConfirmationsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/donation-categories': {
       id: '/_authenticated/admin/donation-categories'
       path: '/donation-categories'
@@ -750,6 +822,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCampaignsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/bank-accounts': {
+      id: '/_authenticated/admin/bank-accounts'
+      path: '/bank-accounts'
+      fullPath: '/admin/bank-accounts'
+      preLoaderRoute: typeof AuthenticatedAdminBankAccountsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/about': {
       id: '/_authenticated/admin/about'
       path: '/about'
@@ -762,9 +841,11 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
+  AuthenticatedAdminBankAccountsRoute: typeof AuthenticatedAdminBankAccountsRoute
   AuthenticatedAdminCampaignsRoute: typeof AuthenticatedAdminCampaignsRoute
   AuthenticatedAdminContactRoute: typeof AuthenticatedAdminContactRoute
   AuthenticatedAdminDonationCategoriesRoute: typeof AuthenticatedAdminDonationCategoriesRoute
+  AuthenticatedAdminDonationConfirmationsRoute: typeof AuthenticatedAdminDonationConfirmationsRoute
   AuthenticatedAdminDonationsRoute: typeof AuthenticatedAdminDonationsRoute
   AuthenticatedAdminEventsRoute: typeof AuthenticatedAdminEventsRoute
   AuthenticatedAdminFaqRoute: typeof AuthenticatedAdminFaqRoute
@@ -774,6 +855,7 @@ interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminNewsRoute: typeof AuthenticatedAdminNewsRoute
   AuthenticatedAdminPartnersRoute: typeof AuthenticatedAdminPartnersRoute
   AuthenticatedAdminProgramsRoute: typeof AuthenticatedAdminProgramsRoute
+  AuthenticatedAdminQrisRoute: typeof AuthenticatedAdminQrisRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminTeamRoute: typeof AuthenticatedAdminTeamRoute
   AuthenticatedAdminTestimonialsRoute: typeof AuthenticatedAdminTestimonialsRoute
@@ -785,10 +867,13 @@ interface AuthenticatedAdminRouteRouteChildren {
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
     AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
+    AuthenticatedAdminBankAccountsRoute: AuthenticatedAdminBankAccountsRoute,
     AuthenticatedAdminCampaignsRoute: AuthenticatedAdminCampaignsRoute,
     AuthenticatedAdminContactRoute: AuthenticatedAdminContactRoute,
     AuthenticatedAdminDonationCategoriesRoute:
       AuthenticatedAdminDonationCategoriesRoute,
+    AuthenticatedAdminDonationConfirmationsRoute:
+      AuthenticatedAdminDonationConfirmationsRoute,
     AuthenticatedAdminDonationsRoute: AuthenticatedAdminDonationsRoute,
     AuthenticatedAdminEventsRoute: AuthenticatedAdminEventsRoute,
     AuthenticatedAdminFaqRoute: AuthenticatedAdminFaqRoute,
@@ -798,6 +883,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
     AuthenticatedAdminNewsRoute: AuthenticatedAdminNewsRoute,
     AuthenticatedAdminPartnersRoute: AuthenticatedAdminPartnersRoute,
     AuthenticatedAdminProgramsRoute: AuthenticatedAdminProgramsRoute,
+    AuthenticatedAdminQrisRoute: AuthenticatedAdminQrisRoute,
     AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
     AuthenticatedAdminTeamRoute: AuthenticatedAdminTeamRoute,
     AuthenticatedAdminTestimonialsRoute: AuthenticatedAdminTestimonialsRoute,
@@ -828,6 +914,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  DonasiRoute: DonasiRoute,
   EventsRoute: EventsRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,

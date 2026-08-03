@@ -3,7 +3,8 @@ import { SiteLayout, PageHero } from "@/components/site-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ShieldCheck, Repeat, CreditCard, Users, ArrowRight } from "lucide-react";
+import { ShieldCheck, Repeat, CreditCard, Users, ArrowRight, Heart } from "lucide-react";
+import { DonationChannels } from "@/components/donation-channels";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
@@ -28,9 +29,22 @@ function Donate() {
 
   return (
     <SiteLayout>
-      <PageHero eyebrow="Donasi" title="Kebaikan Anda menjadi berkah" description="100% donasi Anda tersalurkan ke lapangan. Transparan dan diaudit setiap tahun." />
+      <PageHero
+        eyebrow="Donasi"
+        title="Mari Menjadi Bagian dari Kebaikan"
+        description="Setiap donasi yang Anda berikan akan membantu menghadirkan manfaat bagi masyarakat yang membutuhkan melalui program-program KBSBB."
+      />
+
+      <div className="container-x -mt-6 flex justify-center md:-mt-8">
+        <Button asChild size="lg" className="rounded-full px-8 gap-2 shadow-glow">
+          <a href="#metode-donasi"><Heart className="h-4 w-4 fill-current" /> Donasi Sekarang</a>
+        </Button>
+      </div>
+
+      <DonationChannels />
 
       <section className="container-x py-16 md:py-20">
+
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Program Donasi Aktif</h2>
         <p className="mt-2 text-muted-foreground">Pilih program donasi dan pantau progresnya secara langsung.</p>
 

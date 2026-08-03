@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Loader2, Globe, Share2, Mail, Map, Search, LayoutTemplate } from "lucide-react";
+import { Loader2, Globe, Share2, Mail, Map, Search, LayoutTemplate, MessageCircle } from "lucide-react";
 import { MediaPicker } from "@/components/admin/media-picker";
 import { Switch } from "@/components/ui/switch";
 
@@ -31,6 +31,20 @@ const GROUPS: Group[] = [
         label: "Tampilkan Statistik Dampak",
         kind: "boolean",
         help: "Jika dinonaktifkan, section Statistik Dampak tidak akan tampil di Homepage, namun seluruh data statistik tetap tersimpan.",
+      },
+    ],
+  },
+  {
+    key: "whatsapp", icon: MessageCircle, title: "WhatsApp",
+    fields: [
+      { name: "number", label: "Nomor WhatsApp", help: "Format internasional tanpa tanda +, contoh: 628xxxxxxxxxx" },
+      { name: "admin_name", label: "Nama Admin", help: "Ditampilkan pada tooltip tombol WhatsApp. Contoh: Admin KBSBB" },
+      { name: "default_message", label: "Pesan Default", kind: "textarea" },
+      {
+        name: "enabled",
+        label: "Tombol WhatsApp Mengambang",
+        kind: "boolean",
+        help: "Jika dinonaktifkan, tombol WhatsApp tidak ditampilkan di seluruh halaman website.",
       },
     ],
   },
