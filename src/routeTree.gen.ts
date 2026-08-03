@@ -36,6 +36,7 @@ import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminProgramsRouteImport } from './routes/_authenticated/admin/programs'
 import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authenticated/admin/partners'
 import { Route as AuthenticatedAdminNewsRouteImport } from './routes/_authenticated/admin/news'
+import { Route as AuthenticatedAdminImpactStatsRouteImport } from './routes/_authenticated/admin/impact-stats'
 import { Route as AuthenticatedAdminHeroRouteImport } from './routes/_authenticated/admin/hero'
 import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authenticated/admin/gallery'
 import { Route as AuthenticatedAdminFaqRouteImport } from './routes/_authenticated/admin/faq'
@@ -185,6 +186,12 @@ const AuthenticatedAdminNewsRoute = AuthenticatedAdminNewsRouteImport.update({
   path: '/news',
   getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
+const AuthenticatedAdminImpactStatsRoute =
+  AuthenticatedAdminImpactStatsRouteImport.update({
+    id: '/impact-stats',
+    path: '/impact-stats',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminHeroRoute = AuthenticatedAdminHeroRouteImport.update({
   id: '/hero',
   path: '/hero',
@@ -264,6 +271,7 @@ export interface FileRoutesByFullPath {
   '/admin/faq': typeof AuthenticatedAdminFaqRoute
   '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
   '/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/admin/impact-stats': typeof AuthenticatedAdminImpactStatsRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/programs': typeof AuthenticatedAdminProgramsRoute
@@ -300,6 +308,7 @@ export interface FileRoutesByTo {
   '/admin/faq': typeof AuthenticatedAdminFaqRoute
   '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
   '/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/admin/impact-stats': typeof AuthenticatedAdminImpactStatsRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/programs': typeof AuthenticatedAdminProgramsRoute
@@ -339,6 +348,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/faq': typeof AuthenticatedAdminFaqRoute
   '/_authenticated/admin/gallery': typeof AuthenticatedAdminGalleryRoute
   '/_authenticated/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/_authenticated/admin/impact-stats': typeof AuthenticatedAdminImpactStatsRoute
   '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
   '/_authenticated/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/_authenticated/admin/programs': typeof AuthenticatedAdminProgramsRoute
@@ -378,6 +388,7 @@ export interface FileRouteTypes {
     | '/admin/faq'
     | '/admin/gallery'
     | '/admin/hero'
+    | '/admin/impact-stats'
     | '/admin/news'
     | '/admin/partners'
     | '/admin/programs'
@@ -414,6 +425,7 @@ export interface FileRouteTypes {
     | '/admin/faq'
     | '/admin/gallery'
     | '/admin/hero'
+    | '/admin/impact-stats'
     | '/admin/news'
     | '/admin/partners'
     | '/admin/programs'
@@ -452,6 +464,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/faq'
     | '/_authenticated/admin/gallery'
     | '/_authenticated/admin/hero'
+    | '/_authenticated/admin/impact-stats'
     | '/_authenticated/admin/news'
     | '/_authenticated/admin/partners'
     | '/_authenticated/admin/programs'
@@ -674,6 +687,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminNewsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/impact-stats': {
+      id: '/_authenticated/admin/impact-stats'
+      path: '/impact-stats'
+      fullPath: '/admin/impact-stats'
+      preLoaderRoute: typeof AuthenticatedAdminImpactStatsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/hero': {
       id: '/_authenticated/admin/hero'
       path: '/hero'
@@ -750,6 +770,7 @@ interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminFaqRoute: typeof AuthenticatedAdminFaqRoute
   AuthenticatedAdminGalleryRoute: typeof AuthenticatedAdminGalleryRoute
   AuthenticatedAdminHeroRoute: typeof AuthenticatedAdminHeroRoute
+  AuthenticatedAdminImpactStatsRoute: typeof AuthenticatedAdminImpactStatsRoute
   AuthenticatedAdminNewsRoute: typeof AuthenticatedAdminNewsRoute
   AuthenticatedAdminPartnersRoute: typeof AuthenticatedAdminPartnersRoute
   AuthenticatedAdminProgramsRoute: typeof AuthenticatedAdminProgramsRoute
@@ -773,6 +794,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
     AuthenticatedAdminFaqRoute: AuthenticatedAdminFaqRoute,
     AuthenticatedAdminGalleryRoute: AuthenticatedAdminGalleryRoute,
     AuthenticatedAdminHeroRoute: AuthenticatedAdminHeroRoute,
+    AuthenticatedAdminImpactStatsRoute: AuthenticatedAdminImpactStatsRoute,
     AuthenticatedAdminNewsRoute: AuthenticatedAdminNewsRoute,
     AuthenticatedAdminPartnersRoute: AuthenticatedAdminPartnersRoute,
     AuthenticatedAdminProgramsRoute: AuthenticatedAdminProgramsRoute,
