@@ -11,7 +11,7 @@ import { Loader2, Globe, Share2, Mail, Map, Search, LayoutTemplate } from "lucid
 import { MediaPicker } from "@/components/admin/media-picker";
 import { Switch } from "@/components/ui/switch";
 
-type Group = { key: string; icon: any; title: string; fields: { name: string; label: string; kind?: "text" | "textarea" | "image" | "boolean" }[] };
+type Group = { key: string; icon: any; title: string; fields: { name: string; label: string; kind?: "text" | "textarea" | "image" | "boolean"; help?: string }[] };
 
 const GROUPS: Group[] = [
   {
@@ -26,7 +26,12 @@ const GROUPS: Group[] = [
   {
     key: "homepage", icon: LayoutTemplate, title: "Homepage",
     fields: [
-      { name: "show_impact_stats", label: "Tampilkan Statistik Dampak", kind: "boolean" },
+      {
+        name: "show_impact_stats",
+        label: "Tampilkan Statistik Dampak",
+        kind: "boolean",
+        help: "Jika dinonaktifkan, section Statistik Dampak tidak akan tampil di Homepage, namun seluruh data statistik tetap tersimpan.",
+      },
     ],
   },
   {
@@ -117,6 +122,7 @@ function SettingsPage() {
                   ) : (
                     <Input value={v} onChange={(e) => set(e.target.value)} />
                   )}
+                  {f.help && <p className="text-xs text-muted-foreground">{f.help}</p>}
                 </div>
               );
             })}
