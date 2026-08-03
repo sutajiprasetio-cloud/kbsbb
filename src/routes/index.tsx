@@ -1,16 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Calendar, MapPin, Heart, Users, HandCoins, Sprout, Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home as HomeIcon, HandHeart, Quote, Mail } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight, Calendar, MapPin, Heart, HandCoins, Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home as HomeIcon, HandHeart, Quote, Mail } from "lucide-react";
 import { SiteLayout } from "@/components/site-layout";
 import * as LucideIcons from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
-import { useTable, useSettings } from "@/lib/public-data";
+import { useTable, useSingleton } from "@/lib/public-data";
+import { useHomepageConfig, type SectionId } from "@/lib/homepage-config";
 import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 import { HeroSlider } from "@/components/hero-slider";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,32 +29,43 @@ export const Route = createFileRoute("/")({
 const ICONS: Record<string, any> = { Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home: HomeIcon, HandHeart };
 
 function HomePage() {
-  const settings = useSettings();
+  const config = useHomepageConfig();
+  if (!config) return <SiteLayout><div className="min-h-[60vh]" /></SiteLayout>;
+
+  const order = config.order.filter((id) => config.enabled[id]);
+  const heroIndex = order.indexOf("hero");
+  const nextAfterHero = heroIndex >= 0 ? order[heroIndex + 1] : undefined;
+  const statsAfterHero = nextAfterHero === "impact_stats";
+
+  const render = (id: SectionId, i: number) => {
+    switch (id) {
+      case "hero": return <HeroSlider key={id} compactBottom={!statsAfterHero} />;
+      case "about": return <AboutSection key={id} />;
+      case "impact_stats": return <StatsSection key={id} floating={i === heroIndex + 1 && heroIndex >= 0} />;
+      case "programs": return <FeaturedPrograms key={id} compactTop={heroIndex >= 0 && i === heroIndex + 1} />;
+      case "campaigns": return <DonationProgress key={id} />;
+      case "events": return <UpcomingEvents key={id} />;
+      case "gallery": return <GalleryPreview key={id} />;
+      case "testimonials": return <Testimonials key={id} />;
+      case "partners": return <PartnersMarquee key={id} />;
+      case "news": return <LatestNews key={id} />;
+      case "faq": return <FaqSection key={id} />;
+      case "cta_donate": return <DonateCta key={id} />;
+      case "contact": return <NewsletterAndMap key={id} />;
+      default: return null;
+    }
+  };
+
+  return <SiteLayout>{order.map((id, i) => render(id, i))}</SiteLayout>;
+}
+
+function StatsSection({ floating = false }: { floating?: boolean }) {
   const stats = useTable<any>("impact_stats", {
     filter: (q) => q.eq("is_active", true),
     order: { column: "sort_order", ascending: true },
   });
+  if (!stats || stats.length === 0) return null;
 
-  const enabled = settings.homepage?.show_impact_stats;
-  const showStats = !(enabled === false || enabled === "false") && !!stats && stats.length > 0;
-
-  return (
-    <SiteLayout>
-      <HeroSlider compactBottom={!showStats} />
-      {showStats && <StatsSection stats={stats!} />}
-      <FeaturedPrograms compactTop={!showStats} />
-      <DonationProgress />
-      <LatestNews />
-      <UpcomingEvents />
-      <GalleryPreview />
-      <Testimonials />
-      <PartnersMarquee />
-      <NewsletterAndMap />
-    </SiteLayout>
-  );
-}
-
-function StatsSection({ stats }: { stats: any[] }) {
   const cols =
     stats.length <= 2 ? "sm:grid-cols-2"
     : stats.length === 3 ? "sm:grid-cols-3"
@@ -60,7 +73,7 @@ function StatsSection({ stats }: { stats: any[] }) {
     : "sm:grid-cols-2 lg:grid-cols-4";
 
   return (
-    <section className="relative -mt-16 z-20">
+    <section className={floating ? "relative -mt-16 z-20" : "py-14 md:py-20"}>
       <div className="container-x">
         <div className={`grid grid-cols-2 ${cols} gap-2 sm:gap-4 rounded-3xl bg-card shadow-soft border border-border p-3 sm:p-4 md:p-6`}>
           {stats.map((s: any) => {
@@ -83,7 +96,6 @@ function StatsSection({ stats }: { stats: any[] }) {
   );
 }
 
-
 export function SectionHeading({ eyebrow, title, description, align = "center" }: { eyebrow: string; title: string; description?: string; align?: "left" | "center" }) {
   return (
     <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
@@ -91,6 +103,27 @@ export function SectionHeading({ eyebrow, title, description, align = "center" }
       <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">{title}</h2>
       {description && <p className="mt-4 text-muted-foreground md:text-lg">{description}</p>}
     </div>
+  );
+}
+
+function AboutSection() {
+  const about = useSingleton<any>("about_content", 1);
+  if (!about) return null;
+  return (
+    <section className="py-20 md:py-28">
+      <div className="container-x grid items-center gap-10 lg:grid-cols-2">
+        {about.image_url && (
+          <ModeImage src={about.image_url} alt={about.headline ?? "Tentang KBSBB"} mode={about.display_mode} className="aspect-[4/3] w-full overflow-hidden rounded-3xl bg-muted shadow-soft" />
+        )}
+        <div>
+          <SectionHeading eyebrow="Tentang Kami" title={about.headline ?? "Tentang KBSBB"} description={about.intro ?? undefined} align="left" />
+          {about.mission && <p className="mt-5 text-muted-foreground">{about.mission}</p>}
+          <Link to="/about" className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">
+            Selengkapnya <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -244,7 +277,7 @@ function UpcomingEvents() {
   );
 }
 
-function GalleryPreview() { /*
+function GalleryPreview() {
   const items = useTable<any>("gallery_items", { order: { column: "sort_order", ascending: true }, limit: 8 });
   return (
     <section className="py-20 md:py-28">
@@ -267,9 +300,49 @@ function GalleryPreview() { /*
         )}
       </div>
     </section>
-  ); */
+  );
 }
 
+function FaqSection() {
+  const items = useTable<any>("faqs", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true }, limit: 6 });
+  if (!items) return null;
+  return (
+    <section className="py-20 md:py-28">
+      <div className="container-x">
+        <SectionHeading eyebrow="FAQ" title="Pertanyaan yang sering diajukan" />
+        {items.length === 0 ? (
+          <EmptyState className="mt-10" title="Belum ada FAQ" description="Pertanyaan umum akan tampil di sini." />
+        ) : (
+          <Accordion type="single" collapsible className="mx-auto mt-10 max-w-3xl">
+            {items.map((f: any) => (
+              <AccordionItem key={f.id} value={f.id}>
+                <AccordionTrigger className="text-left font-semibold">{f.question}</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">{f.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function DonateCta() {
+  return (
+    <section className="py-20 md:py-28 gradient-brand text-white">
+      <div className="container-x text-center">
+        <HandCoins className="mx-auto h-10 w-10 opacity-80" />
+        <h2 className="mt-5 text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">Setiap donasi Anda berarti</h2>
+        <p className="mx-auto mt-4 max-w-2xl opacity-90">Bantu kami menghadirkan layanan kesehatan, pendidikan, dan pangan bagi masyarakat yang membutuhkan.</p>
+        <Link to="/donate" className="mt-8 inline-block">
+          <Button variant="secondary" className="h-12 rounded-full px-8 text-base font-semibold gap-2">
+            <Heart className="h-4 w-4 fill-current" /> Donasi Sekarang
+          </Button>
+        </Link>
+      </div>
+    </section>
+  );
+}
 
 function Testimonials() {
   const items = useTable<any>("testimonials", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
@@ -369,7 +442,6 @@ function NewsletterAndMap() {
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           />
-
         </div>
       </div>
     </section>

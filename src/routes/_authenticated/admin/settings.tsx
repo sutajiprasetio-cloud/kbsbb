@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Loader2, Globe, Share2, Mail, Map, Search, LayoutTemplate, MessageCircle } from "lucide-react";
+import { Loader2, Globe, Share2, Mail, Map, Search, MessageCircle } from "lucide-react";
 import { MediaPicker } from "@/components/admin/media-picker";
 import { Switch } from "@/components/ui/switch";
 
@@ -21,17 +21,6 @@ const GROUPS: Group[] = [
       { name: "tagline", label: "Tagline" },
       { name: "logo_url", label: "Logo", kind: "image" },
       { name: "favicon_url", label: "Favicon", kind: "image" },
-    ],
-  },
-  {
-    key: "homepage", icon: LayoutTemplate, title: "Homepage",
-    fields: [
-      {
-        name: "show_impact_stats",
-        label: "Tampilkan Statistik Dampak",
-        kind: "boolean",
-        help: "Jika dinonaktifkan, section Statistik Dampak tidak akan tampil di Homepage, namun seluruh data statistik tetap tersimpan.",
-      },
     ],
   },
   {
