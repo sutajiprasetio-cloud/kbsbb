@@ -362,6 +362,7 @@ export type Database = {
           created_at: string
           cta_href: string | null
           cta_label: string | null
+          display_mode: string
           id: string
           image_url: string | null
           is_active: boolean
@@ -374,6 +375,7 @@ export type Database = {
           created_at?: string
           cta_href?: string | null
           cta_label?: string | null
+          display_mode?: string
           id?: string
           image_url?: string | null
           is_active?: boolean
@@ -386,6 +388,7 @@ export type Database = {
           created_at?: string
           cta_href?: string | null
           cta_label?: string | null
+          display_mode?: string
           id?: string
           image_url?: string | null
           is_active?: boolean
