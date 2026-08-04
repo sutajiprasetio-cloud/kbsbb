@@ -100,6 +100,8 @@ function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { dark, toggle } = useDarkMode();
+  const branding = useBranding();
+  const headerLogo = useBrandLogo(branding.logo_header);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
