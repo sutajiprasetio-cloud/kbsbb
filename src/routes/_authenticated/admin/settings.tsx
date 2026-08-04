@@ -14,15 +14,7 @@ import { Switch } from "@/components/ui/switch";
 type Group = { key: string; icon: any; title: string; fields: { name: string; label: string; kind?: "text" | "textarea" | "image" | "boolean"; help?: string }[] };
 
 const GROUPS: Group[] = [
-  {
-    key: "general", icon: Globe, title: "Website",
-    fields: [
-      { name: "site_name", label: "Site name" },
-      { name: "tagline", label: "Tagline" },
-      { name: "logo_url", label: "Logo", kind: "image" },
-      { name: "favicon_url", label: "Favicon", kind: "image" },
-    ],
-  },
+
   {
     key: "whatsapp", icon: MessageCircle, title: "WhatsApp",
     fields: [
