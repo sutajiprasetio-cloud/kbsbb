@@ -122,10 +122,12 @@ function Header() {
     >
       <div className={`container-x flex items-center justify-between gap-3 transition-all duration-300 ${solid ? "h-14 lg:h-16" : "h-16 lg:h-20"}`}>
         <Link to="/" className="flex items-center gap-2 shrink-0 group" onClick={() => setOpen(false)}>
-          <img src={logo} alt="KBSBB" className="h-9 w-9 lg:h-11 lg:w-11 transition-transform group-hover:scale-110" width={44} height={44} />
+          <img src={headerLogo} alt={branding.site_name} className="h-9 w-9 lg:h-11 lg:w-11 object-contain transition-transform group-hover:scale-110" width={44} height={44} />
           <div className="leading-tight min-w-0">
-            <div className="text-base font-extrabold tracking-tight text-gradient-brand">KBSBB</div>
-            <div className="hidden sm:block truncate text-[10px] uppercase tracking-widest text-muted-foreground">Komunitas Berbagi Sehat · Berbagi Berkah</div>
+            <div className="text-base font-extrabold tracking-tight text-gradient-brand">{branding.site_name}</div>
+            {branding.tagline && (
+              <div className="hidden sm:block truncate text-[10px] uppercase tracking-widest text-muted-foreground">{branding.tagline}</div>
+            )}
           </div>
         </Link>
 
