@@ -4,6 +4,7 @@ import { Menu, X, Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, He
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { useSettings } from "@/lib/public-data";
+import { useBranding, useBrandLogo, useFavicon } from "@/lib/branding";
 
 const NAV = [
   { to: "/", label: "Beranda" },
@@ -20,6 +21,8 @@ const NAV = [
 ] as const;
 
 export function SiteLayout({ children }: { children: ReactNode }) {
+  const branding = useBranding();
+  useFavicon(branding.favicon);
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <PageLoader />
@@ -97,6 +100,8 @@ function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { dark, toggle } = useDarkMode();
+  const branding = useBranding();
+  const headerLogo = useBrandLogo(branding.logo_header);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -117,10 +122,12 @@ function Header() {
     >
       <div className={`container-x flex items-center justify-between gap-3 transition-all duration-300 ${solid ? "h-14 lg:h-16" : "h-16 lg:h-20"}`}>
         <Link to="/" className="flex items-center gap-2 shrink-0 group" onClick={() => setOpen(false)}>
-          <img src={logo} alt="KBSBB" className="h-9 w-9 lg:h-11 lg:w-11 transition-transform group-hover:scale-110" width={44} height={44} />
+          <img src={headerLogo} alt={branding.site_name} className="h-9 w-9 lg:h-11 lg:w-11 object-contain transition-transform group-hover:scale-110" width={44} height={44} />
           <div className="leading-tight min-w-0">
-            <div className="text-base font-extrabold tracking-tight text-gradient-brand">KBSBB</div>
-            <div className="hidden sm:block truncate text-[10px] uppercase tracking-widest text-muted-foreground">Komunitas Berbagi Sehat · Berbagi Berkah</div>
+            <div className="text-base font-extrabold tracking-tight text-gradient-brand">{branding.site_name}</div>
+            {branding.tagline && (
+              <div className="hidden sm:block truncate text-[10px] uppercase tracking-widest text-muted-foreground">{branding.tagline}</div>
+            )}
           </div>
         </Link>
 
@@ -249,15 +256,19 @@ function FloatingActions() {
 }
 
 function Footer() {
+  const branding = useBranding();
+  const footerLogo = useBrandLogo(branding.logo_footer);
   return (
     <footer className="mt-24 bg-[oklch(0.18_0.02_240)] text-white/85">
       <div className="container-x py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <img src={logo} alt="KBSBB" className="h-10 w-10" width={40} height={40} />
+            <img src={footerLogo} alt={branding.site_name} className="h-10 w-10 object-contain" width={40} height={40} />
             <div>
-              <div className="text-lg font-extrabold text-white">KBSBB</div>
-              <div className="text-[10px] uppercase tracking-widest text-white/60">Komunitas Berbagi Sehat · Berbagi Berkah</div>
+              <div className="text-lg font-extrabold text-white">{branding.site_name}</div>
+              {branding.tagline && (
+                <div className="text-[10px] uppercase tracking-widest text-white/60">{branding.tagline}</div>
+              )}
             </div>
           </div>
           <p className="mt-4 text-sm text-white/70 leading-relaxed">

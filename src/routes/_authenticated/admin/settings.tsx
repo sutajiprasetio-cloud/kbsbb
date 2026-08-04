@@ -7,22 +7,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Loader2, Globe, Share2, Mail, Map, Search, MessageCircle } from "lucide-react";
+import { Loader2, Share2, Mail, Map, Search, MessageCircle } from "lucide-react";
 import { MediaPicker } from "@/components/admin/media-picker";
 import { Switch } from "@/components/ui/switch";
 
 type Group = { key: string; icon: any; title: string; fields: { name: string; label: string; kind?: "text" | "textarea" | "image" | "boolean"; help?: string }[] };
 
 const GROUPS: Group[] = [
-  {
-    key: "general", icon: Globe, title: "Website",
-    fields: [
-      { name: "site_name", label: "Site name" },
-      { name: "tagline", label: "Tagline" },
-      { name: "logo_url", label: "Logo", kind: "image" },
-      { name: "favicon_url", label: "Favicon", kind: "image" },
-    ],
-  },
+
   {
     key: "whatsapp", icon: MessageCircle, title: "WhatsApp",
     fields: [
