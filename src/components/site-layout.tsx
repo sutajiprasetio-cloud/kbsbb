@@ -4,6 +4,7 @@ import { Menu, X, Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, He
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { useSettings } from "@/lib/public-data";
+import { useBranding, useBrandLogo, useFavicon } from "@/lib/branding";
 
 const NAV = [
   { to: "/", label: "Beranda" },
