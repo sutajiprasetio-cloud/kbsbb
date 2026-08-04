@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Loader2, Globe, Share2, Mail, Map, Search, MessageCircle } from "lucide-react";
+import { Loader2, Share2, Mail, Map, Search, MessageCircle } from "lucide-react";
 import { MediaPicker } from "@/components/admin/media-picker";
 import { Switch } from "@/components/ui/switch";
 
