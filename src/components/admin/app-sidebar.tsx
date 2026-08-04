@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, FileText, Image as ImageIcon, Users, HandHeart, Calendar,
   MessageSquare, Handshake, HelpCircle, Building2, UserCog, Settings, Sparkles, Heart,
-  Info, Tag, Megaphone, BarChart3, ReceiptText, Landmark, QrCode, LayoutTemplate,
+  Info, Tag, Megaphone, BarChart3, ReceiptText, Landmark, QrCode, LayoutTemplate, Palette,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
