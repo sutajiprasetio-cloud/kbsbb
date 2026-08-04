@@ -52,6 +52,7 @@ const GROUPS = [
     label: "System",
     items: [
       { title: "Homepage", url: "/admin/homepage", icon: LayoutTemplate },
+      { title: "Branding", url: "/admin/branding", icon: Palette },
       { title: "Users", url: "/admin/users", icon: UserCog },
       { title: "Settings", url: "/admin/settings", icon: Settings },
     ],

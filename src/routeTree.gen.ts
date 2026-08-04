@@ -49,6 +49,7 @@ import { Route as AuthenticatedAdminDonationConfirmationsRouteImport } from './r
 import { Route as AuthenticatedAdminDonationCategoriesRouteImport } from './routes/_authenticated/admin/donation-categories'
 import { Route as AuthenticatedAdminContactRouteImport } from './routes/_authenticated/admin/contact'
 import { Route as AuthenticatedAdminCampaignsRouteImport } from './routes/_authenticated/admin/campaigns'
+import { Route as AuthenticatedAdminBrandingRouteImport } from './routes/_authenticated/admin/branding'
 import { Route as AuthenticatedAdminBankAccountsRouteImport } from './routes/_authenticated/admin/bank-accounts'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin/about'
 
@@ -265,6 +266,12 @@ const AuthenticatedAdminCampaignsRoute =
     path: '/campaigns',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminBrandingRoute =
+  AuthenticatedAdminBrandingRouteImport.update({
+    id: '/branding',
+    path: '/branding',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminBankAccountsRoute =
   AuthenticatedAdminBankAccountsRouteImport.update({
     id: '/bank-accounts',
@@ -298,6 +305,7 @@ export interface FileRoutesByFullPath {
   '/news/': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
+  '/admin/branding': typeof AuthenticatedAdminBrandingRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
   '/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
@@ -340,6 +348,7 @@ export interface FileRoutesByTo {
   '/news': typeof NewsIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
+  '/admin/branding': typeof AuthenticatedAdminBrandingRoute
   '/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/admin/contact': typeof AuthenticatedAdminContactRoute
   '/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
@@ -385,6 +394,7 @@ export interface FileRoutesById {
   '/news/': typeof NewsIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
   '/_authenticated/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
+  '/_authenticated/admin/branding': typeof AuthenticatedAdminBrandingRoute
   '/_authenticated/admin/campaigns': typeof AuthenticatedAdminCampaignsRoute
   '/_authenticated/admin/contact': typeof AuthenticatedAdminContactRoute
   '/_authenticated/admin/donation-categories': typeof AuthenticatedAdminDonationCategoriesRoute
@@ -430,6 +440,7 @@ export interface FileRouteTypes {
     | '/news/'
     | '/admin/about'
     | '/admin/bank-accounts'
+    | '/admin/branding'
     | '/admin/campaigns'
     | '/admin/contact'
     | '/admin/donation-categories'
@@ -472,6 +483,7 @@ export interface FileRouteTypes {
     | '/news'
     | '/admin/about'
     | '/admin/bank-accounts'
+    | '/admin/branding'
     | '/admin/campaigns'
     | '/admin/contact'
     | '/admin/donation-categories'
@@ -516,6 +528,7 @@ export interface FileRouteTypes {
     | '/news/'
     | '/_authenticated/admin/about'
     | '/_authenticated/admin/bank-accounts'
+    | '/_authenticated/admin/branding'
     | '/_authenticated/admin/campaigns'
     | '/_authenticated/admin/contact'
     | '/_authenticated/admin/donation-categories'
@@ -842,6 +855,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCampaignsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/branding': {
+      id: '/_authenticated/admin/branding'
+      path: '/branding'
+      fullPath: '/admin/branding'
+      preLoaderRoute: typeof AuthenticatedAdminBrandingRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/bank-accounts': {
       id: '/_authenticated/admin/bank-accounts'
       path: '/bank-accounts'
@@ -862,6 +882,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
   AuthenticatedAdminBankAccountsRoute: typeof AuthenticatedAdminBankAccountsRoute
+  AuthenticatedAdminBrandingRoute: typeof AuthenticatedAdminBrandingRoute
   AuthenticatedAdminCampaignsRoute: typeof AuthenticatedAdminCampaignsRoute
   AuthenticatedAdminContactRoute: typeof AuthenticatedAdminContactRoute
   AuthenticatedAdminDonationCategoriesRoute: typeof AuthenticatedAdminDonationCategoriesRoute
@@ -889,6 +910,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
   {
     AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
     AuthenticatedAdminBankAccountsRoute: AuthenticatedAdminBankAccountsRoute,
+    AuthenticatedAdminBrandingRoute: AuthenticatedAdminBrandingRoute,
     AuthenticatedAdminCampaignsRoute: AuthenticatedAdminCampaignsRoute,
     AuthenticatedAdminContactRoute: AuthenticatedAdminContactRoute,
     AuthenticatedAdminDonationCategoriesRoute:
@@ -953,13 +975,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
