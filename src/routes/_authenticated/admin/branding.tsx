@@ -50,9 +50,29 @@ function BrandingPage() {
 
   async function save() {
     setSaving(true);
-    const { error } = await supabase.from("site_settings").upsert({ key: "branding", value: values as any });
+    const { error } = await supabase
+      .from("site_settings")
+      .upsert({ key: "branding", value: values as any }, { onConflict: "key" });
+    // Keep legacy `general` keys in sync so older readers show the same logo.
+    if (!error) {
+      const { data: gen } = await supabase.from("site_settings").select("value").eq("key", "general").maybeSingle();
+      await supabase.from("site_settings").upsert(
+        {
+          key: "general",
+          value: {
+            ...(((gen as any)?.value as any) ?? {}),
+            logo_url: values.logo_header,
+            favicon_url: values.favicon,
+            site_name: values.site_name,
+            tagline: values.tagline,
+          } as any,
+        },
+        { onConflict: "key" },
+      );
+    }
     setSaving(false);
     if (error) return toast.error(error.message);
+    window.dispatchEvent(new CustomEvent("kbsbb-branding-updated"));
     toast.success("Branding disimpan");
   }
 
