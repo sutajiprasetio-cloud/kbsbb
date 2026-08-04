@@ -21,6 +21,8 @@ const NAV = [
 ] as const;
 
 export function SiteLayout({ children }: { children: ReactNode }) {
+  const branding = useBranding();
+  useFavicon(branding.favicon);
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <PageLoader />
