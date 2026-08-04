@@ -256,15 +256,19 @@ function FloatingActions() {
 }
 
 function Footer() {
+  const branding = useBranding();
+  const footerLogo = useBrandLogo(branding.logo_footer);
   return (
     <footer className="mt-24 bg-[oklch(0.18_0.02_240)] text-white/85">
       <div className="container-x py-16 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <img src={logo} alt="KBSBB" className="h-10 w-10" width={40} height={40} />
+            <img src={footerLogo} alt={branding.site_name} className="h-10 w-10 object-contain" width={40} height={40} />
             <div>
-              <div className="text-lg font-extrabold text-white">KBSBB</div>
-              <div className="text-[10px] uppercase tracking-widest text-white/60">Komunitas Berbagi Sehat · Berbagi Berkah</div>
+              <div className="text-lg font-extrabold text-white">{branding.site_name}</div>
+              {branding.tagline && (
+                <div className="text-[10px] uppercase tracking-widest text-white/60">{branding.tagline}</div>
+              )}
             </div>
           </div>
           <p className="mt-4 text-sm text-white/70 leading-relaxed">
