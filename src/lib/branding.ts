@@ -34,6 +34,16 @@ export function normalizeBranding(raw: any, legacy?: any): Branding {
 /** Reads branding from the CMS (falls back to legacy `general` settings). */
 export function useBranding(): Branding {
   const [branding, setBranding] = useState<Branding>(DEFAULT_BRANDING);
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const bump = () => setTick((t) => t + 1);
+    window.addEventListener("kbsbb-branding-updated", bump);
+    window.addEventListener("focus", bump);
+    return () => {
+      window.removeEventListener("kbsbb-branding-updated", bump);
+      window.removeEventListener("focus", bump);
+    };
+  }, []);
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -44,7 +54,7 @@ export function useBranding(): Branding {
       setBranding(normalizeBranding(map.branding, map.general));
     })();
     return () => { cancelled = true; };
-  }, []);
+  }, [tick]);
   return branding;
 }
 
