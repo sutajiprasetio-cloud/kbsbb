@@ -86,7 +86,7 @@ function NewsDetail() {
                     style={{
                       textAlign: "justify",
                       lineHeight: "1.9",
-                      textIndent: "2em",
+                      // textIndent: "2em",
                     }}
                   >
                     {p}
