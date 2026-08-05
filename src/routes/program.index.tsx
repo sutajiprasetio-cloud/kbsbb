@@ -1,0 +1,68 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteLayout, PageHero } from "@/components/site-layout";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home, ArrowRight, HandHeart } from "lucide-react";
+import { useTable } from "@/lib/public-data";
+import { ModeImage } from "@/components/safe-image";
+import { EmptyState } from "@/components/empty-state";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { canonical } from "@/lib/slug";
+
+export const Route = createFileRoute("/program/")({
+  head: () => ({
+    meta: [
+      { title: "Program — Yayasan Kemanusiaan KBSBB" },
+      { name: "description", content: "Jelajahi program kemanusiaan KBSBB di bidang kesehatan, pendidikan, ketahanan pangan, tanggap bencana, air bersih, dan hunian." },
+      { property: "og:title", content: "Program KBSBB" },
+      { property: "og:description", content: "Enam pilar aksi kemanusiaan di seluruh Indonesia." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: canonical("/program") },
+    ],
+    links: [{ rel: "canonical", href: canonical("/program") }],
+  }),
+  component: Programs,
+});
+
+const ICONS: Record<string, any> = { Stethoscope, GraduationCap, UtensilsCrossed, LifeBuoy, Droplet, Home, HandHeart };
+
+function Programs() {
+  const items = useTable<any>("programs", { filter: (q) => q.eq("is_active", true), order: { column: "sort_order", ascending: true } });
+  return (
+    <SiteLayout>
+      <PageHero eyebrow="Apa yang kami lakukan" title="Berbagi Sehat, Berbagi Berkah" description="Melalui berbagai program kesehatan, sosial, pendidikan, dakwah, dan kemanusiaan, KBSBB berupaya menghadirkan manfaat serta keberkahan bagi masyarakat yang membutuhkan." />
+      <section className="container-x py-20">
+        <Breadcrumbs className="mb-8" items={[{ label: "Program" }]} />
+        {items && items.length === 0 ? (
+          <EmptyState title="Belum ada program" description="Daftar program kami sedang diperbarui. Silakan kembali lagi nanti." />
+        ) : (
+          <div className="grid gap-8 md:grid-cols-2">
+            {(items ?? []).map((p: any) => {
+              const Icon = ICONS[p.icon] ?? HandHeart;
+              return (
+                <Card key={p.id} className="overflow-hidden rounded-3xl border-border/70 pt-0 hover:shadow-soft transition-all">
+                  <Link to="/program/$slug" params={{ slug: p.slug }} className="block">
+                    <ModeImage src={p.image_url} alt={p.title} mode={p.display_mode} className="aspect-[16/10] bg-muted" />
+                  </Link>
+                  <CardContent className="px-6 pb-6">
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-primary">
+                      <Icon className="h-3.5 w-3.5" /> {p.tag ?? p.slug ?? "Program"}
+                    </div>
+                    <Link to="/program/$slug" params={{ slug: p.slug }}>
+                      <h3 className="mt-3 text-xl font-bold hover:text-primary transition-colors">{p.title}</h3>
+                    </Link>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.summary ?? p.description}</p>
+                    <div className="mt-5 flex flex-wrap gap-3">
+                      <Button asChild className="rounded-full gap-2"><Link to="/donasi">Dukung program ini <ArrowRight className="h-4 w-4" /></Link></Button>
+                      <Button asChild variant="outline" className="rounded-full"><Link to="/program/$slug" params={{ slug: p.slug }}>Selengkapnya</Link></Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </section>
+    </SiteLayout>
+  );
+}

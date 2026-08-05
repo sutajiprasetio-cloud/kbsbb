@@ -20,6 +20,7 @@ export const Route = createFileRoute("/_authenticated/admin/gallery")({
         { name: "image_url", label: "Image", type: "image", required: true, span: 2 },
         { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "image_url" },
         { name: "title", label: "Title", type: "text" },
+        { name: "slug", label: "Slug URL (opsional — dibuat otomatis)", type: "text", placeholder: "kegiatan-bakti-sosial" },
         { name: "category", label: "Category", type: "text" },
         { name: "sort_order", label: "Sort order", type: "number" },
       ]}

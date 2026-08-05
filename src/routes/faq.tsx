@@ -3,6 +3,7 @@ import { SiteLayout, PageHero } from "@/components/site-layout";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
@@ -11,7 +12,9 @@ export const Route = createFileRoute("/faq")({
       { name: "description", content: "Jawaban atas pertanyaan umum seputar donasi, menjadi relawan, dan kemitraan bersama KBSBB." },
       { property: "og:title", content: "Tanya Jawab KBSBB" },
       { property: "og:description", content: "Semua yang perlu Anda ketahui." },
+      { property: "og:url", content: canonical("/faq") },
     ],
+    links: [{ rel: "canonical", href: canonical("/faq") }],
   }),
   component: FAQ,
 });
