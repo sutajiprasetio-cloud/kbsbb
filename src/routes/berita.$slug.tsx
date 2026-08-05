@@ -7,17 +7,21 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 import { ArrowLeft, Calendar, User } from "lucide-react";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/berita/$slug")({
-  head: () => ({
+  head: ({ params }) => ({
     meta: [
       { title: "Artikel — Berita KBSBB" },
       { name: "description", content: "Baca kisah lengkap dari kegiatan kemanusiaan KBSBB di seluruh Indonesia." },
       { property: "og:title", content: "Artikel Berita KBSBB" },
       { property: "og:description", content: "Baca kisah lengkap dari kegiatan kemanusiaan KBSBB di seluruh Indonesia." },
       { property: "og:type", content: "article" },
+      { property: "og:url", content: canonical(`/berita/${params.slug}`) },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: canonical(`/berita/${params.slug}`) }],
   }),
   component: NewsDetail,
 });
