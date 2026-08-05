@@ -190,7 +190,7 @@ function NewsDetail() {
                       navigator.clipboard.writeText(shareUrl);
                   
                       toast.success("URL artikel berhasil disalin", {
-                        description: "Silakan bagikan ke teman dan keluarga",
+                        description: "Silakan bagikan kabar kebaikan ini",
                         duration: 2500,
                       });
                     }}
