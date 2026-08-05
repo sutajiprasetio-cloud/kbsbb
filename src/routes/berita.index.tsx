@@ -5,6 +5,7 @@ import { Calendar, ArrowRight } from "lucide-react";
 import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/berita/")({
   head: () => ({
@@ -13,7 +14,10 @@ export const Route = createFileRoute("/berita/")({
       { name: "description", content: "Baca kisah, laporan dampak, dan pengumuman terbaru dari KBSBB." },
       { property: "og:title", content: "Berita KBSBB" },
       { property: "og:description", content: "Kisah dan kabar terbaru dari kegiatan kemanusiaan kami di seluruh Indonesia." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: canonical("/berita") },
     ],
+    links: [{ rel: "canonical", href: canonical("/berita") }],
   }),
   component: News,
 });
