@@ -65,7 +65,11 @@ function NewsDetail() {
           <>
             <ModeImage src={post.cover_url} alt={post.title} mode={post.display_mode} loading="eager" className="aspect-[16/9] rounded-3xl bg-muted" />
             <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-              <span className="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-primary">{post.tags?.[0] ?? "Berita"}</span>
+              {post.tags?.[0] ? (
+                <Link to="/kategori/$slug" params={{ slug: slugify(post.tags[0]) }} className="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-primary hover:opacity-80">{post.tags[0]}</Link>
+              ) : (
+                <span className="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-primary">Berita</span>
+              )}
               {post.author && <span className="inline-flex items-center gap-1"><User className="h-3 w-3" /> {post.author}</span>}
               {post.published_at && <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(post.published_at).toLocaleDateString("id-ID")}</span>}
             </div>
