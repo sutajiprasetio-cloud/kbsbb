@@ -130,6 +130,14 @@ function NewsDetail() {
                 <Button
                   variant="outline"
                   size="sm"
+                  onClick={() =>
+                    window.open(
+                      `https://wa.me/?text=${encodeURIComponent(
+                        shareTitle + "\n" + shareUrl
+                      )}`,
+                      "_blank"
+                    )
+                  }
                 >
                   <FaWhatsapp className="mr-2 h-4 w-4" />
                   WhatsApp
@@ -138,6 +146,10 @@ function NewsDetail() {
                <Button
                 variant="outline"
                 size="sm"
+                onClick={() => {
+                  navigator.clipboard.writeText(shareUrl);
+                  alert("Link artikel berhasil disalin");
+                }}
               >
                 <Link2 className="mr-2 h-4 w-4" />
                 Salin Link
