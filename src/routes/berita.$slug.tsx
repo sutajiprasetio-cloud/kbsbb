@@ -8,7 +8,7 @@ import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { canonical } from "@/lib/slug";
+import { canonical, slugify } from "@/lib/slug";
 
 export const Route = createFileRoute("/berita/$slug")({
   head: ({ params }) => ({
