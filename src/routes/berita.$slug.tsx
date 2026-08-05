@@ -18,6 +18,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { toast } from "sonner";
 
 
 export const Route = createFileRoute("/berita/$slug")({
@@ -158,17 +159,7 @@ function NewsDetail() {
                     <FaFacebookF size={16} />
                   </a>
         
-                  {/* Instagram */}
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(shareUrl);
-                      alert("Link artikel berhasil disalin untuk Instagram");
-                    }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
-                  >
-                    <FaInstagram size={16} />
-                  </button>
-        
+                         
                   {/* Telegram */}
                   <a
                     href={`https://t.me/share/url?url=${encodeURIComponent(
@@ -197,8 +188,13 @@ function NewsDetail() {
                   <button
                     onClick={() => {
                       navigator.clipboard.writeText(shareUrl);
-                      alert("Link artikel berhasil disalin");
+                  
+                      toast.success("URL artikel berhasil disalin", {
+                        description: "Silakan bagikan ke teman dan keluarga",
+                        duration: 2500,
+                      });
                     }}
+                    title="Salin Link"
                     className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
                   >
                     <Link2 size={16} />
