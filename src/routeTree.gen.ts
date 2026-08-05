@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VolunteerRouteImport } from './routes/volunteer'
+import { Route as VisiMisiRouteImport } from './routes/visi-misi'
+import { Route as TimKamiRouteImport } from './routes/tim-kami'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as TestimoniRouteImport } from './routes/testimoni'
 import { Route as TentangKamiRouteImport } from './routes/tentang-kami'
@@ -18,6 +20,7 @@ import { Route as RelawanRouteImport } from './routes/relawan'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as MitraRouteImport } from './routes/mitra'
+import { Route as MediaCenterRouteImport } from './routes/media-center'
 import { Route as KontakRouteImport } from './routes/kontak'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -29,6 +32,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProgramIndexRouteImport } from './routes/program.index'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
+import { Route as MediaCenterIndexRouteImport } from './routes/media-center.index'
 import { Route as EventIndexRouteImport } from './routes/event.index'
 import { Route as DonateIndexRouteImport } from './routes/donate.index'
 import { Route as DonasiIndexRouteImport } from './routes/donasi.index'
@@ -36,6 +40,9 @@ import { Route as DokumentasiIndexRouteImport } from './routes/dokumentasi.index
 import { Route as BeritaIndexRouteImport } from './routes/berita.index'
 import { Route as ProgramSlugRouteImport } from './routes/program.$slug'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as MediaCenterVideoRouteImport } from './routes/media-center.video'
+import { Route as MediaCenterFotoRouteImport } from './routes/media-center.foto'
+import { Route as MediaCenterDokumenRouteImport } from './routes/media-center.dokumen'
 import { Route as KategoriSlugRouteImport } from './routes/kategori.$slug'
 import { Route as EventSlugRouteImport } from './routes/event.$slug'
 import { Route as DonateSlugRouteImport } from './routes/donate.$slug'
@@ -71,6 +78,16 @@ import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authentic
 const VolunteerRoute = VolunteerRouteImport.update({
   id: '/volunteer',
   path: '/volunteer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VisiMisiRoute = VisiMisiRouteImport.update({
+  id: '/visi-misi',
+  path: '/visi-misi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TimKamiRoute = TimKamiRouteImport.update({
+  id: '/tim-kami',
+  path: '/tim-kami',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -111,6 +128,11 @@ const PartnersRoute = PartnersRouteImport.update({
 const MitraRoute = MitraRouteImport.update({
   id: '/mitra',
   path: '/mitra',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaCenterRoute = MediaCenterRouteImport.update({
+  id: '/media-center',
+  path: '/media-center',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KontakRoute = KontakRouteImport.update({
@@ -167,6 +189,11 @@ const NewsIndexRoute = NewsIndexRouteImport.update({
   path: '/news/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MediaCenterIndexRoute = MediaCenterIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MediaCenterRoute,
+} as any)
 const EventIndexRoute = EventIndexRouteImport.update({
   id: '/event/',
   path: '/event/',
@@ -201,6 +228,21 @@ const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/news/$slug',
   path: '/news/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const MediaCenterVideoRoute = MediaCenterVideoRouteImport.update({
+  id: '/video',
+  path: '/video',
+  getParentRoute: () => MediaCenterRoute,
+} as any)
+const MediaCenterFotoRoute = MediaCenterFotoRouteImport.update({
+  id: '/foto',
+  path: '/foto',
+  getParentRoute: () => MediaCenterRoute,
+} as any)
+const MediaCenterDokumenRoute = MediaCenterDokumenRouteImport.update({
+  id: '/dokumen',
+  path: '/dokumen',
+  getParentRoute: () => MediaCenterRoute,
 } as any)
 const KategoriSlugRoute = KategoriSlugRouteImport.update({
   id: '/kategori/$slug',
@@ -383,6 +425,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/kontak': typeof KontakRoute
+  '/media-center': typeof MediaCenterRouteWithChildren
   '/mitra': typeof MitraRoute
   '/partners': typeof PartnersRoute
   '/programs': typeof ProgramsRoute
@@ -391,6 +434,8 @@ export interface FileRoutesByFullPath {
   '/tentang-kami': typeof TentangKamiRoute
   '/testimoni': typeof TestimoniRoute
   '/testimonials': typeof TestimonialsRoute
+  '/tim-kami': typeof TimKamiRoute
+  '/visi-misi': typeof VisiMisiRoute
   '/volunteer': typeof VolunteerRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/berita/$slug': typeof BeritaSlugRoute
@@ -399,6 +444,9 @@ export interface FileRoutesByFullPath {
   '/donate/$slug': typeof DonateSlugRoute
   '/event/$slug': typeof EventSlugRoute
   '/kategori/$slug': typeof KategoriSlugRoute
+  '/media-center/dokumen': typeof MediaCenterDokumenRoute
+  '/media-center/foto': typeof MediaCenterFotoRoute
+  '/media-center/video': typeof MediaCenterVideoRoute
   '/news/$slug': typeof NewsSlugRoute
   '/program/$slug': typeof ProgramSlugRoute
   '/berita/': typeof BeritaIndexRoute
@@ -406,6 +454,7 @@ export interface FileRoutesByFullPath {
   '/donasi/': typeof DonasiIndexRoute
   '/donate/': typeof DonateIndexRoute
   '/event/': typeof EventIndexRoute
+  '/media-center/': typeof MediaCenterIndexRoute
   '/news/': typeof NewsIndexRoute
   '/program/': typeof ProgramIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
@@ -450,6 +499,8 @@ export interface FileRoutesByTo {
   '/tentang-kami': typeof TentangKamiRoute
   '/testimoni': typeof TestimoniRoute
   '/testimonials': typeof TestimonialsRoute
+  '/tim-kami': typeof TimKamiRoute
+  '/visi-misi': typeof VisiMisiRoute
   '/volunteer': typeof VolunteerRoute
   '/berita/$slug': typeof BeritaSlugRoute
   '/dokumentasi/$slug': typeof DokumentasiSlugRoute
@@ -457,6 +508,9 @@ export interface FileRoutesByTo {
   '/donate/$slug': typeof DonateSlugRoute
   '/event/$slug': typeof EventSlugRoute
   '/kategori/$slug': typeof KategoriSlugRoute
+  '/media-center/dokumen': typeof MediaCenterDokumenRoute
+  '/media-center/foto': typeof MediaCenterFotoRoute
+  '/media-center/video': typeof MediaCenterVideoRoute
   '/news/$slug': typeof NewsSlugRoute
   '/program/$slug': typeof ProgramSlugRoute
   '/berita': typeof BeritaIndexRoute
@@ -464,6 +518,7 @@ export interface FileRoutesByTo {
   '/donasi': typeof DonasiIndexRoute
   '/donate': typeof DonateIndexRoute
   '/event': typeof EventIndexRoute
+  '/media-center': typeof MediaCenterIndexRoute
   '/news': typeof NewsIndexRoute
   '/program': typeof ProgramIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
@@ -502,6 +557,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/kontak': typeof KontakRoute
+  '/media-center': typeof MediaCenterRouteWithChildren
   '/mitra': typeof MitraRoute
   '/partners': typeof PartnersRoute
   '/programs': typeof ProgramsRoute
@@ -510,6 +566,8 @@ export interface FileRoutesById {
   '/tentang-kami': typeof TentangKamiRoute
   '/testimoni': typeof TestimoniRoute
   '/testimonials': typeof TestimonialsRoute
+  '/tim-kami': typeof TimKamiRoute
+  '/visi-misi': typeof VisiMisiRoute
   '/volunteer': typeof VolunteerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/berita/$slug': typeof BeritaSlugRoute
@@ -518,6 +576,9 @@ export interface FileRoutesById {
   '/donate/$slug': typeof DonateSlugRoute
   '/event/$slug': typeof EventSlugRoute
   '/kategori/$slug': typeof KategoriSlugRoute
+  '/media-center/dokumen': typeof MediaCenterDokumenRoute
+  '/media-center/foto': typeof MediaCenterFotoRoute
+  '/media-center/video': typeof MediaCenterVideoRoute
   '/news/$slug': typeof NewsSlugRoute
   '/program/$slug': typeof ProgramSlugRoute
   '/berita/': typeof BeritaIndexRoute
@@ -525,6 +586,7 @@ export interface FileRoutesById {
   '/donasi/': typeof DonasiIndexRoute
   '/donate/': typeof DonateIndexRoute
   '/event/': typeof EventIndexRoute
+  '/media-center/': typeof MediaCenterIndexRoute
   '/news/': typeof NewsIndexRoute
   '/program/': typeof ProgramIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
@@ -563,6 +625,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gallery'
     | '/kontak'
+    | '/media-center'
     | '/mitra'
     | '/partners'
     | '/programs'
@@ -571,6 +634,8 @@ export interface FileRouteTypes {
     | '/tentang-kami'
     | '/testimoni'
     | '/testimonials'
+    | '/tim-kami'
+    | '/visi-misi'
     | '/volunteer'
     | '/admin'
     | '/berita/$slug'
@@ -579,6 +644,9 @@ export interface FileRouteTypes {
     | '/donate/$slug'
     | '/event/$slug'
     | '/kategori/$slug'
+    | '/media-center/dokumen'
+    | '/media-center/foto'
+    | '/media-center/video'
     | '/news/$slug'
     | '/program/$slug'
     | '/berita/'
@@ -586,6 +654,7 @@ export interface FileRouteTypes {
     | '/donasi/'
     | '/donate/'
     | '/event/'
+    | '/media-center/'
     | '/news/'
     | '/program/'
     | '/admin/about'
@@ -630,6 +699,8 @@ export interface FileRouteTypes {
     | '/tentang-kami'
     | '/testimoni'
     | '/testimonials'
+    | '/tim-kami'
+    | '/visi-misi'
     | '/volunteer'
     | '/berita/$slug'
     | '/dokumentasi/$slug'
@@ -637,6 +708,9 @@ export interface FileRouteTypes {
     | '/donate/$slug'
     | '/event/$slug'
     | '/kategori/$slug'
+    | '/media-center/dokumen'
+    | '/media-center/foto'
+    | '/media-center/video'
     | '/news/$slug'
     | '/program/$slug'
     | '/berita'
@@ -644,6 +718,7 @@ export interface FileRouteTypes {
     | '/donasi'
     | '/donate'
     | '/event'
+    | '/media-center'
     | '/news'
     | '/program'
     | '/admin/about'
@@ -681,6 +756,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gallery'
     | '/kontak'
+    | '/media-center'
     | '/mitra'
     | '/partners'
     | '/programs'
@@ -689,6 +765,8 @@ export interface FileRouteTypes {
     | '/tentang-kami'
     | '/testimoni'
     | '/testimonials'
+    | '/tim-kami'
+    | '/visi-misi'
     | '/volunteer'
     | '/_authenticated/admin'
     | '/berita/$slug'
@@ -697,6 +775,9 @@ export interface FileRouteTypes {
     | '/donate/$slug'
     | '/event/$slug'
     | '/kategori/$slug'
+    | '/media-center/dokumen'
+    | '/media-center/foto'
+    | '/media-center/video'
     | '/news/$slug'
     | '/program/$slug'
     | '/berita/'
@@ -704,6 +785,7 @@ export interface FileRouteTypes {
     | '/donasi/'
     | '/donate/'
     | '/event/'
+    | '/media-center/'
     | '/news/'
     | '/program/'
     | '/_authenticated/admin/about'
@@ -742,6 +824,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
   KontakRoute: typeof KontakRoute
+  MediaCenterRoute: typeof MediaCenterRouteWithChildren
   MitraRoute: typeof MitraRoute
   PartnersRoute: typeof PartnersRoute
   ProgramsRoute: typeof ProgramsRoute
@@ -750,6 +833,8 @@ export interface RootRouteChildren {
   TentangKamiRoute: typeof TentangKamiRoute
   TestimoniRoute: typeof TestimoniRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  TimKamiRoute: typeof TimKamiRoute
+  VisiMisiRoute: typeof VisiMisiRoute
   VolunteerRoute: typeof VolunteerRoute
   BeritaSlugRoute: typeof BeritaSlugRoute
   DokumentasiSlugRoute: typeof DokumentasiSlugRoute
@@ -775,6 +860,20 @@ declare module '@tanstack/react-router' {
       path: '/volunteer'
       fullPath: '/volunteer'
       preLoaderRoute: typeof VolunteerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/visi-misi': {
+      id: '/visi-misi'
+      path: '/visi-misi'
+      fullPath: '/visi-misi'
+      preLoaderRoute: typeof VisiMisiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tim-kami': {
+      id: '/tim-kami'
+      path: '/tim-kami'
+      fullPath: '/tim-kami'
+      preLoaderRoute: typeof TimKamiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/testimonials': {
@@ -831,6 +930,13 @@ declare module '@tanstack/react-router' {
       path: '/mitra'
       fullPath: '/mitra'
       preLoaderRoute: typeof MitraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media-center': {
+      id: '/media-center'
+      path: '/media-center'
+      fullPath: '/media-center'
+      preLoaderRoute: typeof MediaCenterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kontak': {
@@ -910,6 +1016,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/media-center/': {
+      id: '/media-center/'
+      path: '/'
+      fullPath: '/media-center/'
+      preLoaderRoute: typeof MediaCenterIndexRouteImport
+      parentRoute: typeof MediaCenterRoute
+    }
     '/event/': {
       id: '/event/'
       path: '/event'
@@ -958,6 +1071,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/news/$slug'
       preLoaderRoute: typeof NewsSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/media-center/video': {
+      id: '/media-center/video'
+      path: '/video'
+      fullPath: '/media-center/video'
+      preLoaderRoute: typeof MediaCenterVideoRouteImport
+      parentRoute: typeof MediaCenterRoute
+    }
+    '/media-center/foto': {
+      id: '/media-center/foto'
+      path: '/foto'
+      fullPath: '/media-center/foto'
+      preLoaderRoute: typeof MediaCenterFotoRouteImport
+      parentRoute: typeof MediaCenterRoute
+    }
+    '/media-center/dokumen': {
+      id: '/media-center/dokumen'
+      path: '/dokumen'
+      fullPath: '/media-center/dokumen'
+      preLoaderRoute: typeof MediaCenterDokumenRouteImport
+      parentRoute: typeof MediaCenterRoute
     }
     '/kategori/$slug': {
       id: '/kategori/$slug'
@@ -1252,6 +1386,24 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface MediaCenterRouteChildren {
+  MediaCenterDokumenRoute: typeof MediaCenterDokumenRoute
+  MediaCenterFotoRoute: typeof MediaCenterFotoRoute
+  MediaCenterVideoRoute: typeof MediaCenterVideoRoute
+  MediaCenterIndexRoute: typeof MediaCenterIndexRoute
+}
+
+const MediaCenterRouteChildren: MediaCenterRouteChildren = {
+  MediaCenterDokumenRoute: MediaCenterDokumenRoute,
+  MediaCenterFotoRoute: MediaCenterFotoRoute,
+  MediaCenterVideoRoute: MediaCenterVideoRoute,
+  MediaCenterIndexRoute: MediaCenterIndexRoute,
+}
+
+const MediaCenterRouteWithChildren = MediaCenterRoute._addFileChildren(
+  MediaCenterRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -1262,6 +1414,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
   KontakRoute: KontakRoute,
+  MediaCenterRoute: MediaCenterRouteWithChildren,
   MitraRoute: MitraRoute,
   PartnersRoute: PartnersRoute,
   ProgramsRoute: ProgramsRoute,
@@ -1270,6 +1423,8 @@ const rootRouteChildren: RootRouteChildren = {
   TentangKamiRoute: TentangKamiRoute,
   TestimoniRoute: TestimoniRoute,
   TestimonialsRoute: TestimonialsRoute,
+  TimKamiRoute: TimKamiRoute,
+  VisiMisiRoute: VisiMisiRoute,
   VolunteerRoute: VolunteerRoute,
   BeritaSlugRoute: BeritaSlugRoute,
   DokumentasiSlugRoute: DokumentasiSlugRoute,
