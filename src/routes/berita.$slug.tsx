@@ -129,7 +129,7 @@ function NewsDetail() {
             <div className="mt-10 rounded-xl border border-primary/30 bg-card p-4">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <span className="font-medium text-foreground">
-                  Mari Sebarkan Kebaikan:
+                  Sebarkan kebaikan ini melalui :
                 </span>
         
                 <div className="flex flex-wrap items-center gap-3">
