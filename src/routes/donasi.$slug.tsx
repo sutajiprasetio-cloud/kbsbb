@@ -8,17 +8,20 @@ import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
 import { useCampaign, rp, pct } from "@/lib/donations";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/donasi/$slug")({
-  head: () => ({
+  head: ({ params }) => ({
     meta: [
       { title: "Program Donasi — KBSBB" },
       { name: "description", content: "Dukung program donasi KBSBB ini. Pantau progres dan jumlah donatur secara langsung, dan berdonasi dengan aman dalam hitungan detik." },
       { property: "og:title", content: "Program Donasi — KBSBB" },
       { property: "og:description", content: "Dukung program donasi KBSBB dan pantau progresnya secara langsung." },
       { property: "og:type", content: "article" },
+      { property: "og:url", content: canonical(`/donasi/${params.slug}`) },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: canonical(`/donasi/${params.slug}`) }],
   }),
   component: CampaignDetail,
 });
