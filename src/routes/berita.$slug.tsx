@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 //import { ArrowLeft, Calendar, User } from "lucide-react";
-import { ArrowLeft, Calendar, User, Share2, Link2} from "lucide-react";
+import { ArrowLeft, Calendar, User, Share2} from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { canonical, slugify } from "@/lib/slug";
 import { Card, CardContent } from "@/components/ui/card";
@@ -39,6 +39,7 @@ export const Route = createFileRoute("/berita/$slug")({
 function NewsDetail() {
   const { slug } = Route.useParams();
   const [post, setPost] = useState<any | null | undefined>(undefined);
+  const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
   const shareUrl =
     typeof window !== "undefined"
       ? window.location.href
@@ -108,155 +109,108 @@ function NewsDetail() {
             {post.excerpt && <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>}
 
             
-            {post.content && (
-           <div className="mt-10 rounded-xl border border-primary/30 bg-card p-4">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        
-            <span className="font-medium text-foreground">
-              Mari Sebarkan Kebaikan:
-            </span>
-        
-            <div className="flex flex-wrap items-center gap-3">
-        
-              {/* WhatsApp */}
-              <a
-                href={`https://wa.me/?text=${encodeURIComponent(
-                  shareTitle + "\n" + shareUrl
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Bagikan ke WhatsApp"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
-              >
-                <FaWhatsapp size={16} />
-              </a>
-        
-              {/* Facebook */}
-              <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                  shareUrl
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Bagikan ke Facebook"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
-              >
-                <FaFacebookF size={16} />
-              </a>
-        
-              {/* Instagram */}
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(shareUrl);
-                  alert(
-                    "Link artikel berhasil disalin. Silakan bagikan ke Instagram."
-                  );
-                }}
-                title="Bagikan ke Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
-              >
-                <FaInstagram size={16} />
-              </button>
-        
-              {/* Telegram */}
-              <a
-                href={`https://t.me/share/url?url=${encodeURIComponent(
-                  shareUrl
-                )}&text=${encodeURIComponent(shareTitle)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Bagikan ke Telegram"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
-              >
-                <FaTelegramPlane size={16} />
-              </a>
-        
-              {/* X */}
-              <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  shareTitle
-                )}&url=${encodeURIComponent(shareUrl)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Bagikan ke X"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
-              >
-                <FaXTwitter size={16} />
-              </a>
-        
-              {/* Salin Link */}
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(shareUrl);
-                  alert("Link artikel berhasil disalin");
-                }}
-                title="Salin Link"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
-              >
-                <Link2 size={16} />
-              </button>
-        
-            </div>
-          </div>
-        </div>   
-            
-            /* <div className="mt-8 space-y-6 text-base text-foreground/90">
-                {String(post.content).split(/\n{2,}/).map((p: string, i: number) => (
-                  <p
-                    key={i}
-                    className="whitespace-pre-line"
-                    style={{
-                      textAlign: "justify",
-                      lineHeight: "1.9",
-                      // textIndent: "2em",
-                    }}
-                  >
-                    {p}
-                  </p>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-10 border-t pt-6">
-            <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
-              <Share2 className="h-5 w-5" />
-              Sebarkan Kebaikan Ini
-            </h3>
-            
-              <div className="flex flex-wrap gap-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    window.open(
-                      `https://wa.me/?text=${encodeURIComponent(
-                        shareTitle + "\n" + shareUrl
-                      )}`,
-                      "_blank"
-                    )
-                  }
+           {post.content && (
+          <>
+            <div className="mt-8 space-y-6 text-base text-foreground/90">
+              {String(post.content).split(/\n{2,}/).map((p: string, i: number) => (
+                <p
+                  key={i}
+                  className="whitespace-pre-line"
+                  style={{
+                    textAlign: "justify",
+                    lineHeight: "1.9",
+                  }}
                 >
-                  <FaWhatsapp className="mr-2 h-4 w-4" />
-                  WhatsApp
-                </Button>
-            
-               <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  navigator.clipboard.writeText(shareUrl);
-                  alert("Link artikel berhasil disalin");
-                }}
-              >
-                <Link2 className="mr-2 h-4 w-4" />
-                Salin Link
-              </Button>
+                  {p}
+                </p>
+              ))}
+            </div>
+        
+            <div className="mt-10 rounded-xl border border-primary/30 bg-card p-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <span className="font-medium text-foreground">
+                  Mari Sebarkan Kebaikan:
+                </span>
+        
+                <div className="flex flex-wrap items-center gap-3">
+        
+                  {/* WhatsApp */}
+                  <a
+                    href={`https://wa.me/?text=${encodeURIComponent(
+                      shareTitle + "\n" + shareUrl
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
+                  >
+                    <FaWhatsapp size={16} />
+                  </a>
+        
+                  {/* Facebook */}
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                      shareUrl
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
+                  >
+                    <FaFacebookF size={16} />
+                  </a>
+        
+                  {/* Instagram */}
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(shareUrl);
+                      alert("Link artikel berhasil disalin untuk Instagram");
+                    }}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
+                  >
+                    <FaInstagram size={16} />
+                  </button>
+        
+                  {/* Telegram */}
+                  <a
+                    href={`https://t.me/share/url?url=${encodeURIComponent(
+                      shareUrl
+                    )}&text=${encodeURIComponent(shareTitle)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
+                  >
+                    <FaTelegramPlane size={16} />
+                  </a>
+        
+                  {/* X */}
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                      shareTitle
+                    )}&url=${encodeURIComponent(shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
+                  >
+                    <FaXTwitter size={16} />
+                  </a>
+        
+                  {/* Salin Link */}
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(shareUrl);
+                      alert("Link artikel berhasil disalin");
+                    }}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-primary text-primary transition hover:bg-primary hover:text-white"
+                  >
+                    <Link2 size={16} />
+                  </button>
+        
+                </div>
               </div>
-            </div> 
-          */
-
-
+            </div>
+          </>
+        )} 
             
+                        
             {post.tags?.length > 1 && (
               <div className="mt-10 flex flex-wrap gap-2">
                 {post.tags.slice(1).map((t: string) => (
