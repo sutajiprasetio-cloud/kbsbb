@@ -5,6 +5,7 @@ import { Quote } from "lucide-react";
 import { useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/testimoni")({
   head: () => ({
@@ -13,7 +14,9 @@ export const Route = createFileRoute("/testimoni")({
       { name: "description", content: "Baca testimoni relawan, mitra kesehatan, dan penerima manfaat KBSBB dari seluruh Indonesia." },
       { property: "og:title", content: "Kisah Inspiratif KBSBB" },
       { property: "og:description", content: "Suara nyata dari lapangan." },
+      { property: "og:url", content: canonical("/testimoni") },
     ],
+    links: [{ rel: "canonical", href: canonical("/testimoni") }],
   }),
   component: Testimonials,
 });

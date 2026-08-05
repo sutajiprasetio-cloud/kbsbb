@@ -9,6 +9,7 @@ import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
 import { useCampaigns, rp, pct } from "@/lib/donations";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/donasi/")({
   head: () => ({
@@ -19,7 +20,9 @@ export const Route = createFileRoute("/donasi/")({
       { property: "og:description", content: "Kebaikan Anda menjadi berkah bagi sesama." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: canonical("/donasi") },
     ],
+    links: [{ rel: "canonical", href: canonical("/donasi") }],
   }),
   component: Donate,
 });

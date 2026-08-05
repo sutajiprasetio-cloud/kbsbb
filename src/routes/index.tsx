@@ -13,6 +13,7 @@ import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 import { HeroSlider } from "@/components/hero-slider";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,7 +22,9 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "KBSBB adalah yayasan kemanusiaan Indonesia yang menjalankan program kesehatan, pendidikan, pangan, dan tanggap bencana. Donasi, jadi relawan, atau bermitra bersama kami." },
       { property: "og:title", content: "KBSBB — Berbagi Sehat, Berbagi Berkah" },
       { property: "og:description", content: "Memberdayakan masyarakat Indonesia melalui program kesehatan, pendidikan, pangan, dan tanggap bencana." },
+      { property: "og:url", content: canonical("/") },
     ],
+    links: [{ rel: "canonical", href: canonical("/") }],
   }),
   component: HomePage,
 });

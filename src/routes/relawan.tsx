@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Users, Heart, Sparkles, Handshake, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/relawan")({
   head: () => ({
@@ -17,7 +18,9 @@ export const Route = createFileRoute("/relawan")({
       { name: "description", content: "Bergabunglah menjadi relawan KBSBB bersama 3.400+ relawan yang melayani masyarakat di 34 provinsi." },
       { property: "og:title", content: "Jadi Relawan KBSBB" },
       { property: "og:description", content: "Berikan waktu Anda. Ubah satu kehidupan." },
+      { property: "og:url", content: canonical("/relawan") },
     ],
+    links: [{ rel: "canonical", href: canonical("/relawan") }],
   }),
   component: Volunteer,
 });

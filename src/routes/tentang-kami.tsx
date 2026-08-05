@@ -5,6 +5,7 @@ import { Target, Eye, Heart, Award, Users, Sprout } from "lucide-react";
 import { useSingleton, useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/tentang-kami")({
   head: () => ({
@@ -13,7 +14,9 @@ export const Route = createFileRoute("/tentang-kami")({
       { name: "description", content: "Kenali orang-orang di balik KBSBB — yayasan kemanusiaan Indonesia yang berbagi sehat dan berkah di 34 provinsi." },
       { property: "og:title", content: "Tentang KBSBB" },
       { property: "og:description", content: "Misi, nilai, dan kisah perjalanan kami." },
+      { property: "og:url", content: canonical("/tentang-kami") },
     ],
+    links: [{ rel: "canonical", href: canonical("/tentang-kami") }],
   }),
   component: About,
 });

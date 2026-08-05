@@ -10,6 +10,7 @@ import { MapPin, Phone, Mail, Clock, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSettings } from "@/lib/public-data";
 import { toast } from "sonner";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/kontak")({
   head: () => ({
@@ -18,7 +19,9 @@ export const Route = createFileRoute("/kontak")({
       { name: "description", content: "Hubungi tim KBSBB — alamat kantor, telepon, email, dan formulir kontak." },
       { property: "og:title", content: "Kontak KBSBB" },
       { property: "og:description", content: "Kami senang mendengar kabar dari Anda." },
+      { property: "og:url", content: canonical("/kontak") },
     ],
+    links: [{ rel: "canonical", href: canonical("/kontak") }],
   }),
   component: Contact,
 });

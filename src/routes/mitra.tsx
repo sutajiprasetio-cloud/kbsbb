@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
+import { canonical } from "@/lib/slug";
 
 export const Route = createFileRoute("/mitra")({
   head: () => ({
@@ -13,7 +14,9 @@ export const Route = createFileRoute("/mitra")({
       { name: "description", content: "KBSBB bermitra dengan berbagai institusi Indonesia dan global untuk menghadirkan dampak kemanusiaan yang lebih luas." },
       { property: "og:title", content: "Mitra KBSBB" },
       { property: "og:description", content: "Dipercaya oleh berbagai institusi." },
+      { property: "og:url", content: canonical("/mitra") },
     ],
+    links: [{ rel: "canonical", href: canonical("/mitra") }],
   }),
   component: Partners,
 });
