@@ -11,9 +11,6 @@ import { ArrowLeft, Calendar, User, Share2, Link2} from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { canonical, slugify } from "@/lib/slug";
 import { Card, CardContent } from "@/components/ui/card";
-import { FaWhatsapp, FaFacebookF } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-
 
 import { Link2 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
