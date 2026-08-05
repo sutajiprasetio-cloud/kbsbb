@@ -9,6 +9,7 @@ import { ModeImage } from "@/components/safe-image";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { canonical, slugify } from "@/lib/slug";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const Route = createFileRoute("/berita/$slug")({
   head: ({ params }) => ({
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/berita/$slug")({
 function NewsDetail() {
   const { slug } = Route.useParams();
   const [post, setPost] = useState<any | null | undefined>(undefined);
+  const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -39,7 +41,22 @@ function NewsDetail() {
         const res = await client.from("news_posts").select("*").eq("is_published", true).eq("id", slug).maybeSingle();
         data = res.data;
       }
-      if (!cancelled) setPost(data ?? null);
+    //  if (!cancelled) setPost(data ?? null);
+      if (!cancelled) {
+  setPost(data ?? null);
+
+  if (data) {
+    const { data: related } = await client
+      .from("news_posts")
+      .select("*")
+      .eq("is_published", true)
+      .neq("id", data.id)
+      .order("published_at", { ascending: false })
+      .limit(3);
+
+    setRelatedPosts(related || []);
+  }
+}
     })();
     return () => { cancelled = true; };
   }, [slug]);
@@ -105,6 +122,51 @@ function NewsDetail() {
                   <span key={t} className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">{t}</span>
                 ))}
               </div>
+            )}
+
+          {relatedPosts.length > 0 && (
+              <section className="mt-16 border-t pt-12">
+                <h2 className="mb-8 text-2xl font-bold">
+                  Berita Lainnya
+                </h2>
+            
+                <div className="grid gap-6 md:grid-cols-3">
+                  {relatedPosts.map((item) => (
+                    <Link
+                      key={item.id}
+                      to="/berita/$slug"
+                      params={{ slug: item.slug }}
+                      className="group"
+                    >
+                      <Card className="overflow-hidden h-full hover:shadow-lg transition-all duration-300">
+                        <ModeImage
+                          src={item.cover_url}
+                          alt={item.title}
+                          mode={item.display_mode}
+                          className="aspect-video"
+                          imgClassName="group-hover:scale-105 transition-transform duration-500"
+                        />
+            
+                        <CardContent className="p-4">
+                          <h3 className="font-bold line-clamp-2 group-hover:text-primary transition-colors">
+                            {item.title}
+                          </h3>
+            
+                          {item.published_at && (
+                            <p className="mt-2 text-xs text-muted-foreground">
+                              {new Date(item.published_at).toLocaleDateString("id-ID")}
+                            </p>
+                          )}
+            
+                          <p className="mt-2 text-sm text-muted-foreground line-clamp-3">
+                            {item.excerpt}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </section>
             )}
             <div className="mt-12">
               <Button asChild variant="outline" className="rounded-full">
