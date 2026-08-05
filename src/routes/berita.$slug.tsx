@@ -31,6 +31,11 @@ function NewsDetail() {
   const { slug } = Route.useParams();
   const [post, setPost] = useState<any | null | undefined>(undefined);
   const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
+    const shareUrl =
+    typeof window !== "undefined"
+      ? window.location.href
+      : "";
+  const shareTitle = post?.title || "Berita KBSBB";
 
   useEffect(() => {
     let cancelled = false;
@@ -112,7 +117,38 @@ function NewsDetail() {
               </div>
             )}
 
-
+            <div className="mt-10 border-t pt-6">
+              <h3 className="mb-4 text-lg font-semibold">
+                Sebarkan Kebaikan Ini
+              </h3>
+            
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    window.open(
+                      `https://wa.me/?text=${encodeURIComponent(
+                        shareTitle + "\n" + shareUrl
+                      )}`,
+                      "_blank"
+                    )
+                  }
+                >
+                  WhatsApp
+                </Button>
+            
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    navigator.clipboard.writeText(shareUrl)
+                  }
+                >
+                  Salin Link
+                </Button>
+              </div>
+            </div>
 
 
             
