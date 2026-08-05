@@ -75,13 +75,30 @@ function NewsDetail() {
             </div>
             <h1 className="mt-4 text-3xl md:text-4xl font-bold leading-tight tracking-tight">{post.title}</h1>
             {post.excerpt && <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>}
+
+            
             {post.content && (
-              <div className="mt-8 space-y-4 text-base leading-relaxed text-foreground/90">
+              <div className="mt-8 space-y-6 text-base text-foreground/90">
                 {String(post.content).split(/\n{2,}/).map((p: string, i: number) => (
-                  <p key={i} className="whitespace-pre-line">{p}</p>
+                  <p
+                    key={i}
+                    className="whitespace-pre-line"
+                    style={{
+                      textAlign: "justify",
+                      lineHeight: "1.9",
+                      textIndent: "2em",
+                    }}
+                  >
+                    {p}
+                  </p>
                 ))}
               </div>
             )}
+
+
+
+
+            
             {post.tags?.length > 1 && (
               <div className="mt-10 flex flex-wrap gap-2">
                 {post.tags.slice(1).map((t: string) => (
