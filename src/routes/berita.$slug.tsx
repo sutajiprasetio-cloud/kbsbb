@@ -47,6 +47,7 @@ function NewsDetail() {
   return (
     <SiteLayout>
       <article className="container-x max-w-3xl py-28">
+        <Breadcrumbs className="mb-6" items={[{ label: "Berita", to: "/berita" }, { label: post?.title ?? "Artikel" }]} />
         <Button asChild variant="ghost" className="mb-6 -ml-3">
           <Link to="/berita"><ArrowLeft className="h-4 w-4 mr-2" /> Kembali ke Berita</Link>
         </Button>
