@@ -347,6 +347,7 @@ export type Database = {
           image_url: string | null
           is_published: boolean
           location: string | null
+          slug: string | null
           starts_at: string
           title: string
           updated_at: string
@@ -361,6 +362,7 @@ export type Database = {
           image_url?: string | null
           is_published?: boolean
           location?: string | null
+          slug?: string | null
           starts_at: string
           title: string
           updated_at?: string
@@ -375,6 +377,7 @@ export type Database = {
           image_url?: string | null
           is_published?: boolean
           location?: string | null
+          slug?: string | null
           starts_at?: string
           title?: string
           updated_at?: string
@@ -421,6 +424,7 @@ export type Database = {
           display_mode: string
           id: string
           image_url: string
+          slug: string | null
           sort_order: number
           title: string | null
           updated_at: string
@@ -431,6 +435,7 @@ export type Database = {
           display_mode?: string
           id?: string
           image_url: string
+          slug?: string | null
           sort_order?: number
           title?: string | null
           updated_at?: string
@@ -441,6 +446,7 @@ export type Database = {
           display_mode?: string
           id?: string
           image_url?: string
+          slug?: string | null
           sort_order?: number
           title?: string | null
           updated_at?: string
@@ -871,6 +877,7 @@ export type Database = {
           message: string
         }[]
       }
+      slugify: { Args: { _txt: string }; Returns: string }
     }
     Enums: {
       app_role: "super_admin" | "admin" | "editor"
