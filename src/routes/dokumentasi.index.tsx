@@ -31,7 +31,7 @@ function Gallery() {
         {items && items.length === 0 ? (
           <EmptyState title="Belum ada foto" description="Galeri kami sedang disiapkan. Silakan kembali lagi nanti." />
         ) : (
-          <div className="columns-2 md:columns-3 lg:columns-4 gap-4 [column-fill:_balance]">
+          <div className="columns-2 md:columns-4 lg:columns-4 gap-4 [column-fill:_balance]">
             {(items ?? []).map((it: any) => (
               <Link key={it.id} to="/dokumentasi/$slug" params={{ slug: it.slug }} className="mb-4 block break-inside-avoid overflow-hidden rounded-2xl group">
                 <ModeImage src={it.image_url} alt={it.title ?? "Dokumentasi"} mode={it.display_mode} className="w-full aspect-[4/3] bg-muted" imgClassName="transition-transform duration-700 group-hover:scale-105" />
