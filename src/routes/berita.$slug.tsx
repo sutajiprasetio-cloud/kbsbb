@@ -8,7 +8,7 @@ import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 
-export const Route = createFileRoute("/news/$slug")({
+export const Route = createFileRoute("/berita/$slug")({
   head: () => ({
     meta: [
       { title: "Artikel — Berita KBSBB" },
@@ -44,7 +44,7 @@ function NewsDetail() {
     <SiteLayout>
       <article className="container-x max-w-3xl py-28">
         <Button asChild variant="ghost" className="mb-6 -ml-3">
-          <Link to="/news"><ArrowLeft className="h-4 w-4 mr-2" /> Kembali ke Berita</Link>
+          <Link to="/berita"><ArrowLeft className="h-4 w-4 mr-2" /> Kembali ke Berita</Link>
         </Button>
 
         {post === undefined ? (
@@ -82,7 +82,7 @@ function NewsDetail() {
             )}
             <div className="mt-12">
               <Button asChild variant="outline" className="rounded-full">
-                <Link to="/news"><ArrowLeft className="h-4 w-4 mr-2" /> Kembali ke Berita</Link>
+                <Link to="/berita"><ArrowLeft className="h-4 w-4 mr-2" /> Kembali ke Berita</Link>
               </Button>
             </div>
           </>

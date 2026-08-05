@@ -10,7 +10,7 @@ import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
 import { useCampaigns, rp, pct } from "@/lib/donations";
 
-export const Route = createFileRoute("/donate/")({
+export const Route = createFileRoute("/donasi/")({
   head: () => ({
     meta: [
       { title: "Donasi KBSBB — Dukung Program Donasi Aktif" },
@@ -61,11 +61,11 @@ function Donate() {
               const p = pct(c.raised_amount, c.goal_amount);
               return (
                 <Card key={c.id} className="group overflow-hidden rounded-3xl border-border/70 shadow-soft transition-all hover:-translate-y-1 hover:shadow-lg">
-                  <Link to="/donate/$slug" params={{ slug: c.slug }} className="block">
+                  <Link to="/donasi/$slug" params={{ slug: c.slug }} className="block">
                     <ModeImage src={c.cover_url} alt={c.title} mode={c.display_mode} className="aspect-[16/10] bg-muted" imgClassName="transition-transform duration-500 group-hover:scale-105" />
                   </Link>
                   <CardContent className="p-5">
-                    <Link to="/donate/$slug" params={{ slug: c.slug }}>
+                    <Link to="/donasi/$slug" params={{ slug: c.slug }}>
                       <h3 className="text-lg font-bold leading-snug hover:text-primary transition-colors">{c.title}</h3>
                     </Link>
                     {c.description && <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{c.description}</p>}
@@ -75,7 +75,7 @@ function Donate() {
                       <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" />{stat?.donor_count ?? 0} donatur</span>
                     </div>
                     <Button asChild className="mt-4 w-full rounded-full gap-2">
-                      <Link to="/donate/$slug" params={{ slug: c.slug }}>Donasi Sekarang <ArrowRight className="h-4 w-4" /></Link>
+                      <Link to="/donasi/$slug" params={{ slug: c.slug }}>Donasi Sekarang <ArrowRight className="h-4 w-4" /></Link>
                     </Button>
                   </CardContent>
                 </Card>

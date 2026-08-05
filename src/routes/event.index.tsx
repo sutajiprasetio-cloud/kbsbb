@@ -6,7 +6,7 @@ import { MapPin, Calendar, Clock } from "lucide-react";
 import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
 
-export const Route = createFileRoute("/events")({
+export const Route = createFileRoute("/event/")({
   head: () => ({
     meta: [
       { title: "Kegiatan — Agenda Komunitas KBSBB" },

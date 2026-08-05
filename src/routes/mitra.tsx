@@ -6,7 +6,7 @@ import { useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 
-export const Route = createFileRoute("/partners")({
+export const Route = createFileRoute("/mitra")({
   head: () => ({
     meta: [
       { title: "Mitra — Kolaborasi Korporasi & Institusi KBSBB" },
@@ -39,7 +39,7 @@ function Partners() {
           <CardContent className="p-10 md:p-14 text-center">
             <h2 className="text-3xl md:text-4xl font-extrabold">Jadi mitra kami</h2>
             <p className="mt-3 max-w-xl mx-auto opacity-90">Mari berkolaborasi menghadirkan program kesehatan, sosial, pendidikan, dakwah dan kemanusiaan yang memberikan manfaat dan keberkahan bagi masyarakat luas.</p>
-            <Link to="/contact"><Button size="lg" className="mt-6 rounded-full bg-white text-primary hover:bg-white/90">Bergabung jadi mitra</Button></Link>
+            <Link to="/kontak"><Button size="lg" className="mt-6 rounded-full bg-white text-primary hover:bg-white/90">Bergabung jadi mitra</Button></Link>
           </CardContent>
         </Card>
       </section>

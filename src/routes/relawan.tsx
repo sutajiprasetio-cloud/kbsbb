@@ -10,7 +10,7 @@ import { Users, Heart, Sparkles, Handshake, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/volunteer")({
+export const Route = createFileRoute("/relawan")({
   head: () => ({
     meta: [
       { title: "Jadi Relawan KBSBB" },

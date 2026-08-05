@@ -9,7 +9,7 @@ import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
 import { useCampaign, rp, pct } from "@/lib/donations";
 
-export const Route = createFileRoute("/donate/$slug")({
+export const Route = createFileRoute("/donasi/$slug")({
   head: () => ({
     meta: [
       { title: "Program Donasi — KBSBB" },
@@ -41,7 +41,7 @@ function CampaignDetail() {
         <div className="container-x py-24">
           <EmptyState title="Program donasi tidak ditemukan" description="Program ini mungkin telah berakhir atau dihapus." />
           <div className="mt-6 text-center">
-            <Button asChild variant="outline" className="rounded-full gap-2"><Link to="/donate"><ArrowLeft className="h-4 w-4" /> Kembali ke daftar donasi</Link></Button>
+            <Button asChild variant="outline" className="rounded-full gap-2"><Link to="/donasi"><ArrowLeft className="h-4 w-4" /> Kembali ke daftar donasi</Link></Button>
           </div>
         </div>
       </SiteLayout>
@@ -53,7 +53,7 @@ function CampaignDetail() {
   return (
     <SiteLayout>
       <article className="container-x py-10 md:py-16">
-        <Button asChild variant="ghost" className="rounded-full gap-2 -ml-2 mb-6"><Link to="/donate"><ArrowLeft className="h-4 w-4" /> Kembali ke daftar donasi</Link></Button>
+        <Button asChild variant="ghost" className="rounded-full gap-2 -ml-2 mb-6"><Link to="/donasi"><ArrowLeft className="h-4 w-4" /> Kembali ke daftar donasi</Link></Button>
 
         <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] items-start">
           <div>

@@ -6,7 +6,7 @@ import { useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 
-export const Route = createFileRoute("/testimonials")({
+export const Route = createFileRoute("/testimoni")({
   head: () => ({
     meta: [
       { title: "Kisah Inspiratif — Suara Komunitas KBSBB" },

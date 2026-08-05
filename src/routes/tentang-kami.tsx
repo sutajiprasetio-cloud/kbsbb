@@ -6,7 +6,7 @@ import { useSingleton, useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 
-export const Route = createFileRoute("/about")({
+export const Route = createFileRoute("/tentang-kami")({
   head: () => ({
     meta: [
       { title: "Tentang KBSBB — Visi, Misi & Kisah Kami" },

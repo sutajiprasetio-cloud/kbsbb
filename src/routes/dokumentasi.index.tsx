@@ -4,7 +4,7 @@ import { useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 
-export const Route = createFileRoute("/gallery")({
+export const Route = createFileRoute("/dokumentasi/")({
   head: () => ({
     meta: [
       { title: "Galeri — Momen Kebaikan KBSBB" },

@@ -7,7 +7,7 @@ import { useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 
-export const Route = createFileRoute("/programs")({
+export const Route = createFileRoute("/program/")({
   head: () => ({
     meta: [
       { title: "Program — Yayasan Kemanusiaan KBSBB" },
@@ -42,7 +42,7 @@ function Programs() {
                     </div>
                     <h3 className="mt-3 text-xl font-bold">{p.title}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.summary ?? p.description}</p>
-                    <Link to="/donate" className="mt-5 inline-block">
+                    <Link to="/donasi" className="mt-5 inline-block">
                       <Button className="rounded-full gap-2">Dukung program ini <ArrowRight className="h-4 w-4" /></Button>
                     </Link>
                   </CardContent>

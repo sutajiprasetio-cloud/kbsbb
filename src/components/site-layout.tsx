@@ -8,16 +8,16 @@ import { useBranding, useBrandLogo, useFavicon } from "@/lib/branding";
 
 const NAV = [
   { to: "/", label: "Beranda" },
-  { to: "/about", label: "Tentang Kami" },
-  { to: "/programs", label: "Program" },
-  { to: "/news", label: "Berita" },
-  { to: "/gallery", label: "Galeri" },
-  { to: "/events", label: "Kegiatan" },
-  { to: "/volunteer", label: "Relawan" },
-  { to: "/partners", label: "Mitra" },
-// { to: "/testimonials", label: "Kisah Inspiratif" },
+  { to: "/tentang-kami", label: "Tentang Kami" },
+  { to: "/program", label: "Program" },
+  { to: "/berita", label: "Berita" },
+  { to: "/dokumentasi", label: "Galeri" },
+  { to: "/event", label: "Kegiatan" },
+  { to: "/relawan", label: "Relawan" },
+  { to: "/mitra", label: "Mitra" },
+// { to: "/testimoni", label: "Kisah Inspiratif" },
 // { to: "/faq", label: "Tanya Jawab" },
-  { to: "/contact", label: "Kontak" },
+  { to: "/kontak", label: "Kontak" },
 ] as const;
 
 export function SiteLayout({ children }: { children: ReactNode }) {
@@ -153,7 +153,7 @@ function Header() {
           >
             {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
-          <Link to="/donate" className="hidden sm:inline-flex">
+          <Link to="/donasi" className="hidden sm:inline-flex">
             <Button className="gap-2 rounded-full px-5 shadow-glow transition-transform hover:-translate-y-0.5">
               <Heart className="h-4 w-4 fill-current" /> Donasi
             </Button>
@@ -190,7 +190,7 @@ function Header() {
               >
                 {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </button>
-              <Link to="/donate" onClick={() => setOpen(false)} className="flex-1">
+              <Link to="/donasi" onClick={() => setOpen(false)} className="flex-1">
                 <Button className="w-full gap-2 rounded-full"><Heart className="h-4 w-4 fill-current" /> Donasi Sekarang</Button>
               </Link>
             </div>
@@ -235,7 +235,7 @@ function FloatingActions() {
 
       {/* Tombol donasi tetap — sisi kanan */}
       <Link
-        to="/donate"
+        to="/donasi"
         aria-label="Donasi sekarang"
         className="fixed right-0 top-[55%] z-40 hidden md:flex origin-bottom-right rotate-[-90deg] items-center gap-2 gradient-brand text-white px-6 py-3 rounded-t-2xl shadow-glow font-semibold text-sm transition-all"
       >
@@ -245,7 +245,7 @@ function FloatingActions() {
 
       {/* Tombol donasi mobile */}
       <Link
-        to="/donate"
+        to="/donasi"
         aria-label="Donasi sekarang"
         className="md:hidden fixed bottom-6 left-5 z-40 inline-flex items-center gap-2 gradient-brand text-white px-5 h-14 rounded-full shadow-glow font-semibold text-sm hover:scale-105 transition-transform"
       >
@@ -295,11 +295,11 @@ function Footer() {
         <div>
           <h4 className="text-sm font-semibold text-white">Ikut Berperan</h4>
           <ul className="mt-4 space-y-2.5 text-sm">
-            <li><Link to="/volunteer" className="text-white/70 hover:text-primary transition-colors">Jadi Relawan</Link></li>
-            <li><Link to="/donate" className="text-white/70 hover:text-primary transition-colors">Donasi</Link></li>
-            <li><Link to="/partners" className="text-white/70 hover:text-primary transition-colors">Kemitraan</Link></li>
-            <li><Link to="/events" className="text-white/70 hover:text-primary transition-colors">Kegiatan Mendatang</Link></li>
-            <li><Link to="/contact" className="text-white/70 hover:text-primary transition-colors">Hubungi Kami</Link></li>
+            <li><Link to="/relawan" className="text-white/70 hover:text-primary transition-colors">Jadi Relawan</Link></li>
+            <li><Link to="/donasi" className="text-white/70 hover:text-primary transition-colors">Donasi</Link></li>
+            <li><Link to="/mitra" className="text-white/70 hover:text-primary transition-colors">Kemitraan</Link></li>
+            <li><Link to="/event" className="text-white/70 hover:text-primary transition-colors">Kegiatan Mendatang</Link></li>
+            <li><Link to="/kontak" className="text-white/70 hover:text-primary transition-colors">Hubungi Kami</Link></li>
           </ul>
         </div>
 

@@ -11,7 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSettings } from "@/lib/public-data";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/contact")({
+export const Route = createFileRoute("/kontak")({
   head: () => ({
     meta: [
       { title: "Kontak KBSBB" },

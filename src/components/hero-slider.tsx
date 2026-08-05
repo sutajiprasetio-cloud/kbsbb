@@ -85,7 +85,7 @@ export function HeroSlider({ compactBottom = false }: { compactBottom?: boolean 
             <p className="mt-3 max-w-md text-sm text-white/85 md:text-base">
               {slides ? "Belum ada slide yang dipublikasikan." : ""}
             </p>
-            <Link to="/donate" className="mt-6">
+            <Link to="/donasi" className="mt-6">
               <Button size="lg" className="gap-2 rounded-full bg-white px-7 text-primary hover:bg-white/90">
                 <Heart className="h-4 w-4 fill-current" /> Donasi Sekarang
               </Button>

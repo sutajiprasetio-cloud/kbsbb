@@ -118,7 +118,7 @@ function AboutSection() {
         <div>
           <SectionHeading eyebrow="Tentang Kami" title={about.headline ?? "Tentang KBSBB"} description={about.intro ?? undefined} align="left" />
           {about.mission && <p className="mt-5 text-muted-foreground">{about.mission}</p>}
-          <Link to="/about" className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">
+          <Link to="/tentang-kami" className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">
             Selengkapnya <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -150,7 +150,7 @@ function FeaturedPrograms({ compactTop = false }: { compactTop?: boolean }) {
                   <CardContent className="px-5 pb-5">
                     <h3 className="text-lg font-bold">{p.title}</h3>
                     <p className="mt-1.5 text-sm text-muted-foreground">{p.summary ?? p.description}</p>
-                    <Link to="/programs" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">Selengkapnya <ArrowRight className="h-4 w-4" /></Link>
+                    <Link to="/program" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">Selengkapnya <ArrowRight className="h-4 w-4" /></Link>
                   </CardContent>
                 </Card>
               );
@@ -189,7 +189,7 @@ function DonationProgress() {
                     </div>
                     <Progress value={pct} className="mt-2 h-2" />
                     <div className="mt-1 text-xs text-muted-foreground">Target Dana {rupiah(goal)}</div>
-                    <Link to="/donate" className="mt-5 block">
+                    <Link to="/donasi" className="mt-5 block">
                       <Button className="w-full rounded-full gap-2"><Heart className="h-4 w-4 fill-current" /> Donasi Sekarang</Button>
                     </Link>
                   </CardContent>
@@ -210,14 +210,14 @@ function LatestNews() {
       <div className="container-x">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <SectionHeading eyebrow="Berita Terbaru" title="Berita KBSBB" align="left" />
-          <Link to="/news" className="text-sm font-semibold text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">Semua berita <ArrowRight className="h-4 w-4" /></Link>
+          <Link to="/berita" className="text-sm font-semibold text-primary inline-flex items-center gap-1 hover:gap-2 transition-all">Semua berita <ArrowRight className="h-4 w-4" /></Link>
         </div>
         {items && items.length === 0 ? (
           <EmptyState className="mt-10" title="Belum ada berita" description="Berita yang dipublikasikan akan muncul di sini." />
         ) : (
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {(items ?? []).map((n: any) => (
-              <Link key={n.id} to="/news/$slug" params={{ slug: n.slug }} className="block focus:outline-none">
+              <Link key={n.id} to="/berita/$slug" params={{ slug: n.slug }} className="block focus:outline-none">
                 <Card className="group h-full overflow-hidden rounded-3xl border-border/70 pt-0 hover:shadow-soft transition-all">
                   <ModeImage src={n.cover_url} alt={n.title} mode={n.display_mode} className="aspect-[16/10] bg-muted" imgClassName="transition-transform duration-700 group-hover:scale-105" />
                   <CardContent className="px-5 pb-5">
@@ -284,7 +284,7 @@ function GalleryPreview() {
       <div className="container-x">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <SectionHeading eyebrow="Galeri" title="Momen kebaikan" align="left" />
-          <Link to="/gallery" className="text-sm font-semibold text-primary inline-flex items-center gap-1">Lihat semua <ArrowRight className="h-4 w-4" /></Link>
+          <Link to="/dokumentasi" className="text-sm font-semibold text-primary inline-flex items-center gap-1">Lihat semua <ArrowRight className="h-4 w-4" /></Link>
         </div>
         {items && items.length === 0 ? (
           <EmptyState className="mt-10" title="Belum ada foto" description="Foto galeri akan tampil di sini setelah diunggah." />
@@ -334,7 +334,7 @@ function DonateCta() {
         <HandCoins className="mx-auto h-10 w-10 opacity-80" />
         <h2 className="mt-5 text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">Setiap donasi Anda berarti</h2>
         <p className="mx-auto mt-4 max-w-2xl opacity-90">Bantu kami menghadirkan layanan kesehatan, pendidikan, dan pangan bagi masyarakat yang membutuhkan.</p>
-        <Link to="/donate" className="mt-8 inline-block">
+        <Link to="/donasi" className="mt-8 inline-block">
           <Button variant="secondary" className="h-12 rounded-full px-8 text-base font-semibold gap-2">
             <Heart className="h-4 w-4 fill-current" /> Donasi Sekarang
           </Button>

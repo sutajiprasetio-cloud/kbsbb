@@ -6,7 +6,7 @@ import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 
-export const Route = createFileRoute("/news/")({
+export const Route = createFileRoute("/berita/")({
   head: () => ({
     meta: [
       { title: "Berita — Kabar Terbaru KBSBB" },
@@ -29,7 +29,7 @@ function News() {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {(items ?? []).map((n: any) => (
-              <Link key={n.id} to="/news/$slug" params={{ slug: n.slug }} className="block focus:outline-none">
+              <Link key={n.id} to="/berita/$slug" params={{ slug: n.slug }} className="block focus:outline-none">
                 <Card className="group h-full overflow-hidden rounded-3xl border-border/70 pt-0 hover:shadow-soft transition-all">
                   <ModeImage src={n.cover_url} alt={n.title} mode={n.display_mode} className="aspect-[16/10] bg-muted" imgClassName="transition-transform duration-700 group-hover:scale-105" />
                   <CardContent className="px-5 pb-5">
