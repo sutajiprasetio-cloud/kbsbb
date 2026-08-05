@@ -25,7 +25,7 @@ function Gallery() {
   const items = useTable<any>("gallery_items", { order: { column: "sort_order", ascending: true } });
   return (
     <SiteLayout>
-      <PageHero eyebrow="Dokumentasi" title="Jejak Kebaikan KBSBB" description="Kumpulan momen inspiratif dari berbagai program sosial, kemanusiaan, kesehatan, pendidikan, dan pemberdayaan masyarakat yang dilaksanakan oleh KBSBB." />
+      <PageHero eyebrow="Gallery" title="Jejak Kebaikan KBSBB" description="Kumpulan momen inspiratif dari berbagai program sosial, kemanusiaan, kesehatan, pendidikan, dan pemberdayaan masyarakat yang dilaksanakan oleh KBSBB." />
       <section className="container-x py-20">
         <Breadcrumbs className="mb-8" items={[{ label: "Gallery" }]} />
         {items && items.length === 0 ? (
