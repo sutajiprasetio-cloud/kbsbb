@@ -9,21 +9,33 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VolunteerRouteImport } from './routes/volunteer'
+import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as TestimoniRouteImport } from './routes/testimoni'
 import { Route as TentangKamiRouteImport } from './routes/tentang-kami'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RelawanRouteImport } from './routes/relawan'
+import { Route as ProgramsRouteImport } from './routes/programs'
+import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as MitraRouteImport } from './routes/mitra'
 import { Route as KontakRouteImport } from './routes/kontak'
+import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProgramIndexRouteImport } from './routes/program.index'
+import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as EventIndexRouteImport } from './routes/event.index'
+import { Route as DonateIndexRouteImport } from './routes/donate.index'
 import { Route as DonasiIndexRouteImport } from './routes/donasi.index'
 import { Route as DokumentasiIndexRouteImport } from './routes/dokumentasi.index'
 import { Route as BeritaIndexRouteImport } from './routes/berita.index'
+import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as DonateSlugRouteImport } from './routes/donate.$slug'
 import { Route as DonasiSlugRouteImport } from './routes/donasi.$slug'
 import { Route as BeritaSlugRouteImport } from './routes/berita.$slug'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
@@ -52,6 +64,16 @@ import { Route as AuthenticatedAdminBrandingRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminBankAccountsRouteImport } from './routes/_authenticated/admin/bank-accounts'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin/about'
 
+const VolunteerRoute = VolunteerRouteImport.update({
+  id: '/volunteer',
+  path: '/volunteer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestimonialsRoute = TestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TestimoniRoute = TestimoniRouteImport.update({
   id: '/testimoni',
   path: '/testimoni',
@@ -72,6 +94,16 @@ const RelawanRoute = RelawanRouteImport.update({
   path: '/relawan',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProgramsRoute = ProgramsRouteImport.update({
+  id: '/programs',
+  path: '/programs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MitraRoute = MitraRouteImport.update({
   id: '/mitra',
   path: '/mitra',
@@ -82,14 +114,34 @@ const KontakRoute = KontakRouteImport.update({
   path: '/kontak',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -106,9 +158,19 @@ const ProgramIndexRoute = ProgramIndexRouteImport.update({
   path: '/program/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsIndexRoute = NewsIndexRouteImport.update({
+  id: '/news/',
+  path: '/news/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventIndexRoute = EventIndexRouteImport.update({
   id: '/event/',
   path: '/event/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateIndexRoute = DonateIndexRouteImport.update({
+  id: '/donate/',
+  path: '/donate/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DonasiIndexRoute = DonasiIndexRouteImport.update({
@@ -124,6 +186,16 @@ const DokumentasiIndexRoute = DokumentasiIndexRouteImport.update({
 const BeritaIndexRoute = BeritaIndexRouteImport.update({
   id: '/berita/',
   path: '/berita/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsSlugRoute = NewsSlugRouteImport.update({
+  id: '/news/$slug',
+  path: '/news/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateSlugRoute = DonateSlugRouteImport.update({
+  id: '/donate/$slug',
+  path: '/donate/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DonasiSlugRoute = DonasiSlugRouteImport.update({
@@ -280,21 +352,33 @@ const AuthenticatedAdminAboutRoute = AuthenticatedAdminAboutRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
+  '/gallery': typeof GalleryRoute
   '/kontak': typeof KontakRoute
   '/mitra': typeof MitraRoute
+  '/partners': typeof PartnersRoute
+  '/programs': typeof ProgramsRoute
   '/relawan': typeof RelawanRoute
   '/reset-password': typeof ResetPasswordRoute
   '/tentang-kami': typeof TentangKamiRoute
   '/testimoni': typeof TestimoniRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/volunteer': typeof VolunteerRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/berita/$slug': typeof BeritaSlugRoute
   '/donasi/$slug': typeof DonasiSlugRoute
+  '/donate/$slug': typeof DonateSlugRoute
+  '/news/$slug': typeof NewsSlugRoute
   '/berita/': typeof BeritaIndexRoute
   '/dokumentasi/': typeof DokumentasiIndexRoute
   '/donasi/': typeof DonasiIndexRoute
+  '/donate/': typeof DonateIndexRoute
   '/event/': typeof EventIndexRoute
+  '/news/': typeof NewsIndexRoute
   '/program/': typeof ProgramIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
@@ -323,20 +407,32 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
+  '/gallery': typeof GalleryRoute
   '/kontak': typeof KontakRoute
   '/mitra': typeof MitraRoute
+  '/partners': typeof PartnersRoute
+  '/programs': typeof ProgramsRoute
   '/relawan': typeof RelawanRoute
   '/reset-password': typeof ResetPasswordRoute
   '/tentang-kami': typeof TentangKamiRoute
   '/testimoni': typeof TestimoniRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/volunteer': typeof VolunteerRoute
   '/berita/$slug': typeof BeritaSlugRoute
   '/donasi/$slug': typeof DonasiSlugRoute
+  '/donate/$slug': typeof DonateSlugRoute
+  '/news/$slug': typeof NewsSlugRoute
   '/berita': typeof BeritaIndexRoute
   '/dokumentasi': typeof DokumentasiIndexRoute
   '/donasi': typeof DonasiIndexRoute
+  '/donate': typeof DonateIndexRoute
   '/event': typeof EventIndexRoute
+  '/news': typeof NewsIndexRoute
   '/program': typeof ProgramIndexRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
@@ -367,21 +463,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/contact': typeof ContactRoute
+  '/events': typeof EventsRoute
   '/faq': typeof FaqRoute
+  '/gallery': typeof GalleryRoute
   '/kontak': typeof KontakRoute
   '/mitra': typeof MitraRoute
+  '/partners': typeof PartnersRoute
+  '/programs': typeof ProgramsRoute
   '/relawan': typeof RelawanRoute
   '/reset-password': typeof ResetPasswordRoute
   '/tentang-kami': typeof TentangKamiRoute
   '/testimoni': typeof TestimoniRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/volunteer': typeof VolunteerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/berita/$slug': typeof BeritaSlugRoute
   '/donasi/$slug': typeof DonasiSlugRoute
+  '/donate/$slug': typeof DonateSlugRoute
+  '/news/$slug': typeof NewsSlugRoute
   '/berita/': typeof BeritaIndexRoute
   '/dokumentasi/': typeof DokumentasiIndexRoute
   '/donasi/': typeof DonasiIndexRoute
+  '/donate/': typeof DonateIndexRoute
   '/event/': typeof EventIndexRoute
+  '/news/': typeof NewsIndexRoute
   '/program/': typeof ProgramIndexRoute
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
   '/_authenticated/admin/bank-accounts': typeof AuthenticatedAdminBankAccountsRoute
@@ -412,21 +520,33 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/auth'
+    | '/contact'
+    | '/events'
     | '/faq'
+    | '/gallery'
     | '/kontak'
     | '/mitra'
+    | '/partners'
+    | '/programs'
     | '/relawan'
     | '/reset-password'
     | '/tentang-kami'
     | '/testimoni'
+    | '/testimonials'
+    | '/volunteer'
     | '/admin'
     | '/berita/$slug'
     | '/donasi/$slug'
+    | '/donate/$slug'
+    | '/news/$slug'
     | '/berita/'
     | '/dokumentasi/'
     | '/donasi/'
+    | '/donate/'
     | '/event/'
+    | '/news/'
     | '/program/'
     | '/admin/about'
     | '/admin/bank-accounts'
@@ -455,20 +575,32 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/auth'
+    | '/contact'
+    | '/events'
     | '/faq'
+    | '/gallery'
     | '/kontak'
     | '/mitra'
+    | '/partners'
+    | '/programs'
     | '/relawan'
     | '/reset-password'
     | '/tentang-kami'
     | '/testimoni'
+    | '/testimonials'
+    | '/volunteer'
     | '/berita/$slug'
     | '/donasi/$slug'
+    | '/donate/$slug'
+    | '/news/$slug'
     | '/berita'
     | '/dokumentasi'
     | '/donasi'
+    | '/donate'
     | '/event'
+    | '/news'
     | '/program'
     | '/admin/about'
     | '/admin/bank-accounts'
@@ -498,21 +630,33 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/about'
     | '/auth'
+    | '/contact'
+    | '/events'
     | '/faq'
+    | '/gallery'
     | '/kontak'
     | '/mitra'
+    | '/partners'
+    | '/programs'
     | '/relawan'
     | '/reset-password'
     | '/tentang-kami'
     | '/testimoni'
+    | '/testimonials'
+    | '/volunteer'
     | '/_authenticated/admin'
     | '/berita/$slug'
     | '/donasi/$slug'
+    | '/donate/$slug'
+    | '/news/$slug'
     | '/berita/'
     | '/dokumentasi/'
     | '/donasi/'
+    | '/donate/'
     | '/event/'
+    | '/news/'
     | '/program/'
     | '/_authenticated/admin/about'
     | '/_authenticated/admin/bank-accounts'
@@ -543,25 +687,51 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
+  ContactRoute: typeof ContactRoute
+  EventsRoute: typeof EventsRoute
   FaqRoute: typeof FaqRoute
+  GalleryRoute: typeof GalleryRoute
   KontakRoute: typeof KontakRoute
   MitraRoute: typeof MitraRoute
+  PartnersRoute: typeof PartnersRoute
+  ProgramsRoute: typeof ProgramsRoute
   RelawanRoute: typeof RelawanRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   TentangKamiRoute: typeof TentangKamiRoute
   TestimoniRoute: typeof TestimoniRoute
+  TestimonialsRoute: typeof TestimonialsRoute
+  VolunteerRoute: typeof VolunteerRoute
   BeritaSlugRoute: typeof BeritaSlugRoute
   DonasiSlugRoute: typeof DonasiSlugRoute
+  DonateSlugRoute: typeof DonateSlugRoute
+  NewsSlugRoute: typeof NewsSlugRoute
   BeritaIndexRoute: typeof BeritaIndexRoute
   DokumentasiIndexRoute: typeof DokumentasiIndexRoute
   DonasiIndexRoute: typeof DonasiIndexRoute
+  DonateIndexRoute: typeof DonateIndexRoute
   EventIndexRoute: typeof EventIndexRoute
+  NewsIndexRoute: typeof NewsIndexRoute
   ProgramIndexRoute: typeof ProgramIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/volunteer': {
+      id: '/volunteer'
+      path: '/volunteer'
+      fullPath: '/volunteer'
+      preLoaderRoute: typeof VolunteerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/testimonials': {
+      id: '/testimonials'
+      path: '/testimonials'
+      fullPath: '/testimonials'
+      preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/testimoni': {
       id: '/testimoni'
       path: '/testimoni'
@@ -590,6 +760,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RelawanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/programs': {
+      id: '/programs'
+      path: '/programs'
+      fullPath: '/programs'
+      preLoaderRoute: typeof ProgramsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mitra': {
       id: '/mitra'
       path: '/mitra'
@@ -604,6 +788,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KontakRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/faq': {
       id: '/faq'
       path: '/faq'
@@ -611,11 +802,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -639,11 +851,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProgramIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/news/': {
+      id: '/news/'
+      path: '/news'
+      fullPath: '/news/'
+      preLoaderRoute: typeof NewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/event/': {
       id: '/event/'
       path: '/event'
       fullPath: '/event/'
       preLoaderRoute: typeof EventIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donate/': {
+      id: '/donate/'
+      path: '/donate'
+      fullPath: '/donate/'
+      preLoaderRoute: typeof DonateIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/donasi/': {
@@ -665,6 +891,20 @@ declare module '@tanstack/react-router' {
       path: '/berita'
       fullPath: '/berita/'
       preLoaderRoute: typeof BeritaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news/$slug': {
+      id: '/news/$slug'
+      path: '/news/$slug'
+      fullPath: '/news/$slug'
+      preLoaderRoute: typeof NewsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donate/$slug': {
+      id: '/donate/$slug'
+      path: '/donate/$slug'
+      fullPath: '/donate/$slug'
+      preLoaderRoute: typeof DonateSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/donasi/$slug': {
@@ -935,20 +1175,32 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
+  ContactRoute: ContactRoute,
+  EventsRoute: EventsRoute,
   FaqRoute: FaqRoute,
+  GalleryRoute: GalleryRoute,
   KontakRoute: KontakRoute,
   MitraRoute: MitraRoute,
+  PartnersRoute: PartnersRoute,
+  ProgramsRoute: ProgramsRoute,
   RelawanRoute: RelawanRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   TentangKamiRoute: TentangKamiRoute,
   TestimoniRoute: TestimoniRoute,
+  TestimonialsRoute: TestimonialsRoute,
+  VolunteerRoute: VolunteerRoute,
   BeritaSlugRoute: BeritaSlugRoute,
   DonasiSlugRoute: DonasiSlugRoute,
+  DonateSlugRoute: DonateSlugRoute,
+  NewsSlugRoute: NewsSlugRoute,
   BeritaIndexRoute: BeritaIndexRoute,
   DokumentasiIndexRoute: DokumentasiIndexRoute,
   DonasiIndexRoute: DonasiIndexRoute,
+  DonateIndexRoute: DonateIndexRoute,
   EventIndexRoute: EventIndexRoute,
+  NewsIndexRoute: NewsIndexRoute,
   ProgramIndexRoute: ProgramIndexRoute,
 }
 export const routeTree = rootRouteImport
