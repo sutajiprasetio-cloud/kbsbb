@@ -6,7 +6,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
-import { ArrowLeft, Calendar, User } from "lucide-react";
+//import { ArrowLeft, Calendar, User } from "lucide-react";
+import { ArrowLeft, Calendar, User, Share2, Link2} from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { canonical, slugify } from "@/lib/slug";
 import { Card, CardContent } from "@/components/ui/card";
@@ -118,9 +119,10 @@ function NewsDetail() {
             )}
 
             <div className="mt-10 border-t pt-6">
-              <h3 className="mb-4 text-lg font-semibold">
-                Sebarkan Kebaikan Ini
-              </h3>
+            <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
+              <Share2 className="h-5 w-5" />
+              Sebarkan Kebaikan Ini
+            </h3>
             
               <div className="flex flex-wrap gap-3">
                 <Button
@@ -138,15 +140,16 @@ function NewsDetail() {
                   WhatsApp
                 </Button>
             
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    navigator.clipboard.writeText(shareUrl)
-                  }
-                >
-                  Salin Link
-                </Button>
+               <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  navigator.clipboard.writeText(shareUrl)
+                }
+              >
+                <Link2 className="mr-2 h-4 w-4" />
+                Salin Link
+              </Button>
               </div>
             </div>
 
