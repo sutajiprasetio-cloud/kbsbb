@@ -34,9 +34,13 @@ import { Route as DonateIndexRouteImport } from './routes/donate.index'
 import { Route as DonasiIndexRouteImport } from './routes/donasi.index'
 import { Route as DokumentasiIndexRouteImport } from './routes/dokumentasi.index'
 import { Route as BeritaIndexRouteImport } from './routes/berita.index'
+import { Route as ProgramSlugRouteImport } from './routes/program.$slug'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as KategoriSlugRouteImport } from './routes/kategori.$slug'
+import { Route as EventSlugRouteImport } from './routes/event.$slug'
 import { Route as DonateSlugRouteImport } from './routes/donate.$slug'
 import { Route as DonasiSlugRouteImport } from './routes/donasi.$slug'
+import { Route as DokumentasiSlugRouteImport } from './routes/dokumentasi.$slug'
 import { Route as BeritaSlugRouteImport } from './routes/berita.$slug'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
@@ -188,9 +192,24 @@ const BeritaIndexRoute = BeritaIndexRouteImport.update({
   path: '/berita/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProgramSlugRoute = ProgramSlugRouteImport.update({
+  id: '/program/$slug',
+  path: '/program/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/news/$slug',
   path: '/news/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KategoriSlugRoute = KategoriSlugRouteImport.update({
+  id: '/kategori/$slug',
+  path: '/kategori/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventSlugRoute = EventSlugRouteImport.update({
+  id: '/event/$slug',
+  path: '/event/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DonateSlugRoute = DonateSlugRouteImport.update({
@@ -201,6 +220,11 @@ const DonateSlugRoute = DonateSlugRouteImport.update({
 const DonasiSlugRoute = DonasiSlugRouteImport.update({
   id: '/donasi/$slug',
   path: '/donasi/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DokumentasiSlugRoute = DokumentasiSlugRouteImport.update({
+  id: '/dokumentasi/$slug',
+  path: '/dokumentasi/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BeritaSlugRoute = BeritaSlugRouteImport.update({
@@ -370,9 +394,13 @@ export interface FileRoutesByFullPath {
   '/volunteer': typeof VolunteerRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/berita/$slug': typeof BeritaSlugRoute
+  '/dokumentasi/$slug': typeof DokumentasiSlugRoute
   '/donasi/$slug': typeof DonasiSlugRoute
   '/donate/$slug': typeof DonateSlugRoute
+  '/event/$slug': typeof EventSlugRoute
+  '/kategori/$slug': typeof KategoriSlugRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/program/$slug': typeof ProgramSlugRoute
   '/berita/': typeof BeritaIndexRoute
   '/dokumentasi/': typeof DokumentasiIndexRoute
   '/donasi/': typeof DonasiIndexRoute
@@ -424,9 +452,13 @@ export interface FileRoutesByTo {
   '/testimonials': typeof TestimonialsRoute
   '/volunteer': typeof VolunteerRoute
   '/berita/$slug': typeof BeritaSlugRoute
+  '/dokumentasi/$slug': typeof DokumentasiSlugRoute
   '/donasi/$slug': typeof DonasiSlugRoute
   '/donate/$slug': typeof DonateSlugRoute
+  '/event/$slug': typeof EventSlugRoute
+  '/kategori/$slug': typeof KategoriSlugRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/program/$slug': typeof ProgramSlugRoute
   '/berita': typeof BeritaIndexRoute
   '/dokumentasi': typeof DokumentasiIndexRoute
   '/donasi': typeof DonasiIndexRoute
@@ -481,9 +513,13 @@ export interface FileRoutesById {
   '/volunteer': typeof VolunteerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/berita/$slug': typeof BeritaSlugRoute
+  '/dokumentasi/$slug': typeof DokumentasiSlugRoute
   '/donasi/$slug': typeof DonasiSlugRoute
   '/donate/$slug': typeof DonateSlugRoute
+  '/event/$slug': typeof EventSlugRoute
+  '/kategori/$slug': typeof KategoriSlugRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/program/$slug': typeof ProgramSlugRoute
   '/berita/': typeof BeritaIndexRoute
   '/dokumentasi/': typeof DokumentasiIndexRoute
   '/donasi/': typeof DonasiIndexRoute
@@ -538,9 +574,13 @@ export interface FileRouteTypes {
     | '/volunteer'
     | '/admin'
     | '/berita/$slug'
+    | '/dokumentasi/$slug'
     | '/donasi/$slug'
     | '/donate/$slug'
+    | '/event/$slug'
+    | '/kategori/$slug'
     | '/news/$slug'
+    | '/program/$slug'
     | '/berita/'
     | '/dokumentasi/'
     | '/donasi/'
@@ -592,9 +632,13 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/volunteer'
     | '/berita/$slug'
+    | '/dokumentasi/$slug'
     | '/donasi/$slug'
     | '/donate/$slug'
+    | '/event/$slug'
+    | '/kategori/$slug'
     | '/news/$slug'
+    | '/program/$slug'
     | '/berita'
     | '/dokumentasi'
     | '/donasi'
@@ -648,9 +692,13 @@ export interface FileRouteTypes {
     | '/volunteer'
     | '/_authenticated/admin'
     | '/berita/$slug'
+    | '/dokumentasi/$slug'
     | '/donasi/$slug'
     | '/donate/$slug'
+    | '/event/$slug'
+    | '/kategori/$slug'
     | '/news/$slug'
+    | '/program/$slug'
     | '/berita/'
     | '/dokumentasi/'
     | '/donasi/'
@@ -704,9 +752,13 @@ export interface RootRouteChildren {
   TestimonialsRoute: typeof TestimonialsRoute
   VolunteerRoute: typeof VolunteerRoute
   BeritaSlugRoute: typeof BeritaSlugRoute
+  DokumentasiSlugRoute: typeof DokumentasiSlugRoute
   DonasiSlugRoute: typeof DonasiSlugRoute
   DonateSlugRoute: typeof DonateSlugRoute
+  EventSlugRoute: typeof EventSlugRoute
+  KategoriSlugRoute: typeof KategoriSlugRoute
   NewsSlugRoute: typeof NewsSlugRoute
+  ProgramSlugRoute: typeof ProgramSlugRoute
   BeritaIndexRoute: typeof BeritaIndexRoute
   DokumentasiIndexRoute: typeof DokumentasiIndexRoute
   DonasiIndexRoute: typeof DonasiIndexRoute
@@ -893,11 +945,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BeritaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/program/$slug': {
+      id: '/program/$slug'
+      path: '/program/$slug'
+      fullPath: '/program/$slug'
+      preLoaderRoute: typeof ProgramSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/news/$slug': {
       id: '/news/$slug'
       path: '/news/$slug'
       fullPath: '/news/$slug'
       preLoaderRoute: typeof NewsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kategori/$slug': {
+      id: '/kategori/$slug'
+      path: '/kategori/$slug'
+      fullPath: '/kategori/$slug'
+      preLoaderRoute: typeof KategoriSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event/$slug': {
+      id: '/event/$slug'
+      path: '/event/$slug'
+      fullPath: '/event/$slug'
+      preLoaderRoute: typeof EventSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/donate/$slug': {
@@ -912,6 +985,13 @@ declare module '@tanstack/react-router' {
       path: '/donasi/$slug'
       fullPath: '/donasi/$slug'
       preLoaderRoute: typeof DonasiSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dokumentasi/$slug': {
+      id: '/dokumentasi/$slug'
+      path: '/dokumentasi/$slug'
+      fullPath: '/dokumentasi/$slug'
+      preLoaderRoute: typeof DokumentasiSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/berita/$slug': {
@@ -1192,9 +1272,13 @@ const rootRouteChildren: RootRouteChildren = {
   TestimonialsRoute: TestimonialsRoute,
   VolunteerRoute: VolunteerRoute,
   BeritaSlugRoute: BeritaSlugRoute,
+  DokumentasiSlugRoute: DokumentasiSlugRoute,
   DonasiSlugRoute: DonasiSlugRoute,
   DonateSlugRoute: DonateSlugRoute,
+  EventSlugRoute: EventSlugRoute,
+  KategoriSlugRoute: KategoriSlugRoute,
   NewsSlugRoute: NewsSlugRoute,
+  ProgramSlugRoute: ProgramSlugRoute,
   BeritaIndexRoute: BeritaIndexRoute,
   DokumentasiIndexRoute: DokumentasiIndexRoute,
   DonasiIndexRoute: DonasiIndexRoute,
