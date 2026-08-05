@@ -19,6 +19,7 @@ export const Route = createFileRoute("/_authenticated/admin/events")({
       ]}
       fields={[
         { name: "title", label: "Title", type: "text", required: true, span: 2 },
+        { name: "slug", label: "Slug URL (opsional — dibuat otomatis dari judul)", type: "text", span: 2, placeholder: "aksi-donor-darah-jakarta" },
         { name: "description", label: "Description", type: "textarea", span: 2 },
         { name: "location", label: "Location", type: "text", span: 2 },
         { name: "starts_at", label: "Starts at", type: "datetime", required: true },
