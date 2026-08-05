@@ -130,24 +130,14 @@ function NewsDetail() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() =>
-                    window.open(
-                      `https://wa.me/?text=${encodeURIComponent(
-                        shareTitle + "\n" + shareUrl
-                      )}`,
-                      "_blank"
-                    )
-                  }
                 >
+                  <FaWhatsapp className="mr-2 h-4 w-4" />
                   WhatsApp
                 </Button>
             
                <Button
                 variant="outline"
                 size="sm"
-                onClick={() =>
-                  navigator.clipboard.writeText(shareUrl)
-                }
               >
                 <Link2 className="mr-2 h-4 w-4" />
                 Salin Link
