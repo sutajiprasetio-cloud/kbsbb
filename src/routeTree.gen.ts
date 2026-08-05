@@ -15,6 +15,7 @@ import { Route as TimKamiRouteImport } from './routes/tim-kami'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as TestimoniRouteImport } from './routes/testimoni'
 import { Route as TentangKamiRouteImport } from './routes/tentang-kami'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RelawanRouteImport } from './routes/relawan'
 import { Route as ProgramsRouteImport } from './routes/programs'
@@ -103,6 +104,11 @@ const TestimoniRoute = TestimoniRouteImport.update({
 const TentangKamiRoute = TentangKamiRouteImport.update({
   id: '/tentang-kami',
   path: '/tentang-kami',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -431,6 +437,7 @@ export interface FileRoutesByFullPath {
   '/programs': typeof ProgramsRoute
   '/relawan': typeof RelawanRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tentang-kami': typeof TentangKamiRoute
   '/testimoni': typeof TestimoniRoute
   '/testimonials': typeof TestimonialsRoute
@@ -496,6 +503,7 @@ export interface FileRoutesByTo {
   '/programs': typeof ProgramsRoute
   '/relawan': typeof RelawanRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tentang-kami': typeof TentangKamiRoute
   '/testimoni': typeof TestimoniRoute
   '/testimonials': typeof TestimonialsRoute
@@ -563,6 +571,7 @@ export interface FileRoutesById {
   '/programs': typeof ProgramsRoute
   '/relawan': typeof RelawanRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tentang-kami': typeof TentangKamiRoute
   '/testimoni': typeof TestimoniRoute
   '/testimonials': typeof TestimonialsRoute
@@ -631,6 +640,7 @@ export interface FileRouteTypes {
     | '/programs'
     | '/relawan'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/tentang-kami'
     | '/testimoni'
     | '/testimonials'
@@ -696,6 +706,7 @@ export interface FileRouteTypes {
     | '/programs'
     | '/relawan'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/tentang-kami'
     | '/testimoni'
     | '/testimonials'
@@ -762,6 +773,7 @@ export interface FileRouteTypes {
     | '/programs'
     | '/relawan'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/tentang-kami'
     | '/testimoni'
     | '/testimonials'
@@ -830,6 +842,7 @@ export interface RootRouteChildren {
   ProgramsRoute: typeof ProgramsRoute
   RelawanRoute: typeof RelawanRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TentangKamiRoute: typeof TentangKamiRoute
   TestimoniRoute: typeof TestimoniRoute
   TestimonialsRoute: typeof TestimonialsRoute
@@ -895,6 +908,13 @@ declare module '@tanstack/react-router' {
       path: '/tentang-kami'
       fullPath: '/tentang-kami'
       preLoaderRoute: typeof TentangKamiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -1420,6 +1440,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProgramsRoute: ProgramsRoute,
   RelawanRoute: RelawanRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TentangKamiRoute: TentangKamiRoute,
   TestimoniRoute: TestimoniRoute,
   TestimonialsRoute: TestimonialsRoute,
