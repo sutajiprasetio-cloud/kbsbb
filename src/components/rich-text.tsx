@@ -15,10 +15,17 @@ export function RichText({ html, className }: { html?: string | null; className?
   const ref = useRef<HTMLDivElement>(null);
 
   const clean = useMemo(() => {
-    const raw = html ?? "";
+    const raw = (html ?? "").trim();
     if (!raw) return "";
-    if (typeof window === "undefined") return raw;
-    return DOMPurify.sanitize(raw, {
+    // Legacy plain-text content: keep paragraph breaks.
+    const source = /<[a-z][\s\S]*>/i.test(raw)
+      ? raw
+      : raw
+          .split(/\n{2,}/)
+          .map((p) => `<p>${p.replace(/\n/g, "<br />")}</p>`)
+          .join("");
+    if (typeof window === "undefined") return source;
+    return DOMPurify.sanitize(source, {
       ADD_ATTR: ["target", "rel", "data-align", "data-width", "data-caption", "colspan", "rowspan", "style"],
       ADD_TAGS: ["figure", "figcaption"],
     });
