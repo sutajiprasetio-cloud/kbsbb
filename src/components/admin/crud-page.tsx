@@ -267,12 +267,19 @@ function FormFields({ fields, value, onChange }: { fields: Field[]; value: any; 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {fields.map((f) => {
         const v = value[f.name] ?? "";
-        const wrapper = f.span === 2 || f.type === "textarea" ? "md:col-span-2" : "";
+        const wrapper = f.span === 2 || f.type === "textarea" || f.type === "richtext" ? "md:col-span-2" : "";
         return (
           <div key={f.name} className={`space-y-2 ${wrapper}`}>
             <Label htmlFor={f.name}>{f.label}{f.required && <span className="text-destructive"> *</span>}</Label>
             {f.type === "textarea" ? (
               <Textarea id={f.name} value={v} onChange={(e) => set(f.name, e.target.value)} rows={5} placeholder={f.placeholder} />
+            ) : f.type === "richtext" ? (
+              <RichTextEditor
+                value={typeof v === "string" ? v : ""}
+                onChange={(html) => set(f.name, html)}
+                storageKey={`${f.name}-${value?.id ?? "new"}`}
+                placeholder={f.placeholder}
+              />
             ) : f.type === "boolean" ? (
               <div className="flex items-center gap-2 h-10">
                 <Switch checked={!!v} onCheckedChange={(c) => set(f.name, c)} />
