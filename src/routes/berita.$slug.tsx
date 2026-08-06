@@ -19,6 +19,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { toast } from "sonner";
+import { RichText } from "@/components/rich-text";
 
 
 export const Route = createFileRoute("/berita/$slug")({

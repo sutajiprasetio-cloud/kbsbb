@@ -9,6 +9,7 @@ import { ModeImage } from "@/components/safe-image";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/program/$slug")({
   head: ({ params }) => ({

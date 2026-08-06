@@ -6,6 +6,7 @@ import { useSingleton, useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/tentang-kami")({
   head: () => ({

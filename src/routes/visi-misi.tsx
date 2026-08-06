@@ -6,6 +6,7 @@ import { useSingleton } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/visi-misi")({
   head: () => ({

@@ -9,6 +9,7 @@ import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
 import { useCampaign, rp, pct } from "@/lib/donations";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/donasi/$slug")({
   head: ({ params }) => ({

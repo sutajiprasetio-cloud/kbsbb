@@ -5,6 +5,7 @@ import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/tim-kami")({
   head: () => ({
