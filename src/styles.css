@@ -199,3 +199,25 @@
 
 .reveal { opacity: 0; }
 .reveal.in-view { animation: reveal-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ---- Rich text editor & rendered content ---- */
+.rt-editor .ProseMirror,
+.prose {
+  overflow-wrap: anywhere;
+}
+.prose figure.rt-figure { margin-inline: auto; }
+.prose figure.rt-align-left { margin-inline: 0 auto; text-align: left; }
+.prose figure.rt-align-right { margin-inline: auto 0; text-align: right; }
+.prose figure.rt-align-center { text-align: center; }
+.prose figure.rt-figure img { display: inline-block; border-radius: 0.75rem; }
+.prose figure.rt-figure figcaption { font-size: 0.8125rem; opacity: 0.7; margin-top: 0.5rem; }
+.prose table { width: 100%; border-collapse: collapse; }
+.prose table td, .prose table th { border: 1px solid var(--border); padding: 0.5rem 0.75rem; }
+.prose table th { background: color-mix(in oklab, var(--muted) 70%, transparent); }
+.rt-editor .ProseMirror ul[data-type="taskList"] { list-style: none; padding-left: 0; }
+.rt-editor .ProseMirror ul[data-type="taskList"] li { display: flex; gap: 0.5rem; align-items: flex-start; }
+.prose ul[data-type="taskList"] { list-style: none; padding-left: 0; }
+.prose ul[data-type="taskList"] li { display: flex; gap: 0.5rem; align-items: flex-start; }
+.rt-editor .ProseMirror .selectedCell { background: color-mix(in oklab, var(--primary) 15%, transparent); }
+.rt-editor .ProseMirror img.ProseMirror-selectednode,
+.rt-editor .ProseMirror .ProseMirror-selectednode img { outline: 2px solid var(--primary); border-radius: 0.75rem; }
