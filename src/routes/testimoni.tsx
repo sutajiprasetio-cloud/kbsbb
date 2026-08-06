@@ -36,7 +36,7 @@ function Testimonials() {
               <Card key={q.id} className="rounded-3xl border-border/70 hover:shadow-soft transition-all">
                 <CardContent className="p-6">
                   <Quote className="h-8 w-8 text-primary/50" />
-                  <p className="mt-4 text-base leading-relaxed">"{q.quote}"</p>
+                  <RichText html={q.quote} className="mt-4 text-base leading-relaxed" />
                   <div className="mt-6 flex items-center gap-3">
                     {q.avatar_url && <ModeImage src={q.avatar_url} alt={q.name} mode={q.display_mode} className="h-12 w-12 shrink-0 rounded-full" />}
                     <div>
