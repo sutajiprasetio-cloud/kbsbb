@@ -9,6 +9,7 @@ import { ModeImage } from "@/components/safe-image";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/program/$slug")({
   head: ({ params }) => ({
@@ -57,11 +58,7 @@ function ProgramDetail() {
             <h1 className="mt-8 text-3xl md:text-4xl font-bold leading-tight tracking-tight">{item.title}</h1>
             {item.summary && <p className="mt-4 text-lg text-muted-foreground">{item.summary}</p>}
             {item.description && (
-              <div className="mt-6 space-y-4 text-base leading-relaxed text-foreground/90">
-                {String(item.description).split(/\n{2,}/).map((p: string, i: number) => (
-                  <p key={i} className="whitespace-pre-line">{p}</p>
-                ))}
-              </div>
+              <RichText html={item.description} className="mt-6 text-base leading-relaxed text-foreground/90" />
             )}
             <div className="mt-10 flex flex-wrap gap-3">
               <Button asChild className="rounded-full gap-2"><Link to="/donasi">Dukung program ini <ArrowRight className="h-4 w-4" /></Link></Button>

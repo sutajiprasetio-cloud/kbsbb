@@ -9,6 +9,7 @@ import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
 import { useCampaign, rp, pct } from "@/lib/donations";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/donasi/$slug")({
   head: ({ params }) => ({
@@ -63,7 +64,7 @@ function CampaignDetail() {
             <ModeImage src={campaign.cover_url} alt={campaign.title} mode={campaign.display_mode} loading="eager" className="rounded-3xl bg-muted aspect-[16/9]" />
             <h1 className="mt-6 text-3xl md:text-4xl font-bold tracking-tight">{campaign.title}</h1>
             {campaign.description && (
-              <div className="mt-4 whitespace-pre-line text-muted-foreground leading-relaxed">{campaign.description}</div>
+              <RichText html={campaign.description} className="mt-4 text-muted-foreground leading-relaxed" />
             )}
 
             <div className="mt-8">

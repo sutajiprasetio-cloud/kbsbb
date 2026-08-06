@@ -6,6 +6,7 @@ import { useSingleton, useTable } from "@/lib/public-data";
 import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/tentang-kami")({
   head: () => ({
@@ -43,12 +44,7 @@ function About() {
          
           <div>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Sejarah kami</h2>
-          <p
-            className="mt-4 text-muted-foreground leading-relaxed whitespace-pre-line text-justify"
-            style={{ textAlign: "justify" }}
-          >
-              {about.story}
-            </p>
+          <RichText html={about.story} className="mt-4 text-muted-foreground leading-relaxed [&>p]:text-justify" />
           </div>
           
           )}
@@ -62,7 +58,7 @@ function About() {
               <CardContent className="p-8">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-brand text-white"><Target className="h-5 w-5" /></div>
                 <h3 className="mt-4 text-2xl font-extrabold">Misi</h3>
-                <p className="mt-2 text-muted-foreground whitespace-pre-line text-justify" style={{ textAlign: "justify" }} >{about.mission}</p>
+                <RichText html={about.mission} className="mt-2 text-muted-foreground [&>p]:text-justify" />
               </CardContent>
             </Card>
           )}
@@ -71,7 +67,7 @@ function About() {
               <CardContent className="p-8">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-brand text-white"><Award className="h-5 w-5" /></div>
                 <h3 className="mt-4 text-2xl font-extrabold">Visi</h3>
-                <p className="mt-2 text-muted-foreground whitespace-pre-line text-justify" style={{ textAlign: "justify" }} >{about.vision}</p>
+                <RichText html={about.vision} className="mt-2 text-muted-foreground [&>p]:text-justify" />
               </CardContent>
             </Card>
           )}

@@ -22,7 +22,7 @@ export const Route = createFileRoute("/_authenticated/admin/news")({
         { name: "slug", label: "Slug", type: "text", required: true },
         { name: "author", label: "Author", type: "text" },
         { name: "excerpt", label: "Excerpt", type: "textarea", span: 2 },
-        { name: "content", label: "Content (markdown)", type: "textarea", span: 2 },
+        { name: "content", label: "Isi Konten", type: "richtext", span: 2 },
         { name: "cover_url", label: "Cover image", type: "image", span: 2 },
         { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "cover_url" },
         { name: "tags", label: "Tags (comma separated)", type: "tags", span: 2 },

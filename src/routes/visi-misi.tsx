@@ -6,6 +6,7 @@ import { useSingleton } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/visi-misi")({
   head: () => ({
@@ -37,14 +38,14 @@ function VisiMisi() {
               <Card className="rounded-3xl border-border/70"><CardContent className="p-8">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-brand text-white"><Award className="h-5 w-5" /></div>
                 <h2 className="mt-4 text-2xl font-extrabold">Visi</h2>
-                <p className="mt-2 text-muted-foreground whitespace-pre-line text-justify">{about.vision}</p>
+                <RichText html={about.vision} className="mt-2 text-muted-foreground [&>p]:text-justify" />
               </CardContent></Card>
             )}
             {about?.mission && (
               <Card className="rounded-3xl border-border/70"><CardContent className="p-8">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-brand text-white"><Target className="h-5 w-5" /></div>
                 <h2 className="mt-4 text-2xl font-extrabold">Misi</h2>
-                <p className="mt-2 text-muted-foreground whitespace-pre-line text-justify">{about.mission}</p>
+                <RichText html={about.mission} className="mt-2 text-muted-foreground [&>p]:text-justify" />
               </CardContent></Card>
             )}
           </div>

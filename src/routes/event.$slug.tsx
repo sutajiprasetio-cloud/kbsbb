@@ -9,6 +9,7 @@ import { ModeImage } from "@/components/safe-image";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/event/$slug")({
   head: ({ params }) => ({
@@ -59,9 +60,7 @@ function EventDetail() {
               {item.location && <span className="inline-flex items-center gap-1"><MapPin className="h-4 w-4" /> {item.location}</span>}
             </div>
             {item.description && (
-              <div className="mt-6 space-y-4 text-base leading-relaxed text-foreground/90">
-                {String(item.description).split(/\n{2,}/).map((p: string, i: number) => (<p key={i} className="whitespace-pre-line">{p}</p>))}
-              </div>
+              <RichText html={item.description} className="mt-6 text-base leading-relaxed text-foreground/90" />
             )}
             <div className="mt-10 flex flex-wrap gap-3">
               {item.cta_href && <a href={item.cta_href} target="_blank" rel="noreferrer"><Button className="rounded-full">Daftar</Button></a>}

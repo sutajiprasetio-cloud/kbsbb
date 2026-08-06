@@ -19,6 +19,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaTelegramPlane } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { toast } from "sonner";
+import { RichText } from "@/components/rich-text";
 
 
 export const Route = createFileRoute("/berita/$slug")({
@@ -112,20 +113,8 @@ function NewsDetail() {
             
            {post.content && (
           <>
-            <div className="mt-8 space-y-6 text-base text-foreground/90">
-              {String(post.content).split(/\n{2,}/).map((p: string, i: number) => (
-                <p
-                  key={i}
-                  className="whitespace-pre-line"
-                  style={{
-                    textAlign: "justify",
-                    lineHeight: "1.9",
-                  }}
-                >
-                  {p}
-                </p>
-              ))}
-            </div>
+            <RichText html={post.content} className="mt-8 text-base text-foreground/90 [&>p]:text-justify [&>p]:leading-[1.9]" />
+
         
             <div className="mt-10 rounded-xl border border-primary/30 bg-card p-4">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">

@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin/programs")({
         { name: "title", label: "Title", type: "text", required: true },
         { name: "slug", label: "Slug", type: "text", required: true, placeholder: "kesehatan" },
         { name: "summary", label: "Summary", type: "textarea", span: 2 },
-        { name: "description", label: "Description", type: "textarea", span: 2 },
+        { name: "description", label: "Description", type: "richtext", span: 2 },
         { name: "image_url", label: "Image", type: "image", span: 2 },
         { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "image_url" },
         { name: "icon", label: "Icon (lucide name)", type: "text" },

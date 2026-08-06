@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
 import { canonical } from "@/lib/slug";
+import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
@@ -32,7 +33,7 @@ function FAQ() {
             {(items ?? []).map((it: any, i: number) => (
               <AccordionItem key={it.id} value={`item-${i}`} className="border-b border-border">
                 <AccordionTrigger className="text-left text-base md:text-lg font-semibold py-5">{it.question}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed whitespace-pre-line">{it.answer}</AccordionContent>
+                <AccordionContent className="text-muted-foreground leading-relaxed"><RichText html={it.answer} /></AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
