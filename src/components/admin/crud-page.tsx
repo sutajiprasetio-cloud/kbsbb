@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { MediaPicker } from "./media-picker";
 import { SafeImage, useMediaUrl } from "@/components/safe-image";
 
-export type FieldType = "text" | "textarea" | "number" | "boolean" | "image" | "datetime" | "select" | "tags" | "display_mode";
+export type FieldType = "text" | "textarea" | "richtext" | "number" | "boolean" | "image" | "datetime" | "select" | "tags" | "display_mode";
 
 export type Field = {
   name: string;
