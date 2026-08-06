@@ -19,7 +19,7 @@ export const Route = createFileRoute("/_authenticated/admin/testimonials")({
       fields={[
         { name: "name", label: "Name", type: "text", required: true },
         { name: "role", label: "Role", type: "text" },
-        { name: "quote", label: "Quote", type: "textarea", required: true, span: 2 },
+        { name: "quote", label: "Quote", type: "richtext", required: true, span: 2 },
         { name: "avatar_url", label: "Avatar", type: "image", span: 2 },
         { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "avatar_url" },
         { name: "rating", label: "Rating (1-5)", type: "number" },

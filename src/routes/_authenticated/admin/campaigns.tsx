@@ -26,7 +26,7 @@ function CampaignsPage() {
         fields={[
           { name: "title", label: "Title", type: "text", required: true, span: 2 },
           { name: "slug", label: "Slug", type: "text", required: true },
-          { name: "description", label: "Description", type: "textarea", span: 2 },
+          { name: "description", label: "Description", type: "richtext", span: 2 },
           { name: "cover_url", label: "Cover image", type: "image", span: 2 },
           { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "cover_url" },
           { name: "goal_amount", label: "Goal amount (IDR)", type: "number" },

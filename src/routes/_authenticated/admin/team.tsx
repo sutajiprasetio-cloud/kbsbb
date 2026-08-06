@@ -18,7 +18,7 @@ export const Route = createFileRoute("/_authenticated/admin/team")({
       fields={[
         { name: "name", label: "Name", type: "text", required: true },
         { name: "role", label: "Role", type: "text" },
-        { name: "bio", label: "Bio", type: "textarea", span: 2 },
+        { name: "bio", label: "Bio", type: "richtext", span: 2 },
         { name: "photo_url", label: "Photo", type: "image", span: 2 },
         { name: "display_mode", label: "Mode Tampilan Gambar", type: "display_mode", span: 2, previewField: "photo_url" },
         { name: "sort_order", label: "Sort order", type: "number" },
