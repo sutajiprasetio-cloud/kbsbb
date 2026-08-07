@@ -20,15 +20,17 @@ import {
   Bold, Italic, Underline as UnderlineIcon, Strikethrough, List, ListOrdered, ListChecks,
   Quote, Minus, Undo2, Redo2, AlignLeft, AlignCenter, AlignRight, AlignJustify,
   Link2, Link2Off, ImagePlus, Table as TableIcon, Code2, Eye, Loader2, Highlighter,
-  Rows3, Columns3, Trash2, Combine,
+  Rows3, Columns3, Trash2, Combine, Youtube, Braces, IndentIncrease, IndentDecrease,
 } from "lucide-react";
 import { toast } from "sonner";
 import { RichImage } from "./rich-image";
+import { RichEmbed, toEmbedSrc } from "./rich-embed";
 import { RichText } from "@/components/rich-text";
 
 const FONT_SIZES = ["12px", "14px", "16px", "18px", "20px", "24px", "30px", "36px", "48px"];
 const TEXT_COLORS = ["#111827", "#dc2626", "#ea580c", "#ca8a04", "#16a34a", "#0284c7", "#4f46e5", "#9333ea"];
 const HIGHLIGHTS = ["#fef08a", "#bbf7d0", "#bfdbfe", "#fecaca", "#e9d5ff", "#fed7aa"];
+
 
 export function sanitizeHtml(html: string) {
   if (typeof window === "undefined") return html;
