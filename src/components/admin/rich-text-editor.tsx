@@ -293,7 +293,7 @@ export function RichTextEditor({
   return (
     <div className="rounded-lg border bg-background">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-1 border-b bg-muted/40 p-2">
+      <div className="sticky top-0 z-20 flex flex-wrap items-center gap-1 overflow-x-auto rounded-t-lg border-b bg-muted/40 p-2">
         <Tb title="Undo" disabled={toolbarDisabled} onClick={() => editor?.chain().focus().undo().run()}><Undo2 className="h-4 w-4" /></Tb>
         <Tb title="Redo" disabled={toolbarDisabled} onClick={() => editor?.chain().focus().redo().run()}><Redo2 className="h-4 w-4" /></Tb>
         <Separator orientation="vertical" className="mx-1 h-6" />
