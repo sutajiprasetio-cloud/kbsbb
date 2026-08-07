@@ -125,6 +125,7 @@ export function CrudPage(props: CrudPageProps) {
         if (f.type === "number") v = v === "" || v == null ? null : Number(v);
         if (f.type === "tags" && typeof v === "string") v = v.split(",").map((s: string) => s.trim()).filter(Boolean);
         if (f.type === "datetime" && v === "") v = null;
+        if (f.name === "slug" && typeof v === "string" && v) v = slugify(v);
         payload[f.name] = v;
       }
       if (singleton) {
