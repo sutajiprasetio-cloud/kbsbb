@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, redirect, Link } from "@tanstack/react-router";
 import { SiteLayout, PageHero } from "@/components/site-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, ArrowRight } from "lucide-react";
@@ -6,7 +6,7 @@ import { useTable } from "@/lib/public-data";
 import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { canonical, slugify } from "@/lib/slug";
+import { canonical, slugify, cleanSlugRedirect } from "@/lib/slug";
 
 export const Route = createFileRoute("/kategori/$slug")({
   head: ({ params }) => ({
@@ -20,6 +20,10 @@ export const Route = createFileRoute("/kategori/$slug")({
     ],
     links: [{ rel: "canonical", href: canonical(`/kategori/${params.slug}`) }],
   }),
+  beforeLoad: ({ params }) => {
+    const clean = cleanSlugRedirect("/kategori/$slug", params.slug);
+    if (clean) throw redirect({ to: "/kategori/$slug", params: { slug: clean }, statusCode: 301 });
+  },
   component: Kategori,
 });
 

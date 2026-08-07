@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, redirect, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site-layout";
 import { supabase } from "@/integrations/supabase/client";
@@ -8,7 +8,7 @@ import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { canonical } from "@/lib/slug";
+import { canonical, cleanSlugRedirect } from "@/lib/slug";
 import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/program/$slug")({
@@ -24,6 +24,10 @@ export const Route = createFileRoute("/program/$slug")({
     ],
     links: [{ rel: "canonical", href: canonical(`/program/${params.slug}`) }],
   }),
+  beforeLoad: ({ params }) => {
+    const clean = cleanSlugRedirect("/program/$slug", params.slug);
+    if (clean) throw redirect({ to: "/program/$slug", params: { slug: clean }, statusCode: 301 });
+  },
   component: ProgramDetail,
 });
 

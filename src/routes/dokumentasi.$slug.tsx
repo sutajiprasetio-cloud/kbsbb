@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, redirect, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site-layout";
 import { supabase } from "@/integrations/supabase/client";
@@ -8,7 +8,7 @@ import { EmptyState } from "@/components/empty-state";
 import { ModeImage } from "@/components/safe-image";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ArrowLeft } from "lucide-react";
-import { canonical } from "@/lib/slug";
+import { canonical, cleanSlugRedirect } from "@/lib/slug";
 
 export const Route = createFileRoute("/dokumentasi/$slug")({
   head: ({ params }) => ({
@@ -23,6 +23,10 @@ export const Route = createFileRoute("/dokumentasi/$slug")({
     ],
     links: [{ rel: "canonical", href: canonical(`/dokumentasi/${params.slug}`) }],
   }),
+  beforeLoad: ({ params }) => {
+    const clean = cleanSlugRedirect("/dokumentasi/$slug", params.slug);
+    if (clean) throw redirect({ to: "/dokumentasi/$slug", params: { slug: clean }, statusCode: 301 });
+  },
   component: DokumentasiDetail,
 });
 

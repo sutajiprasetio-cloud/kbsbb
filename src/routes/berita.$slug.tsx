@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, redirect, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site-layout";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,7 +9,7 @@ import { ModeImage } from "@/components/safe-image";
 //import { ArrowLeft, Calendar, User } from "lucide-react";
 import { ArrowLeft, Calendar, User, Share2} from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { canonical, slugify } from "@/lib/slug";
+import { canonical, slugify, cleanSlugRedirect } from "@/lib/slug";
 import { Card, CardContent } from "@/components/ui/card";
 
 import { Link2 } from "lucide-react";
@@ -35,6 +35,10 @@ export const Route = createFileRoute("/berita/$slug")({
     ],
     links: [{ rel: "canonical", href: canonical(`/berita/${params.slug}`) }],
   }),
+  beforeLoad: ({ params }) => {
+    const clean = cleanSlugRedirect("/berita/$slug", params.slug);
+    if (clean) throw redirect({ to: "/berita/$slug", params: { slug: clean }, statusCode: 301 });
+  },
   component: NewsDetail,
 });
 
