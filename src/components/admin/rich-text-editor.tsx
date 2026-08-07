@@ -452,7 +452,37 @@ export function RichTextEditor({
         }}
       />
 
+      {/* Video embed dialog */}
+      <Dialog open={embedOpen} onOpenChange={setEmbedOpen}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Sisipkan Video</DialogTitle></DialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="rt-embed">URL YouTube, Vimeo, atau embed lain</Label>
+            <Input
+              id="rt-embed"
+              value={embedUrl}
+              onChange={(e) => setEmbedUrl(e.target.value)}
+              placeholder="https://www.youtube.com/watch?v=…"
+            />
+            <p className="text-xs text-muted-foreground">Video otomatis tampil responsif 16:9 di halaman publik.</p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEmbedOpen(false)}>Batal</Button>
+            <Button
+              onClick={() => {
+                if (!toEmbedSrc(embedUrl)) { toast.error("URL video tidak valid"); return; }
+                editor?.chain().focus().setEmbed({ src: embedUrl }).run();
+                setEmbedOpen(false);
+              }}
+            >
+              Sisipkan
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Link dialog */}
+
       <Dialog open={linkOpen} onOpenChange={setLinkOpen}>
         <DialogContent>
           <DialogHeader><DialogTitle>Tautan</DialogTitle></DialogHeader>
