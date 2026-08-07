@@ -171,7 +171,11 @@ export function RichTextEditor({
     },
   });
 
+  const editorRef = useRef<Editor | null>(null);
+  editorRef.current = editor ?? null;
+
   const insertFiles = useCallback(
+
     async (files: File[]) => {
       if (!editor) return;
       setUploading(true);
