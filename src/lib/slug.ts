@@ -25,3 +25,12 @@ export const normalizeSlug = (raw: string) => slugify(raw);
 export const SITE_URL = "https://kbsbb.lovable.app";
 
 export const canonical = (path: string) => `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+
+/**
+ * Redirect legacy/dirty slugs (spasi/%20, huruf kapital) ke versi bersih.
+ * Dipakai di beforeLoad route detail.
+ */
+export function cleanSlugRedirect(to: string, slug: string) {
+  const clean = normalizeSlug(slug);
+  return clean && clean !== slug ? clean : null;
+}
