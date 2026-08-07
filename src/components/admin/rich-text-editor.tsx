@@ -35,10 +35,14 @@ const HIGHLIGHTS = ["#fef08a", "#bbf7d0", "#bfdbfe", "#fecaca", "#e9d5ff", "#fed
 export function sanitizeHtml(html: string) {
   if (typeof window === "undefined") return html;
   return DOMPurify.sanitize(html, {
-    ADD_ATTR: ["target", "rel", "data-align", "data-width", "data-caption", "colspan", "rowspan", "style"],
-    ADD_TAGS: ["figure", "figcaption"],
+    ADD_ATTR: [
+      "target", "rel", "data-align", "data-width", "data-caption", "data-type", "data-checked",
+      "colspan", "rowspan", "style", "allow", "allowfullscreen", "frameborder", "loading", "decoding",
+    ],
+    ADD_TAGS: ["figure", "figcaption", "iframe"],
   });
 }
+
 
 async function uploadToMedia(file: File) {
   const ext = file.name.split(".").pop();
