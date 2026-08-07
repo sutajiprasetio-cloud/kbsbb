@@ -94,14 +94,21 @@ export function RichTextEditor({
   const [imgOpen, setImgOpen] = useState(false);
   const [imgAlt, setImgAlt] = useState("");
   const [imgCaption, setImgCaption] = useState("");
+  const [embedOpen, setEmbedOpen] = useState(false);
+  const [embedUrl, setEmbedUrl] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const lastSaved = useRef(value || "");
+  const openLinkRef = useRef<() => void>(() => {});
 
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
       StarterKit.configure({
-        link: { openOnClick: false, HTMLAttributes: { rel: "noopener noreferrer" } },
+        link: {
+          openOnClick: false,
+          autolink: true,
+          HTMLAttributes: { rel: "noopener noreferrer" },
+        },
         heading: { levels: [1, 2, 3, 4, 5, 6] },
       }),
       TextStyleKit.configure({ fontSize: {}, color: {} }),
@@ -111,12 +118,21 @@ export function RichTextEditor({
       TaskItem.configure({ nested: true }),
       TableKit.configure({ table: { resizable: true } }),
       RichImage.configure({ allowBase64: false }),
+      RichEmbed,
     ],
     content: value || "",
     editorProps: {
       attributes: {
         class:
           "prose prose-sm sm:prose-base max-w-none focus:outline-none min-h-[260px] px-4 py-3 dark:prose-invert",
+      },
+      handleKeyDown: (_view, event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+          event.preventDefault();
+          openLinkRef.current();
+          return true;
+        }
+        return false;
       },
       handleDrop: (_view, event) => {
         const files = Array.from((event as DragEvent).dataTransfer?.files ?? []).filter((f) =>
@@ -129,12 +145,25 @@ export function RichTextEditor({
       },
       handlePaste: (_view, event) => {
         const files = Array.from(event.clipboardData?.files ?? []).filter((f) => f.type.startsWith("image/"));
-        if (!files.length) return false;
-        event.preventDefault();
-        void insertFiles(files);
-        return true;
+        if (files.length) {
+          event.preventDefault();
+          void insertFiles(files);
+          return true;
+        }
+        // Paste a bare video URL as a responsive embed.
+        const text = event.clipboardData?.getData("text/plain")?.trim() ?? "";
+        if (/^https?:\/\/\S+$/.test(text) && /youtube\.com|youtu\.be|vimeo\.com/.test(text)) {
+          const src = toEmbedSrc(text);
+          if (src) {
+            event.preventDefault();
+            editorRef.current?.chain().focus().setEmbed({ src: text }).run();
+            return true;
+          }
+        }
+        return false;
       },
     },
+
     onUpdate: ({ editor: ed }) => {
       const out = ed.getHTML();
       setHtml(out);
