@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, redirect, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -8,7 +8,7 @@ import { ModeImage } from "@/components/safe-image";
 import { EmptyState } from "@/components/empty-state";
 import { DonationForm } from "@/components/donation-form";
 import { useCampaign, rp, pct } from "@/lib/donations";
-import { canonical } from "@/lib/slug";
+import { canonical, cleanSlugRedirect } from "@/lib/slug";
 import { RichText } from "@/components/rich-text";
 
 export const Route = createFileRoute("/donasi/$slug")({
@@ -24,6 +24,10 @@ export const Route = createFileRoute("/donasi/$slug")({
     ],
     links: [{ rel: "canonical", href: canonical(`/donasi/${params.slug}`) }],
   }),
+  beforeLoad: ({ params }) => {
+    const clean = cleanSlugRedirect(params.slug);
+    if (clean) throw redirect({ to: "/donasi/$slug", params: { slug: clean }, statusCode: 301 });
+  },
   component: CampaignDetail,
 });
 
