@@ -20,23 +20,29 @@ import {
   Bold, Italic, Underline as UnderlineIcon, Strikethrough, List, ListOrdered, ListChecks,
   Quote, Minus, Undo2, Redo2, AlignLeft, AlignCenter, AlignRight, AlignJustify,
   Link2, Link2Off, ImagePlus, Table as TableIcon, Code2, Eye, Loader2, Highlighter,
-  Rows3, Columns3, Trash2, Combine,
+  Rows3, Columns3, Trash2, Combine, Youtube, Braces, IndentIncrease, IndentDecrease,
 } from "lucide-react";
 import { toast } from "sonner";
 import { RichImage } from "./rich-image";
+import { RichEmbed, toEmbedSrc } from "./rich-embed";
 import { RichText } from "@/components/rich-text";
 
 const FONT_SIZES = ["12px", "14px", "16px", "18px", "20px", "24px", "30px", "36px", "48px"];
 const TEXT_COLORS = ["#111827", "#dc2626", "#ea580c", "#ca8a04", "#16a34a", "#0284c7", "#4f46e5", "#9333ea"];
 const HIGHLIGHTS = ["#fef08a", "#bbf7d0", "#bfdbfe", "#fecaca", "#e9d5ff", "#fed7aa"];
 
+
 export function sanitizeHtml(html: string) {
   if (typeof window === "undefined") return html;
   return DOMPurify.sanitize(html, {
-    ADD_ATTR: ["target", "rel", "data-align", "data-width", "data-caption", "colspan", "rowspan", "style"],
-    ADD_TAGS: ["figure", "figcaption"],
+    ADD_ATTR: [
+      "target", "rel", "data-align", "data-width", "data-caption", "data-type", "data-checked",
+      "colspan", "rowspan", "style", "allow", "allowfullscreen", "frameborder", "loading", "decoding",
+    ],
+    ADD_TAGS: ["figure", "figcaption", "iframe"],
   });
 }
+
 
 async function uploadToMedia(file: File) {
   const ext = file.name.split(".").pop();
@@ -88,14 +94,21 @@ export function RichTextEditor({
   const [imgOpen, setImgOpen] = useState(false);
   const [imgAlt, setImgAlt] = useState("");
   const [imgCaption, setImgCaption] = useState("");
+  const [embedOpen, setEmbedOpen] = useState(false);
+  const [embedUrl, setEmbedUrl] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const lastSaved = useRef(value || "");
+  const openLinkRef = useRef<() => void>(() => {});
 
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
       StarterKit.configure({
-        link: { openOnClick: false, HTMLAttributes: { rel: "noopener noreferrer" } },
+        link: {
+          openOnClick: false,
+          autolink: true,
+          HTMLAttributes: { rel: "noopener noreferrer" },
+        },
         heading: { levels: [1, 2, 3, 4, 5, 6] },
       }),
       TextStyleKit.configure({ fontSize: {}, color: {} }),
@@ -105,12 +118,21 @@ export function RichTextEditor({
       TaskItem.configure({ nested: true }),
       TableKit.configure({ table: { resizable: true } }),
       RichImage.configure({ allowBase64: false }),
+      RichEmbed,
     ],
     content: value || "",
     editorProps: {
       attributes: {
         class:
           "prose prose-sm sm:prose-base max-w-none focus:outline-none min-h-[260px] px-4 py-3 dark:prose-invert",
+      },
+      handleKeyDown: (_view, event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+          event.preventDefault();
+          openLinkRef.current();
+          return true;
+        }
+        return false;
       },
       handleDrop: (_view, event) => {
         const files = Array.from((event as DragEvent).dataTransfer?.files ?? []).filter((f) =>
@@ -123,12 +145,25 @@ export function RichTextEditor({
       },
       handlePaste: (_view, event) => {
         const files = Array.from(event.clipboardData?.files ?? []).filter((f) => f.type.startsWith("image/"));
-        if (!files.length) return false;
-        event.preventDefault();
-        void insertFiles(files);
-        return true;
+        if (files.length) {
+          event.preventDefault();
+          void insertFiles(files);
+          return true;
+        }
+        // Paste a bare video URL as a responsive embed.
+        const text = event.clipboardData?.getData("text/plain")?.trim() ?? "";
+        if (/^https?:\/\/\S+$/.test(text) && /youtube\.com|youtu\.be|vimeo\.com/.test(text)) {
+          const src = toEmbedSrc(text);
+          if (src) {
+            event.preventDefault();
+            editorRef.current?.chain().focus().setEmbed({ src: text }).run();
+            return true;
+          }
+        }
+        return false;
       },
     },
+
     onUpdate: ({ editor: ed }) => {
       const out = ed.getHTML();
       setHtml(out);
@@ -136,7 +171,11 @@ export function RichTextEditor({
     },
   });
 
+  const editorRef = useRef<Editor | null>(null);
+  editorRef.current = editor ?? null;
+
   const insertFiles = useCallback(
+
     async (files: File[]) => {
       if (!editor) return;
       setUploading(true);
@@ -202,6 +241,21 @@ export function RichTextEditor({
     setLinkBlank((editor.getAttributes("link").target ?? "_blank") === "_blank");
     setLinkOpen(true);
   }
+  openLinkRef.current = openLink;
+
+  /** Indent / outdent works for both list items and plain blocks. */
+  function indent(dir: 1 | -1) {
+    if (!editor) return;
+    const inList = editor.isActive("listItem") || editor.isActive("taskItem");
+    if (inList) {
+      if (dir === 1) editor.chain().focus().sinkListItem(editor.isActive("taskItem") ? "taskItem" : "listItem").run();
+      else editor.chain().focus().liftListItem(editor.isActive("taskItem") ? "taskItem" : "listItem").run();
+      return;
+    }
+    if (dir === 1) editor.chain().focus().toggleBlockquote().run();
+    else if (editor.isActive("blockquote")) editor.chain().focus().lift("blockquote").run();
+  }
+
 
   function saveLink() {
     if (!editor) return;
@@ -239,7 +293,7 @@ export function RichTextEditor({
   return (
     <div className="rounded-lg border bg-background">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-1 border-b bg-muted/40 p-2">
+      <div className="sticky top-0 z-20 flex flex-wrap items-center gap-1 overflow-x-auto rounded-t-lg border-b bg-muted/40 p-2">
         <Tb title="Undo" disabled={toolbarDisabled} onClick={() => editor?.chain().focus().undo().run()}><Undo2 className="h-4 w-4" /></Tb>
         <Tb title="Redo" disabled={toolbarDisabled} onClick={() => editor?.chain().focus().redo().run()}><Redo2 className="h-4 w-4" /></Tb>
         <Separator orientation="vertical" className="mx-1 h-6" />
@@ -311,14 +365,19 @@ export function RichTextEditor({
         <Tb title="Checklist" active={editor?.isActive("taskList")} disabled={toolbarDisabled} onClick={() => editor?.chain().focus().toggleTaskList().run()}><ListChecks className="h-4 w-4" /></Tb>
         <Tb title="Kutipan" active={editor?.isActive("blockquote")} disabled={toolbarDisabled} onClick={() => editor?.chain().focus().toggleBlockquote().run()}><Quote className="h-4 w-4" /></Tb>
         <Tb title="Garis horizontal" disabled={toolbarDisabled} onClick={() => editor?.chain().focus().setHorizontalRule().run()}><Minus className="h-4 w-4" /></Tb>
+        <Tb title="Blok kode" active={editor?.isActive("codeBlock")} disabled={toolbarDisabled} onClick={() => editor?.chain().focus().toggleCodeBlock().run()}><Braces className="h-4 w-4" /></Tb>
+        <Tb title="Tambah indentasi" disabled={toolbarDisabled} onClick={() => indent(1)}><IndentIncrease className="h-4 w-4" /></Tb>
+        <Tb title="Kurangi indentasi" disabled={toolbarDisabled} onClick={() => indent(-1)}><IndentDecrease className="h-4 w-4" /></Tb>
 
         <Separator orientation="vertical" className="mx-1 h-6" />
-        <Tb title="Tautan" active={editor?.isActive("link")} disabled={toolbarDisabled} onClick={openLink}><Link2 className="h-4 w-4" /></Tb>
+        <Tb title="Tautan (Ctrl+K)" active={editor?.isActive("link")} disabled={toolbarDisabled} onClick={openLink}><Link2 className="h-4 w-4" /></Tb>
         <Tb title="Hapus tautan" disabled={toolbarDisabled || !editor?.isActive("link")} onClick={() => editor?.chain().focus().unsetLink().run()}><Link2Off className="h-4 w-4" /></Tb>
         <Tb title="Sisipkan gambar" disabled={toolbarDisabled || uploading} onClick={() => fileRef.current?.click()}>
           {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImagePlus className="h-4 w-4" />}
         </Tb>
+        <Tb title="Sisipkan video (YouTube / Vimeo)" disabled={toolbarDisabled} onClick={() => { setEmbedUrl(""); setEmbedOpen(true); }}><Youtube className="h-4 w-4" /></Tb>
         <Tb title="Sisipkan tabel" disabled={toolbarDisabled} onClick={() => editor?.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}><TableIcon className="h-4 w-4" /></Tb>
+
 
         <div className="ml-auto flex items-center gap-1">
           <Tb title="Pratinjau" onClick={() => setPreview(true)}><Eye className="h-4 w-4" /><span className="hidden sm:inline">Pratinjau</span></Tb>
@@ -393,7 +452,37 @@ export function RichTextEditor({
         }}
       />
 
+      {/* Video embed dialog */}
+      <Dialog open={embedOpen} onOpenChange={setEmbedOpen}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Sisipkan Video</DialogTitle></DialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="rt-embed">URL YouTube, Vimeo, atau embed lain</Label>
+            <Input
+              id="rt-embed"
+              value={embedUrl}
+              onChange={(e) => setEmbedUrl(e.target.value)}
+              placeholder="https://www.youtube.com/watch?v=…"
+            />
+            <p className="text-xs text-muted-foreground">Video otomatis tampil responsif 16:9 di halaman publik.</p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEmbedOpen(false)}>Batal</Button>
+            <Button
+              onClick={() => {
+                if (!toEmbedSrc(embedUrl)) { toast.error("URL video tidak valid"); return; }
+                editor?.chain().focus().setEmbed({ src: embedUrl }).run();
+                setEmbedOpen(false);
+              }}
+            >
+              Sisipkan
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Link dialog */}
+
       <Dialog open={linkOpen} onOpenChange={setLinkOpen}>
         <DialogContent>
           <DialogHeader><DialogTitle>Tautan</DialogTitle></DialogHeader>
