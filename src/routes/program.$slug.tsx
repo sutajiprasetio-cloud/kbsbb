@@ -25,7 +25,7 @@ export const Route = createFileRoute("/program/$slug")({
     links: [{ rel: "canonical", href: canonical(`/program/${params.slug}`) }],
   }),
   beforeLoad: ({ params }) => {
-    const clean = cleanSlugRedirect("/program/$slug", params.slug);
+    const clean = cleanSlugRedirect(params.slug);
     if (clean) throw redirect({ to: "/program/$slug", params: { slug: clean }, statusCode: 301 });
   },
   component: ProgramDetail,

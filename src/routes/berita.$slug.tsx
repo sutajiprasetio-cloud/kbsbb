@@ -36,7 +36,7 @@ export const Route = createFileRoute("/berita/$slug")({
     links: [{ rel: "canonical", href: canonical(`/berita/${params.slug}`) }],
   }),
   beforeLoad: ({ params }) => {
-    const clean = cleanSlugRedirect("/berita/$slug", params.slug);
+    const clean = cleanSlugRedirect(params.slug);
     if (clean) throw redirect({ to: "/berita/$slug", params: { slug: clean }, statusCode: 301 });
   },
   component: NewsDetail,

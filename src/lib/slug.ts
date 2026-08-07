@@ -30,7 +30,7 @@ export const canonical = (path: string) => `${SITE_URL}${path.startsWith("/") ? 
  * Redirect legacy/dirty slugs (spasi/%20, huruf kapital) ke versi bersih.
  * Dipakai di beforeLoad route detail.
  */
-export function cleanSlugRedirect(to: string, slug: string) {
+export function cleanSlugRedirect(slug: string) {
   const clean = normalizeSlug(slug);
   return clean && clean !== slug ? clean : null;
 }

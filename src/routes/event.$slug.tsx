@@ -25,7 +25,7 @@ export const Route = createFileRoute("/event/$slug")({
     links: [{ rel: "canonical", href: canonical(`/event/${params.slug}`) }],
   }),
   beforeLoad: ({ params }) => {
-    const clean = cleanSlugRedirect("/event/$slug", params.slug);
+    const clean = cleanSlugRedirect(params.slug);
     if (clean) throw redirect({ to: "/event/$slug", params: { slug: clean }, statusCode: 301 });
   },
   component: EventDetail,

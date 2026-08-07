@@ -21,7 +21,7 @@ export const Route = createFileRoute("/kategori/$slug")({
     links: [{ rel: "canonical", href: canonical(`/kategori/${params.slug}`) }],
   }),
   beforeLoad: ({ params }) => {
-    const clean = cleanSlugRedirect("/kategori/$slug", params.slug);
+    const clean = cleanSlugRedirect(params.slug);
     if (clean) throw redirect({ to: "/kategori/$slug", params: { slug: clean }, statusCode: 301 });
   },
   component: Kategori,
