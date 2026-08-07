@@ -241,6 +241,21 @@ export function RichTextEditor({
     setLinkBlank((editor.getAttributes("link").target ?? "_blank") === "_blank");
     setLinkOpen(true);
   }
+  openLinkRef.current = openLink;
+
+  /** Indent / outdent works for both list items and plain blocks. */
+  function indent(dir: 1 | -1) {
+    if (!editor) return;
+    const inList = editor.isActive("listItem") || editor.isActive("taskItem");
+    if (inList) {
+      if (dir === 1) editor.chain().focus().sinkListItem(editor.isActive("taskItem") ? "taskItem" : "listItem").run();
+      else editor.chain().focus().liftListItem(editor.isActive("taskItem") ? "taskItem" : "listItem").run();
+      return;
+    }
+    if (dir === 1) editor.chain().focus().toggleBlockquote().run();
+    else if (editor.isActive("blockquote")) editor.chain().focus().lift("blockquote").run();
+  }
+
 
   function saveLink() {
     if (!editor) return;
