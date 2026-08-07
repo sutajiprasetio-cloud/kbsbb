@@ -23,6 +23,7 @@ export const Route = createFileRoute("/kategori/$slug")({
   beforeLoad: ({ params }) => {
     const clean = cleanSlugRedirect(params.slug);
     if (clean) throw redirect({ to: "/kategori/$slug", params: { slug: clean }, statusCode: 301 });
+    return {};
   },
   component: Kategori,
 });
