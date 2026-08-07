@@ -878,6 +878,7 @@ export type Database = {
         }[]
       }
       slugify: { Args: { _txt: string }; Returns: string }
+      slugify_text: { Args: { input: string }; Returns: string }
     }
     Enums: {
       app_role: "super_admin" | "admin" | "editor"
