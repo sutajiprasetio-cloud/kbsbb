@@ -365,14 +365,19 @@ export function RichTextEditor({
         <Tb title="Checklist" active={editor?.isActive("taskList")} disabled={toolbarDisabled} onClick={() => editor?.chain().focus().toggleTaskList().run()}><ListChecks className="h-4 w-4" /></Tb>
         <Tb title="Kutipan" active={editor?.isActive("blockquote")} disabled={toolbarDisabled} onClick={() => editor?.chain().focus().toggleBlockquote().run()}><Quote className="h-4 w-4" /></Tb>
         <Tb title="Garis horizontal" disabled={toolbarDisabled} onClick={() => editor?.chain().focus().setHorizontalRule().run()}><Minus className="h-4 w-4" /></Tb>
+        <Tb title="Blok kode" active={editor?.isActive("codeBlock")} disabled={toolbarDisabled} onClick={() => editor?.chain().focus().toggleCodeBlock().run()}><Braces className="h-4 w-4" /></Tb>
+        <Tb title="Tambah indentasi" disabled={toolbarDisabled} onClick={() => indent(1)}><IndentIncrease className="h-4 w-4" /></Tb>
+        <Tb title="Kurangi indentasi" disabled={toolbarDisabled} onClick={() => indent(-1)}><IndentDecrease className="h-4 w-4" /></Tb>
 
         <Separator orientation="vertical" className="mx-1 h-6" />
-        <Tb title="Tautan" active={editor?.isActive("link")} disabled={toolbarDisabled} onClick={openLink}><Link2 className="h-4 w-4" /></Tb>
+        <Tb title="Tautan (Ctrl+K)" active={editor?.isActive("link")} disabled={toolbarDisabled} onClick={openLink}><Link2 className="h-4 w-4" /></Tb>
         <Tb title="Hapus tautan" disabled={toolbarDisabled || !editor?.isActive("link")} onClick={() => editor?.chain().focus().unsetLink().run()}><Link2Off className="h-4 w-4" /></Tb>
         <Tb title="Sisipkan gambar" disabled={toolbarDisabled || uploading} onClick={() => fileRef.current?.click()}>
           {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImagePlus className="h-4 w-4" />}
         </Tb>
+        <Tb title="Sisipkan video (YouTube / Vimeo)" disabled={toolbarDisabled} onClick={() => { setEmbedUrl(""); setEmbedOpen(true); }}><Youtube className="h-4 w-4" /></Tb>
         <Tb title="Sisipkan tabel" disabled={toolbarDisabled} onClick={() => editor?.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}><TableIcon className="h-4 w-4" /></Tb>
+
 
         <div className="ml-auto flex items-center gap-1">
           <Tb title="Pratinjau" onClick={() => setPreview(true)}><Eye className="h-4 w-4" /><span className="hidden sm:inline">Pratinjau</span></Tb>
