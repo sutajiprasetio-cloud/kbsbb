@@ -221,3 +221,27 @@
 .rt-editor .ProseMirror .selectedCell { background: color-mix(in oklab, var(--primary) 15%, transparent); }
 .rt-editor .ProseMirror img.ProseMirror-selectednode,
 .rt-editor .ProseMirror .ProseMirror-selectednode img { outline: 2px solid var(--primary); border-radius: 0.75rem; }
+
+/* Responsive video / iframe embeds (editor + public pages) */
+.rt-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 1.5rem 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--muted) 60%, transparent);
+}
+.rt-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Tables scroll instead of breaking the layout on mobile */
+.rt-table-wrap { width: 100%; overflow-x: auto; margin: 1.25rem 0; }
+.rt-table-wrap table { margin: 0; min-width: 32rem; }
+.rt-editor .ProseMirror { overflow-x: auto; }
+.rt-editor .ProseMirror pre {
+  background: color-mix(in oklab, var(--muted) 70%, transparent);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+}
+
