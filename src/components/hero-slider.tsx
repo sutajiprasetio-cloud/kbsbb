@@ -181,7 +181,7 @@ export function HeroSlider({ compactBottom = false }: { compactBottom?: boolean 
         }}
       >
         {slides.map((s, idx) => (
-          <Slide key={s.id} slide={s} active={idx === index} eager={idx === 0} />
+          <Slide key={s.id} slide={s} active={idx === index} eager={idx === 0} onEnded={() => go(1)} />
         ))}
 
         {hasText && (
