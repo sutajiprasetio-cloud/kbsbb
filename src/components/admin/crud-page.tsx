@@ -19,6 +19,8 @@ import { Plus, Pencil, Trash2, Search, ChevronLeft, ChevronRight, Loader2 } from
 import { toast } from "sonner";
 import { MediaPicker } from "./media-picker";
 import { SafeImage, useMediaUrl } from "@/components/safe-image";
+import { isVideoMedia } from "@/components/hero-slider";
+
 import { RichTextEditor } from "./rich-text-editor";
 
 export type FieldType = "text" | "textarea" | "richtext" | "number" | "boolean" | "image" | "datetime" | "select" | "tags" | "display_mode";
@@ -391,24 +393,36 @@ function DisplayModeField({
         <div className="relative h-40 w-full overflow-hidden rounded-lg border bg-muted md:h-56">
           {imageSrc ? (
             <>
-              {value === "contain" && (
+              {value === "contain" && !isVideoMedia(imageSrc) && (
                 <div
                   className="absolute inset-0 scale-110 bg-cover bg-center"
                   style={{ backgroundImage: `url("${url}")`, filter: "blur(20px)", opacity: 0.3 }}
                   aria-hidden
                 />
               )}
-              <SafeImage
-                src={imageSrc}
-                alt="Pratinjau slide"
-                className={`absolute inset-0 h-full w-full object-center ${fit}`}
-              />
+              {isVideoMedia(imageSrc) ? (
+                <video
+                  src={url}
+                  muted
+                  playsInline
+                  autoPlay
+                  loop
+                  className={`absolute inset-0 h-full w-full object-center ${fit}`}
+                />
+              ) : (
+                <SafeImage
+                  src={imageSrc}
+                  alt="Pratinjau slide"
+                  className={`absolute inset-0 h-full w-full object-center ${fit}`}
+                />
+              )}
             </>
           ) : (
             <div className="grid h-full place-items-center text-xs text-muted-foreground">
-              Unggah gambar untuk melihat pratinjau
+              Unggah gambar atau video untuk melihat pratinjau
             </div>
           )}
+
         </div>
       </div>
     </div>

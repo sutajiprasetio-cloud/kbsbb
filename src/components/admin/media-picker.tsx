@@ -27,10 +27,12 @@ export function MediaPicker({ value, onChange }: { value: string; onChange: (v: 
     }
   }
 
+  const isVideo = /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test(value ?? "");
+
   return (
     <div className="space-y-2">
       <div className="flex gap-2">
-        <Input value={value ?? ""} onChange={(e) => onChange(e.target.value)} placeholder="https://... or upload" />
+        <Input value={value ?? ""} onChange={(e) => onChange(e.target.value)} placeholder="https://... atau unggah gambar/video" />
         <Button type="button" variant="outline" onClick={() => ref.current?.click()} disabled={busy}>
           {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
         </Button>
@@ -40,8 +42,13 @@ export function MediaPicker({ value, onChange }: { value: string; onChange: (v: 
         <input ref={ref} type="file" accept="image/*,video/*" className="hidden" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
       </div>
       {value && /^https?:\/\//.test(value) && (
-        <SafeImage src={value} alt="preview" className="h-24 rounded border object-cover" />
+        isVideo ? (
+          <video src={value} muted playsInline controls className="h-24 rounded border object-cover" />
+        ) : (
+          <SafeImage src={value} alt="preview" className="h-24 rounded border object-cover" />
+        )
       )}
     </div>
   );
 }
+
