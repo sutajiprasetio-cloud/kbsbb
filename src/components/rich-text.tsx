@@ -84,7 +84,6 @@ export function RichText({ html, className }: { html?: string | null; className?
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
-    let cancelled = false;
 
     // Drop iframes from untrusted hosts, then wrap the safe ones responsively.
     root.querySelectorAll("iframe").forEach((frame) => {
@@ -124,17 +123,12 @@ export function RichText({ html, className }: { html?: string | null; className?
       }
     });
 
-    // Private-bucket images need a signed URL.
-    root.querySelectorAll("img").forEach(async (img) => {
-      if (!img.getAttribute("alt")) img.setAttribute("alt", img.closest("figure")?.querySelector("figcaption")?.textContent ?? "");
-      const path = mediaPath(img.getAttribute("src") ?? "");
-      if (!path) return;
-      const { data } = await supabase.storage.from("media").createSignedUrl(path, 60 * 60);
-      if (!cancelled && data?.signedUrl) img.setAttribute("src", data.signedUrl);
+    root.querySelectorAll("img").forEach((img) => {
+      if (!img.getAttribute("alt"))
+        img.setAttribute("alt", img.closest("figure")?.querySelector("figcaption")?.textContent ?? "");
     });
-
-    return () => { cancelled = true; };
   }, [clean]);
+
 
   if (!clean) return null;
 
