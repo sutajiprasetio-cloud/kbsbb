@@ -113,11 +113,14 @@ export function HeroSlider({ compactBottom = false }: { compactBottom?: boolean 
     [count],
   );
 
+  // Timed autoplay for images only — video slides advance when the clip ends.
+  const currentIsVideo = isVideoMedia(slides?.[index]?.image_url);
   useEffect(() => {
-    if (count < 2 || paused) return;
-    const t = setInterval(() => setIndex((v) => (v + 1) % count), AUTOPLAY_MS);
-    return () => clearInterval(t);
-  }, [count, paused]);
+    if (count < 2 || paused || currentIsVideo) return;
+    const t = setTimeout(() => setIndex((v) => (v + 1) % count), AUTOPLAY_MS);
+    return () => clearTimeout(t);
+  }, [count, paused, currentIsVideo, index]);
+
 
   if (!slides || count === 0) {
     return (
