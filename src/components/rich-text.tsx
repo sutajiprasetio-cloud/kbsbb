@@ -1,10 +1,15 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import DOMPurify from "dompurify";
 import { supabase } from "@/integrations/supabase/client";
 
+/** Object path inside the private `media` bucket, for any stored URL form. */
 function mediaPath(url: string) {
-  const m = url.match(/\/storage\/v1\/object\/(?:public|sign|authenticated)\/media\/([^?]+)/);
-  return m ? decodeURIComponent(m[1]) : null;
+  const trimmed = (url || "").trim();
+  if (!trimmed) return null;
+  const m = trimmed.match(/\/storage\/v1\/object\/(?:public|sign|authenticated)\/media\/([^?"']+)/);
+  if (m) return decodeURIComponent(m[1]);
+  if (/^(https?:|data:|blob:|\/)/i.test(trimmed)) return null;
+  return decodeURIComponent(trimmed.replace(/^media\//, ""));
 }
 
 const ALLOWED_IFRAME_HOSTS = [
@@ -22,31 +27,63 @@ const ALLOWED_IFRAME_HOSTS = [
  */
 export function RichText({ html, className }: { html?: string | null; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [signed, setSigned] = useState<Record<string, string>>({});
 
-  const clean = useMemo(() => {
+  const source = useMemo(() => {
     const raw = (html ?? "").trim();
     if (!raw) return "";
     // Legacy plain-text content: keep paragraph breaks.
-    const source = /<[a-z][\s\S]*>/i.test(raw)
+    return /<[a-z][\s\S]*>/i.test(raw)
       ? raw
       : raw
           .split(/\n{2,}/)
           .map((p) => `<p>${p.replace(/\n/g, "<br />")}</p>`)
           .join("");
-    if (typeof window === "undefined") return source;
-    return DOMPurify.sanitize(source, {
+  }, [html]);
+
+  // Resolve every private-bucket image up front so the markup we inject is already valid.
+  useEffect(() => {
+    let cancelled = false;
+    const urls = Array.from(source.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)).map((m) => m[1]);
+    const paths = Array.from(
+      new Set(urls.map((u) => mediaPath(u)).filter((p): p is string => !!p)),
+    );
+    if (paths.length === 0) return;
+    (async () => {
+      const { data } = await supabase.storage.from("media").createSignedUrls(paths, 60 * 60);
+      if (cancelled || !data) return;
+      const map: Record<string, string> = {};
+      data.forEach((row: any) => {
+        if (row?.signedUrl && row?.path) map[row.path] = row.signedUrl;
+      });
+      setSigned(map);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [source]);
+
+  const clean = useMemo(() => {
+    if (!source) return "";
+    const resolved = source.replace(/(<img[^>]+src=)["']([^"']+)["']/gi, (full, head, src) => {
+      const path = mediaPath(src);
+      const url = path ? signed[path] : null;
+      return url ? `${head}"${url}"` : full;
+    });
+    if (typeof window === "undefined") return resolved;
+    return DOMPurify.sanitize(resolved, {
       ADD_ATTR: [
         "target", "rel", "data-align", "data-width", "data-caption", "data-type", "data-checked",
         "colspan", "rowspan", "style", "allow", "allowfullscreen", "frameborder", "loading", "decoding",
       ],
       ADD_TAGS: ["figure", "figcaption", "iframe"],
     });
-  }, [html]);
+  }, [source, signed]);
+
 
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
-    let cancelled = false;
 
     // Drop iframes from untrusted hosts, then wrap the safe ones responsively.
     root.querySelectorAll("iframe").forEach((frame) => {
@@ -86,17 +123,12 @@ export function RichText({ html, className }: { html?: string | null; className?
       }
     });
 
-    // Private-bucket images need a signed URL.
-    root.querySelectorAll("img").forEach(async (img) => {
-      if (!img.getAttribute("alt")) img.setAttribute("alt", img.closest("figure")?.querySelector("figcaption")?.textContent ?? "");
-      const path = mediaPath(img.getAttribute("src") ?? "");
-      if (!path) return;
-      const { data } = await supabase.storage.from("media").createSignedUrl(path, 60 * 60);
-      if (!cancelled && data?.signedUrl) img.setAttribute("src", data.signedUrl);
+    root.querySelectorAll("img").forEach((img) => {
+      if (!img.getAttribute("alt"))
+        img.setAttribute("alt", img.closest("figure")?.querySelector("figcaption")?.textContent ?? "");
     });
-
-    return () => { cancelled = true; };
   }, [clean]);
+
 
   if (!clean) return null;
 
