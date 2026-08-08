@@ -27,7 +27,6 @@ export const Route = createFileRoute("/donasi/$slug")({
   beforeLoad: ({ params }) => {
     const clean = cleanSlugRedirect(params.slug);
     if (clean) throw redirect({ to: "/donasi/$slug", params: { slug: clean }, statusCode: 301 });
-    return {};
   },
   component: CampaignDetail,
 });
