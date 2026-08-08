@@ -20,15 +20,43 @@ type Slide = {
 
 const text = (v?: string | null) => (v ?? "").trim();
 
+/** True when the stored media value points at a video file. */
+export const isVideoMedia = (v?: string | null) =>
+  /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test((v ?? "").trim());
+
 /** Frame sizing shared by the slider and its empty state. */
 const FRAME =
   "relative mx-auto w-[95%] md:w-[80%] max-w-[1400px] overflow-hidden rounded-[20px] shadow-xl";
 const FRAME_H = "h-[200px] md:h-[400px] lg:h-[500px]";
 
-function Slide({ slide, active, eager }: { slide: Slide; active: boolean; eager: boolean }) {
+function Slide({
+  slide,
+  active,
+  eager,
+  onEnded,
+}: {
+  slide: Slide;
+  active: boolean;
+  eager: boolean;
+  onEnded: () => void;
+}) {
   const url = useMediaUrl(slide.image_url);
   const mode = text(slide.display_mode) || "cover";
   const fit = mode === "contain" ? "object-contain" : mode === "fill" ? "object-fill" : "object-cover";
+  const video = isVideoMedia(slide.image_url);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Restart the clip whenever its slide becomes active; pause it otherwise.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!video || !el) return;
+    if (active) {
+      el.currentTime = 0;
+      void el.play().catch(() => {});
+    } else {
+      el.pause();
+    }
+  }, [active, video, url]);
 
   return (
     <div
@@ -37,23 +65,38 @@ function Slide({ slide, active, eager }: { slide: Slide; active: boolean; eager:
         active ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
     >
-      {/* Blurred fill so portrait/square images never crop or letterbox awkwardly */}
-      {mode === "contain" && (
+      {/* Blurred fill so portrait/square media never crop or letterbox awkwardly */}
+      {mode === "contain" && !video && (
         <div
           className="absolute inset-0 scale-110 bg-cover bg-center"
           style={{ backgroundImage: `url("${url}")`, filter: "blur(20px)", opacity: 0.3 }}
           aria-hidden
         />
       )}
-      <SafeImage
-        src={slide.image_url}
-        alt={text(slide.title) || "Kegiatan KBSBB"}
-        loading={eager ? "eager" : "lazy"}
-        className={`absolute inset-0 h-full w-full object-center ${fit}`}
-      />
+      {video ? (
+        <video
+          ref={videoRef}
+          src={url}
+          muted
+          playsInline
+          autoPlay={active}
+          controls={false}
+          preload={eager ? "auto" : "metadata"}
+          onEnded={() => active && onEnded()}
+          className={`absolute inset-0 h-full w-full object-center ${fit}`}
+        />
+      ) : (
+        <SafeImage
+          src={slide.image_url}
+          alt={text(slide.title) || "Kegiatan KBSBB"}
+          loading={eager ? "eager" : "lazy"}
+          className={`absolute inset-0 h-full w-full object-center ${fit}`}
+        />
+      )}
     </div>
   );
 }
+
 
 export function HeroSlider({ compactBottom = false }: { compactBottom?: boolean }) {
   const slides = useTable<Slide>("hero_slides", {
