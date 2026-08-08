@@ -19,6 +19,8 @@ import { Plus, Pencil, Trash2, Search, ChevronLeft, ChevronRight, Loader2 } from
 import { toast } from "sonner";
 import { MediaPicker } from "./media-picker";
 import { SafeImage, useMediaUrl } from "@/components/safe-image";
+import { isVideoMedia } from "@/components/hero-slider";
+
 import { RichTextEditor } from "./rich-text-editor";
 
 export type FieldType = "text" | "textarea" | "richtext" | "number" | "boolean" | "image" | "datetime" | "select" | "tags" | "display_mode";
